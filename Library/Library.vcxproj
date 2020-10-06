@@ -139,7 +139,25 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="BookCopy.cpp" />
+    <ClCompile Include="Librarian.cpp" />
+    <ClCompile Include="LMS.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Student.cpp" />
+    <ClCompile Include="Teacher.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="BookCopy.h" />
+    <ClInclude Include="Librarian.h" />
+    <ClInclude Include="LMS.h" />
+    <ClInclude Include="Student.h" />
+    <ClInclude Include="Teacher.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="BookCopiesData.txt" />
+    <Text Include="LibrariansData.txt" />
+    <Text Include="StudentsData.txt" />
+    <Text Include="TeachersData.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
