@@ -165,3 +165,48 @@ UserType LMS::LogIn()
 	std::cout << "User not found" << std::endl;
 	exit(0);
 }
+
+void LMS::PrintCommands()
+{
+	std::cout << "Enter a command from the list below:" << std::endl;
+	switch (usertype)
+	{
+	case StudentUser:
+		std::cout << "\t1. Search Books" << std::endl;
+		std::cout << "\t2. Borrow Books" << std::endl;
+		std::cout << "\t3. Return Books" << std::endl;
+		std::cout << "\t4. Reserve Books" << std::endl;
+		std::cout << "\t5. Cancel Reservations" << std::endl;
+		std::cout << "\t6. My Information" << std::endl;
+		std::cout << "\t7. Change Password" << std::endl;
+		std::cout << "\t0. Log Out" << std::endl;
+		break;
+
+	case TeacherUser:
+		std::cout << "\t1. Search Books" << std::endl;
+		std::cout << "\t2. Borrow Books" << std::endl;
+		std::cout << "\t3. Return Books" << std::endl;
+		std::cout << "\t4. Reserve Books" << std::endl;
+		std::cout << "\t5. Cancel Reservations" << std::endl;
+		std::cout << "\t6. My Information" << std::endl;
+		std::cout << "\t7. Change Password" << std::endl;
+		std::cout << "\t0. Log Out" << std::endl;
+		break;
+
+	case LibrarianUser:
+		std::cout << "\t1. Search Books" << std::endl;
+		std::cout << "\t2. Add Books" << std::endl;
+		std::cout << "\t3. Delete Books" << std::endl;
+		std::cout << "\t4. Search Users" << std::endl;
+		std::cout << "\t5. Add Users" << std::endl;
+		std::cout << "\t6. Delete Users" << std::endl;
+		std::cout << "\t7. My Information" << std::endl;
+		std::cout << "\t8. Change Password" << std::endl;
+		std::cout << "\t0. Log Out" << std::endl;
+		break;
+
+	default:
+		std::cerr << "Critical error user type not found" << std::endl;
+		break;
+	}
+}

@@ -41,6 +41,8 @@ public:
 
 	UserType LogIn();
 
+	void PrintCommands();
+
 
 };
 

@@ -16,9 +16,9 @@ int main()
 	{
 
 	case StudentUser:
-			while (command != 1)//Main program loop
+			while (command != 0)//Main program loop
 			{
-				std::cout << "Enter a command number from the list below" << std::endl;
+				mainLMS.PrintCommands();
 				std::cin >> command;
 
 				std::cout << std::endl;
@@ -28,9 +28,9 @@ int main()
 
 
 	case TeacherUser:
-			while (command != 1)//Main program loop
+			while (command != 0)//Main program loop
 			{
-				std::cout << "Enter a command number from the list below" << std::endl;
+				mainLMS.PrintCommands();
 				std::cin >> command;
 
 				std::cout << std::endl;
@@ -40,9 +40,9 @@ int main()
 
 
 	case LibrarianUser:
-			while (command != 1)//Main program loop
+			while (command != 0)//Main program loop
 			{
-				std::cout << "Enter a command number from the list below" << std::endl;
+				mainLMS.PrintCommands();
 				std::cin >> command;
 	
 				std::cout << std::endl;
