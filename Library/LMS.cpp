@@ -89,6 +89,11 @@ LMS::~LMS()
 
 }
 
+UserType LMS::GetUserType()
+{
+	return usertype;
+}
+
 UserType LMS::LogIn()
 {
 	

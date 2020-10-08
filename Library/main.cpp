@@ -12,13 +12,51 @@ int main()
 
 	std::cout << "Welcome to the Library Mangement System" << std::endl;
 
-	while (command != 0)//Main program loop
+	switch (mainLMS.GetUserType())
 	{
-		std::cout << "Enter a command number from the list below" << std::endl;
-		std::cin >> command;
+
+	case StudentUser:
+			while (command != 1)//Main program loop
+			{
+				std::cout << "Enter a command number from the list below" << std::endl;
+				std::cin >> command;
+
+				std::cout << std::endl;
+			}
+			break;
+
+
+
+	case TeacherUser:
+			while (command != 1)//Main program loop
+			{
+				std::cout << "Enter a command number from the list below" << std::endl;
+				std::cin >> command;
+
+				std::cout << std::endl;
+			}
+			break;
+
+
+
+	case LibrarianUser:
+			while (command != 1)//Main program loop
+			{
+				std::cout << "Enter a command number from the list below" << std::endl;
+				std::cin >> command;
 	
-		std::cout << std::endl;
+				std::cout << std::endl;
+			}
+			break;
+
+
+
+		default:
+			std::cerr << "Critical error no usertype" << std::endl;
+			break;
 	}
-//hello
+
+	std::cout << "Goodbye thank you for using the Library Management System";
+
 	return 0;
 }

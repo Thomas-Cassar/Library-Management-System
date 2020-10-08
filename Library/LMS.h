@@ -37,7 +37,7 @@ public:
 	LMS();
 	~LMS();
 
-
+	UserType GetUserType();
 
 	UserType LogIn();
 
