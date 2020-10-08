@@ -1,7 +1,9 @@
 #include "LMS.h"
 
 LMS::LMS()
-{//Open files
+{
+	usertype = NULLUSER;
+	//Open files
 	//Students
 	StudentFile.open("StudentsData.txt");
 	//Teachers
@@ -87,10 +89,74 @@ LMS::~LMS()
 
 }
 
-bool LMS::LogIn()
+UserType LMS::LogIn()
 {
+	
 
+	std::string tempusr, temppswd;
 
+	std::cout << "Enter user name:" << std::endl;
+	std::cin >> tempusr;
+	std::cout << "Enter password:" << std::endl;
+	std::cin >> temppswd;
 
-	return true;
+	//Loop through all students
+	for (auto &i : StudentList)
+	{
+		if (tempusr == i.GetUser())
+		{
+			if (temppswd == i.GetPswd())
+			{
+				LoggedInUsername = tempusr;
+				usertype = StudentUser;
+				return StudentUser;
+			}
+			else
+			{
+				std::cout << "Wrong password" << std::endl;
+				exit(0);
+			}
+		}
+	}
+
+	//Loop through all teachers
+	for (auto& i : TeacherList)
+	{
+		if (tempusr == i.GetUser())
+		{
+			if (temppswd == i.GetPswd())
+			{
+				LoggedInUsername = tempusr;
+				usertype = TeacherUser;
+				return TeacherUser;
+			}
+			else
+			{
+				std::cout << "Wrong password" << std::endl;
+				exit(0);
+			}
+		}
+	}
+	
+	//Loop through all librarians
+	for (auto& i : LibrarianList)
+	{
+		if (tempusr == i.GetUser())
+		{
+			if (temppswd == i.GetPswd())
+			{
+				LoggedInUsername = tempusr;
+				usertype = LibrarianUser;
+				return LibrarianUser;
+			}
+			else
+			{
+				std::cout << "Wrong password" << std::endl;
+				exit(0);
+			}
+		}
+	}
+	
+	std::cout << "User not found" << std::endl;
+	exit(0);
 }

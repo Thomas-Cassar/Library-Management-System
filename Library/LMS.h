@@ -10,6 +10,11 @@
 #include "Student.h"
 #include "BookCopy.h"
 
+enum UserType
+{
+	NULLUSER, StudentUser, TeacherUser, LibrarianUser
+};
+
 class LMS
 {
 private:
@@ -24,6 +29,8 @@ private:
 	std::vector<BookCopy> CopyList;
 
 	std::string LoggedInUsername;
+
+	UserType usertype;
 	
 	
 public:
@@ -32,7 +39,7 @@ public:
 
 
 
-	bool LogIn();
+	UserType LogIn();
 
 
 };

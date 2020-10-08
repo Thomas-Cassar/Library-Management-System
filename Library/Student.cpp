@@ -22,3 +22,13 @@ void Student::SetPswd(std::string pswd)
 {
 	Password = pswd;
 }
+
+std::string Student::GetUser()
+{
+	return Username;
+}
+
+std::string Student::GetPswd()
+{
+	return Password;
+}

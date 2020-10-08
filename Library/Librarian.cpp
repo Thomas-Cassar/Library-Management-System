@@ -22,3 +22,13 @@ void Librarian::SetPswd(std::string pswd)
 {
 	Password = pswd;
 }
+
+std::string Librarian::GetUser()
+{
+	return Username;
+}
+
+std::string Librarian::GetPswd()
+{
+	return Password;
+}
