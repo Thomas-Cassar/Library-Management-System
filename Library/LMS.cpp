@@ -1,4 +1,5 @@
 #include "LMS.h"
+#include <conio.h>
 
 LMS::LMS()
 {
@@ -98,12 +99,21 @@ UserType LMS::LogIn()
 {
 	
 
-	std::string tempusr, temppswd;
+	std::string tempusr="", temppswd="";
+	char c;
 
 	std::cout << "Enter user name:" << std::endl;
 	std::cin >> tempusr;
 	std::cout << "Enter password:" << std::endl;
-	std::cin >> temppswd;
+
+	int i = 0;
+	while (((c = _getch()) != '\r')&&(c!='\n'))
+	{
+		temppswd+= c;
+		std::cout << "*";
+		i++;
+	}
+	std::cout << std::endl;
 
 	//Loop through all students
 	for (auto &i : StudentList)
