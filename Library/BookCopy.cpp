@@ -91,11 +91,11 @@ void BookCopy::set_start_date(std::string startDate)
 {
 	start_date = startDate;
 }
-void BookCopy::set_exp_date(std::string startDate)
+void BookCopy::set_exp_date(std::string expDate)
 {
 	exp_date = expDate;
 }
-void BookCopy::set_res_date(std::string startDate)
+void BookCopy::set_res_date(std::string resDate)
 {
 	res_date = resDate;
 }
