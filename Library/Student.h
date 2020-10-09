@@ -1,12 +1,15 @@
 #pragma once
 
 #include <string>
-
+#include <BookCopy.h>
+#include <vector>
 class Student
 {
 private:
 	std::string Username;
 	std::string Password;
+	std::vector<BookCopy> BorrowedBooks;
+	int MaxBorrowed;
 
 public:
 	Student();
@@ -18,5 +21,5 @@ public:
 	std::string GetUser();
 	std::string GetPswd();
 
-
+	void BorrowBook(std::vector <BookCopy> &x);
 };

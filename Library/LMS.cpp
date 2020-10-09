@@ -241,14 +241,14 @@ void LMS::AddBooks()
 	book.setAuthor(auth);
 	std::string cat;
 	std::cout << "Enter the category of the book: " << std::endl;
-	cin >> cat;
+	std::cin >> cat;
 	book.setCategory(cat);
 	std::string id = "";
-	const char nums[] = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+	const char nums[] = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
 	int x;
 	for (x = 0; x < 16; x++)
 	{
-		id += nums[rand()%(sizeof(nums)-1)]
+		id += nums[rand() % (sizeof(nums) - 1)];
 	}
 	book.setID(id);
 	book.set_start_date(Date);
