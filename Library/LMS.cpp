@@ -234,6 +234,7 @@ void LMS::AddBooks()
 	book.setISBN(ISBN);
 	std::string Title;
 	std::cout << "Enter the title of the book: " << std::endl;
+	std::cin >> Title;
 	book.setTitle(Title);
 	std::string auth;
 	std::cout << "Enter the author of the book: " << std::endl;
