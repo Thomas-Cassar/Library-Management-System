@@ -241,16 +241,43 @@ void LMS::AddBooks()
 	book.setAuthor(auth);
 	std::string cat;
 	std::cout << "Enter the category of the book: " << std::endl;
-	cin >> cat;
+	std::cin >> cat;
 	book.setCategory(cat);
 	std::string id = "";
-	const char nums[] = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+	const char nums[] = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
 	int x;
 	for (x = 0; x < 16; x++)
 	{
-		id += nums[rand()%(sizeof(nums)-1)]
+		id += nums[rand() % (sizeof(nums) - 1)];
 	}
 	book.setID(id);
 	book.set_start_date(Date);
 	CopyList.push_back(book);
+}
+
+void LMS::DeleteBooks()
+{
+	BookCopy book;
+	int i = 0, pos, flag = 0;
+	std::string idstr;
+	std::cout << "Enter ID of the copy to delete: " << std::endl;
+	std::cin >> idstr;
+	for (i=0;i<CopyList.size();i++)
+	{
+		if (idstr == CopyList[i].getID())
+		{
+			pos = i;
+			flag = 1;
+			break;
+		}
+	}
+	if (flag == 1)
+	{
+		CopyList.erase(CopyList.begin() + pos);
+		std::cout << "Copy succesfully removed from library!" << std::endl;
+	}
+	else
+	{
+		std::cout << "Copy was not found in library!" << std::endl;
+	}
 }
