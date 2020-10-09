@@ -1,8 +1,12 @@
 #include "LMS.h"
 #include <conio.h>
+#include <ctime>
 
 LMS::LMS()
 {
+	//Initial Date of LMS
+	Date = "01/01/01";
+
 	usertype = NULLUSER;
 	//Open files
 	//Students
@@ -219,4 +223,34 @@ void LMS::PrintCommands()
 		std::cerr << "Critical error user type not found" << std::endl;
 		break;
 	}
+}
+
+void LMS::AddBooks()
+{
+	BookCopy book;
+	std::string ISBN;
+	std::cout << "Enter the ISBN of the book: " << std::endl;
+	std::cin >> ISBN;
+	book.setISBN(ISBN);
+	std::string Title;
+	std::cout << "Enter the title of the book: " << std::endl;
+	book.setTitle(Title);
+	std::string auth;
+	std::cout << "Enter the author of the book: " << std::endl;
+	std::cin >> auth;
+	book.setAuthor(auth);
+	std::string cat;
+	std::cout << "Enter the category of the book: " << std::endl;
+	cin >> cat;
+	book.setCategory(cat);
+	std::string id = "";
+	const char nums[] = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+	int x;
+	for (x = 0; x < 16; x++)
+	{
+		id += nums[rand()%(sizeof(nums)-1)]
+	}
+	book.setID(id);
+	book.set_start_date(Date);
+	CopyList.push_back(book);
 }

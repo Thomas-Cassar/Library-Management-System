@@ -29,7 +29,7 @@ private:
 	std::vector<BookCopy> CopyList;
 
 	std::string LoggedInUsername;
-
+	std::string Date
 	UserType usertype;
 	
 	
@@ -40,7 +40,8 @@ public:
 	UserType GetUserType();
 
 	UserType LogIn();
-
+	void AddBooks();
+	void DeleteBooks();
 	void PrintCommands();
 
 
