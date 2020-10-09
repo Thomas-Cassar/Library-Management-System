@@ -1,4 +1,5 @@
 #include <iostream>
+#include <ctime>
 
 #include "LMS.h"
 
@@ -9,6 +10,8 @@ int main()
 	mainLMS.LogIn();//Prompt user for log in
 
 	int command = -1;//Variable for input command
+
+	srand(time(NULL));//Set the seed for random generators
 
 	std::cout << "Welcome to the Library Mangement System" << std::endl;
 
@@ -44,7 +47,7 @@ int main()
 			{
 				mainLMS.PrintCommands();
 				std::cin >> command;
-	
+
 				std::cout << std::endl;
 			}
 			break;
