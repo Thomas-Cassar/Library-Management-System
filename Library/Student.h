@@ -8,7 +8,9 @@ class Student
 private:
 	std::string Username;
 	std::string Password;
-	std::vector<BookCopy> BorrowedBooks;
+	std::vector<BookCopy> StudentBorrowedBooks;
+	std::vector<BookCopy> StudentReservedBooks;
+	int penalty;
 	int MaxBorrowed;
 
 public:
@@ -21,5 +23,6 @@ public:
 	std::string GetUser();
 	std::string GetPswd();
 
-	void BorrowBook(std::vector <BookCopy> &x);
+	void StudentBorrowBook(std::vector <BookCopy> &x);
+	void CancelStudentReservation(std::vector<BookCopy>& x);
 };

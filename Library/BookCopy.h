@@ -13,7 +13,6 @@ private:
 	std::string start_date;
 	std::string res_date;
 	std::string exp_date;
-	std::vector <std::string> reservees;
 public:
 	BookCopy();
 	BookCopy(std::string isbn, std::string title, std::string author, std::string category, std::string id, std::string reader_name,
@@ -36,5 +35,6 @@ public:
 	void set_start_date(std::string startDate);
 	void set_res_date(std::string resDate);
 	void set_exp_date(std::string expDate);
+	std::vector <std::string> reservees;
 };
 
