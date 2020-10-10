@@ -1,7 +1,8 @@
 #include "Student.h"
 #include <iostream>
-#include <BookCopy.h>
+#include "BookCopy.h"
 #include <vector>
+#include "LMS.h"
 Student::Student()
 {
 	Username = "NULL";
