@@ -225,6 +225,11 @@ void LMS::PrintCommands()
 	}
 }
 
+std::vector<BookCopy> LMS::returnBookCopy()
+{
+	return CopyList; 
+}
+
 void LMS::AddBooks()
 {
 	BookCopy book;

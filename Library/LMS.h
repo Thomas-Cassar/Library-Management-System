@@ -38,7 +38,7 @@ public:
 	~LMS();
 
 	UserType GetUserType();
-
+	std::vector <BookCopy> returnBookCopy();
 	UserType LogIn();
 	void AddBooks();
 	void DeleteBooks();

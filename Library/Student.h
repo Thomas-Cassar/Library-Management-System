@@ -25,4 +25,5 @@ public:
 
 	void StudentBorrowBook(std::vector <BookCopy> &x);
 	void CancelStudentReservation(std::vector<BookCopy>& x);
+	void ReturnBooks(LMS &lms);
 };

@@ -113,3 +113,27 @@ void Student::CancelStudentReservation(std::vector<BookCopy> &x)
 	}
 	std::cout << "Cancellation request has failed!" << std::endl;
 }
+
+void Student::ReturnBooks(LMS &lms)
+{
+	std::cout << "Enter the ID of the book you want to return: " << std::endl;
+	std::string id;
+	std::cin >> id;
+	int i,j;
+	for (i = 0; i < lms.returnBookCopy().size(); i++)
+	{
+		if (id == lms.returnBookCopy()[i].getID())
+		{
+			lms.returnBookCopy()[i].setReaderName("");
+			for (j = 0; j < StudentBorrowedBooks.size(); j++)
+			{
+				if (StudentBorrowedBooks[j].getID() == id)
+				{
+					StudentBorrowedBooks.erase(StudentBorrowedBooks.begin() + i);
+				}
+			}
+			return;
+		}
+	}
+	std::cout << "Could not find the book to return!" << std::endl;
+}
