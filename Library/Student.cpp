@@ -9,12 +9,19 @@ Student::Student()
 	Password = "NULL";
 	MaxBorrowed = 5;
 	penalty = 0;
+
+	// also want to include maxBorrowingPeriods in the constructors?
 }
 
 Student::Student(std::string user, std::string pswd)
 {
 	Username = user;
 	Password = pswd;
+
+	// leaving comment blocks around the things I change - Eshan
+	MaxBorrowed = 5;
+	penalty = 0;
+	//
 }
 
 
@@ -28,6 +35,28 @@ void Student::SetPswd(std::string pswd)
 	Password = pswd;
 }
 
+//
+void Student::SetBorrowedBooks(std::vector<BookCopy> bBooks) 
+{
+	this->StudentBorrowedBooks = bBooks;
+}
+
+void Student::SetReservedBooks(std::vector<BookCopy> rBooks)
+{
+	this->StudentReservedBooks = rBooks;
+}
+
+void Student::SetPenalty(int penalty)
+{
+	this->penalty = penalty;
+}
+
+void Student::SetMaxBorrowed(int maxBorrowed)
+{
+	this->MaxBorrowed = maxBorrowed;
+}
+//
+
 std::string Student::GetUser()
 {
 	return Username;
@@ -37,6 +66,28 @@ std::string Student::GetPswd()
 {
 	return Password;
 }
+
+//
+std::vector<BookCopy> Student::GetBorrowedBooks()
+{
+	return this->StudentBorrowedBooks;
+}
+
+std::vector<BookCopy> Student::GetReservedBooks()
+{
+	return this->StudentReservedBooks;
+}
+
+int Student::GetPenalty()
+{
+	return this->penalty;
+}
+
+int Student::GetMaxBorrowed()
+{
+	return this->MaxBorrowed;
+}
+//
 
 void Student::StudentBorrowBook(std::vector <BookCopy> &x)
 {
@@ -137,3 +188,51 @@ void Student::ReturnBooks(LMS &lms)
 	}
 	std::cout << "Could not find the book to return!" << std::endl;
 }
+
+//
+void Student::operator << (std::ostream& out) 
+{
+	out << "Username: " << this->Username << std::endl;
+	
+	// maybe don't want to show password
+	out << "Password: " << this->Password << std::endl;
+	//
+
+	out << "Current Borrowed Books: " << std::endl;
+	for (int i = 0; i < this->StudentBorrowedBooks.size(); i++) {
+		this->StudentBorrowedBooks[i].operator<<(out);
+		out << std::endl << std::endl;
+	}
+
+	out << "Current Reserved Books: " << std::endl;
+	for (int i = 0; i < this->StudentReservedBooks.size(); i++) {
+		this->StudentReservedBooks[i].operator<<(out);
+		out << std::endl << std::endl;
+	}
+
+	out << "Current Penalty: " << this->penalty << std::endl;
+
+	// if we also include maxBorrowingPeriods for student
+	// out << "Max. Borrowing Periods: " << this->MaxBorrowingPeriods << std::endl;
+}
+
+void Student::operator >> (std::istream& in)
+{
+	std::string Username, Password;
+
+	// may have to add penalty and maxborrowed
+	// int penalty, maxBorrowed
+
+	in >> Username >> Password;
+	
+	// in >> penalty >> maxBorrowed;
+
+	this->Username = Username;
+	this->Password = Password;
+	
+	/*
+	this->penalty = penalty;
+	this->MaxBorrowed = maxBorrowed;
+	*/
+}
+//

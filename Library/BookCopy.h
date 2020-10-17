@@ -1,6 +1,7 @@
 #pragma once
 #include <string>
 #include <vector>
+#include <iostream>
 class BookCopy
 {
 private:
@@ -36,5 +37,10 @@ public:
 	void set_res_date(std::string resDate);
 	void set_exp_date(std::string expDate);
 	std::vector <std::string> reservees;
+
+	//
+	void operator << (std::ostream& out);
+	void operator >> (std::istream& in);
+	//
 };
 

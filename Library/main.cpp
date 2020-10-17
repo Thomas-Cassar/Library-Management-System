@@ -4,7 +4,7 @@
 #include "LMS.h"
 
 int main()
-{
+{	
 	LMS mainLMS;//Intitialize LMS class
 
 	mainLMS.LogIn();//Prompt user for log in
@@ -13,7 +13,7 @@ int main()
 
 	srand(time(NULL));//Set the seed for random generators
 
-	std::cout << "Welcome to the Library Mangement System" << std::endl;
+	std::cout << "Welcome to the Library Management System" << std::endl;
 
 	switch (mainLMS.GetUserType())
 	{
@@ -55,11 +55,11 @@ int main()
 
 
 		default:
-			std::cerr << "Critical error no usertype" << std::endl;
+			std::cerr << "Critical error: No User Type" << std::endl;
 			break;
 	}
-
-	std::cout << "Goodbye thank you for using the Library Management System";
+	
+	std::cout << "Goodbye. Thank you for using the Library Management System.";
 
 	return 0;
 }

@@ -1,5 +1,5 @@
 #include "BookCopy.h"
-//hi
+
 BookCopy::BookCopy()
 {
 	ISBN = "";
@@ -99,3 +99,35 @@ void BookCopy::set_res_date(std::string resDate)
 {
 	res_date = resDate;
 }
+
+//
+void BookCopy::operator << (std::ostream &out)
+{
+	out << "ISBN: " << this->ISBN << std::endl;
+	out << "Title: " << this->Title << std::endl;
+	out << "Author: " << this->Author << std::endl;
+	out << "Category: " << this->Category << std::endl;
+	out << "ID: " << this->ID << std::endl;
+	out << "Reader Name: " << this->readerName << std::endl;
+	out << "Start Date: " << this->start_date << std::endl;
+	out << "Reservation Date: " << this->res_date << std::endl;
+	out << "Expiration Date: " << this->exp_date << std::endl;
+}
+
+void BookCopy::operator >> (std::istream& in) 
+{
+	std::string ISBN, Title, Author, Category, ID,
+		readerName, start_date, res_date, exp_date;
+	in >> ISBN >> Title >> Author >> Category >> ID
+		>> readerName >> start_date >> res_date >> exp_date;
+	this->ISBN = ISBN;
+	this->Title = Title;
+	this->Author = Author;
+	this->Category = Category;
+	this->ID = ID;
+	this->readerName = readerName;
+	this->start_date = start_date;
+	this->res_date = res_date;
+	this->exp_date = exp_date;
+}
+//
