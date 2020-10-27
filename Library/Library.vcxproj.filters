@@ -64,5 +64,8 @@
     <Text Include="LibrariansData.txt">
       <Filter>Resource Files</Filter>
     </Text>
+    <Text Include="DateData.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
   </ItemGroup>
 </Project>

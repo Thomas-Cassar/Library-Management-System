@@ -158,6 +158,7 @@
     <Text Include="LibrariansData.txt" />
     <Text Include="StudentsData.txt" />
     <Text Include="TeachersData.txt" />
+    <Text Include="DateData.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
