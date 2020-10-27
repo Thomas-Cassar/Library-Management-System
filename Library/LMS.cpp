@@ -287,3 +287,8 @@ void LMS::DeleteBooks()
 		std::cout << "Copy was not found in library!" << std::endl;
 	}
 }
+
+void LMS::setDate(std::string date)
+{
+	Date = date;
+}

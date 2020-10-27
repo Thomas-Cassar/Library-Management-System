@@ -36,7 +36,7 @@ private:
 public:
 	LMS();
 	~LMS();
-
+	void setDate(std::string date);
 	UserType GetUserType();
 	std::vector <BookCopy> returnBookCopy();
 	UserType LogIn();

@@ -1,6 +1,6 @@
 #include <iostream>
 #include <ctime>
-
+#include <fstream>
 #include "LMS.h"
 
 int main()
@@ -14,6 +14,14 @@ int main()
 	srand(time(NULL));//Set the seed for random generators
 
 	std::cout << "Welcome to the Library Management System" << std::endl;
+
+	std::string date;
+
+	std::fstream dateFile ("DateData.txt");
+
+	dateFile >> date;
+
+	mainLMS.setDate(date);
 
 	switch (mainLMS.GetUserType())
 	{

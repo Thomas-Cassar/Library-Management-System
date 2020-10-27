@@ -2,7 +2,9 @@
 #include <iostream>
 #include "BookCopy.h"
 #include <vector>
+#include <ctime>
 #include "LMS.h"
+
 Student::Student()
 {
 	Username = "NULL";
