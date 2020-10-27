@@ -27,7 +27,14 @@ int main()
 
 	dateFile >> date;
 
-	mainLMS.setDate(date);
+	if (date != "")
+		mainLMS.setDate(date);
+	else
+		date = "01/01/01";
+
+	clock_t t = clock();
+
+	clock_t m = t;
 
 	switch (mainLMS.GetUserType())
 	{
@@ -72,7 +79,16 @@ int main()
 			std::cerr << "Critical error: No User Type" << std::endl;
 			break;
 	}
+    
+	m = clock() - m;
+
+	for (int iter = 0; iter < float(m)/1000; iter += 5)
+	{
+		mainLMS.incrementDate();
+	}
 	
+	dateFile << mainLMS.getDate() << std::endl;
+	std::cout << mainLMS.getDate() << std::endl;
 	std::cout << "Goodbye. Thank you for using the Library Management System.";
 
 	return 0;
