@@ -36,7 +36,10 @@ private:
 public:
 	LMS();
 	~LMS();
+
+	std::string getDate();
 	void setDate(std::string date);
+	void incrementDate();
 	UserType GetUserType();
 	std::vector <BookCopy> returnBookCopy();
 	UserType LogIn();

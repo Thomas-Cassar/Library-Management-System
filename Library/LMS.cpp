@@ -288,7 +288,153 @@ void LMS::DeleteBooks()
 	}
 }
 
+std::string LMS::getDate()
+{
+	return Date;
+}
 void LMS::setDate(std::string date)
 {
 	Date = date;
+}
+
+void LMS::incrementDate()
+{
+	std::string defaultDate = "01/01/00";
+	int i = 0;
+	if (Date[0] == '0' && Date[1] == '2' && (((Date[6] - '0') * 10) + (Date[7] - '0'))%4 == 0)
+	{
+		if (Date[3] == '2' && Date[4] == '9')
+		{
+			Date[3] = '0';
+			Date[4] = '1';
+			if (Date[1] == '9')
+			{
+				Date[0] = '1';
+				Date[1] = '0';
+			}
+			else
+			    Date[1]++;
+		}
+		else
+		{
+			if (Date[4] == '9')
+			{
+				Date[4] = '0';
+				Date[3]++;
+			}
+			else
+			{
+				Date[4]++;
+			}
+		}
+		return;
+	}
+	if (Date[0] == '0' && Date[1] == '2' && (((Date[6] - '0') * 10) + Date[7] - '0') % 4 != 0)
+	{
+		if (Date[3] == '2' && Date[4] == '8')
+		{
+			Date[3] = '0';
+			Date[4] = '1';
+			if (Date[1] == '9')
+			{
+				Date[0] = '1';
+				Date[1] = '0';
+			}
+			else
+				Date[1]++;
+		}
+		else
+		{
+			if (Date[4] == '9')
+			{
+				Date[4] = '0';
+				Date[3]++;
+			}
+			else
+			{
+				Date[4]++;
+			}
+		}
+		return;
+	}
+	if ((Date[1] == '4' || Date[1] == '6' || Date[1] == '9' || (Date[0] == '1' && Date[1] == '1')))
+	{
+		if (Date[3] == '3' && Date[4] == '0')
+		{
+			Date[3] = '0';
+			Date[4] = '1';
+			if (Date[1] == '9')
+			{
+				Date[0] = '1';
+				Date[1] = '0';
+			}
+			else
+				Date[1]++;
+		}
+		else
+		{
+			if (Date[4] == '9')
+			{
+				Date[4] = '0';
+				Date[3]++;
+			}
+			else
+			{
+				Date[4]++;
+			}
+		}
+	}
+	else
+	{
+		if (Date[3] == '3' && Date[4] == '1')
+		{
+			Date[3] = '0';
+			Date[4] = '1';
+			if (Date[0] == '1' && Date[1] == '2')
+			{
+				for (i = 0; i < 6; i++)
+				{
+					Date[i] = defaultDate[i];
+				}
+				if (Date[6] == '9' && Date[7] == '9')
+				{
+					Date = defaultDate;
+				}
+				else
+				{
+					if (Date[7] == '9')
+					{
+						Date[7] = '0';
+						Date[6]++;
+					}
+					else
+					{
+						Date[7]++;
+					}
+				}
+			}
+			else
+			{
+				if (Date[1] == '9')
+				{
+					Date[0] = '1';
+					Date[1] = '0';
+				}
+				else
+					Date[1]++;
+			}
+		}
+		else
+		{
+			if (Date[4] == '9')
+			{
+				
+				Date[4] = '0';
+				Date[3]++;
+
+			}
+			else
+				Date[4]++;
+		}
+	}
 }

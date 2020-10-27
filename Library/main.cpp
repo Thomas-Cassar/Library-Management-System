@@ -17,11 +17,12 @@ int main()
 
 	std::string date;
 
-	std::fstream dateFile ("DateData.txt");
+	int count = 0; while (count < 500) { mainLMS.incrementDate(); std::cout << mainLMS.getDate() << "\n";count++; } //to test incrementing date
+	//std::fstream dateFile ("DateData.txt");
 
-	dateFile >> date;
+	//dateFile >> date;
 
-	mainLMS.setDate(date);
+	//mainLMS.setDate(date);
 
 	switch (mainLMS.GetUserType())
 	{
