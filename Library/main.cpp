@@ -25,12 +25,12 @@ int main()
 		exit(1);
 	}
 
-	dateFile >> date;
+	while (dateFile >> date);
 
 	if (date != "")
-		mainLMS.setDate(date);
-	else
-		date = "01/01/01";
+	{
+	    mainLMS.setDate(date);
+	}
 
 	clock_t t = clock();
 
@@ -90,6 +90,6 @@ int main()
 	dateFile << mainLMS.getDate() << std::endl;
 	std::cout << mainLMS.getDate() << std::endl;
 	std::cout << "Goodbye. Thank you for using the Library Management System.";
-
+	dateFile.close();
 	return 0;
 }
