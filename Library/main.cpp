@@ -88,8 +88,10 @@ int main()
 	}
 	
 	dateFile << mainLMS.getDate() << std::endl;
-	std::cout << mainLMS.getDate() << std::endl;
+	
 	std::cout << "Goodbye. Thank you for using the Library Management System.";
+
 	dateFile.close();
+
 	return 0;
 }
