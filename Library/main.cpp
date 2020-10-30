@@ -82,9 +82,10 @@ int main()
     
 	m = clock() - m;
 
-	for (int iter = 0; iter < float(m)/1000; iter += 5)
+	for (int iter = 0; iter < float(m)/1000; iter ++)
 	{
-		mainLMS.incrementDate();
+		if (iter!=0 && iter%5==0)
+			mainLMS.incrementDate();
 	}
 	
 	dateFile << mainLMS.getDate() << std::endl;
