@@ -17,26 +17,27 @@ int main()
 
 	std::string date;
 
-	std::ifstream dateFile("DateData.txt");
+	std::fstream dateFile ("DateData.txt");
 
 	if (dateFile.fail())
 	{
 		std::cerr << "Could not open date file";
 		exit(1);
 	}
-	
-	dateFile >> date;
-	std::cout << date << std::endl;
-	while (dateFile >> date);
+
+	int count = 0;
+
+	while (dateFile >> date >> count);
 
 	if (date != "")
 	{
 	    mainLMS.setDate(date);
+		mainLMS.setCounter(count);
 	}
 
 	dateFile.close();
 
-	std::ofstream datesFile("DateData.txt");
+	dateFile.open("DateData.txt");
 
 	clock_t t = clock();
 
@@ -50,7 +51,10 @@ int main()
 			{
 				mainLMS.PrintCommands();
 				std::cin >> command;
-
+				//switch (command)
+				//{
+				//case 1: 
+				//}
 				std::cout << std::endl;
 			}
 			break;
@@ -87,19 +91,26 @@ int main()
 	}
     
 	m = clock() - m;
-	
 
-	for (int iter = 0; iter < float(m)/1000; iter += 5)
+	for (int iter = 0; iter < float(m)/1000; iter ++)
 	{
-		mainLMS.incrementDate();
+		if (iter != 0 && iter % 5 == 0)
+		{
+			mainLMS.incrementDate();
+			mainLMS.incCounter();
+		}
 	}
 	
-	//dateFile << 5;
-	datesFile << mainLMS.getDate() << std::endl;
+	dateFile << mainLMS.getDate();
+	dateFile << " ";
+	dateFile << mainLMS.getCounter() << std::endl;
+
 	
+	std::cout << "The date is: " << mainLMS.getDate() << std::endl;
+
 	std::cout << "Goodbye. Thank you for using the Library Management System.";
 
-	datesFile.close();
+	dateFile.close();
 
 	return 0;
 }

@@ -133,4 +133,3 @@ std::istream& operator >> (std::istream& in, BookCopy& book)
 	book.set_exp_date(exp_date);
 	return in;
 }
-//

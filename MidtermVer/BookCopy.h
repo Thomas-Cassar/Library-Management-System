@@ -42,4 +42,3 @@ public:
 };
 std::ostream& operator << (std::ostream& out, BookCopy& book);
 std::istream& operator >> (std::istream& in, BookCopy& book);
-

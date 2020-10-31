@@ -10,7 +10,6 @@ private:
 	std::string Username;
 	std::string Password;
 	std::vector<BookCopy> StudentBorrowedBooks;
-	std::vector<BookCopy> StudentReservedBooks;
 	int penalty;
 	int MaxBorrowed;
 	int maxBorrowDate;
@@ -21,10 +20,9 @@ public:
 
 	void SetUser(std::string usr);
 	void SetPswd(std::string pswd);
-	
+
 	//
 	void SetBorrowedBooks(std::vector<BookCopy> bBooks);
-	void SetReservedBooks(std::vector<BookCopy> rBooks);
 	void SetPenalty(int penalty);
 	void SetMaxBorrowed(int maxBorrowed);
 	void SetMaxBorrowDate(int maxBorrowDate);
@@ -35,15 +33,13 @@ public:
 
 	//
 	std::vector<BookCopy> GetBorrowedBooks();
-	std::vector<BookCopy> GetReservedBooks();
 	int GetPenalty();
 	int GetMaxBorrowed();
 	int GetMaxBorrowDate();
 	//
 
-	void StudentBorrowBook(std::vector <BookCopy> &x, int date);
-	void CancelStudentReservation(std::vector<BookCopy>& x);
-	void ReturnBooks(std::vector<BookCopy>& x, int date);
+	void StudentBorrowBook(std::vector <BookCopy>& x, int date);
+	void ReturnBooks(std::vector<BookCopy>& x);
 
 	//
 	friend std::ostream& operator << (std::ostream& out, Student& student);
