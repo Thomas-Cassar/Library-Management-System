@@ -29,11 +29,9 @@ public:
 	void setDate(std::string date);
 	void incrementDate();
 	void setCounter(int counter);
-	std::vector <BookCopy> returnBookCopy();
+	std::vector <BookCopy>* returnBookCopy();
 	Student LogIn();
 	int getCounter();
-	void AddBooks();
-	void DeleteBooks();
 	void PrintCommands();
 	void incCounter();
 

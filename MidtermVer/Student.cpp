@@ -11,7 +11,6 @@ Student::Student()
 	Username = "NULL";
 	Password = "NULL";
 	MaxBorrowed = 5;
-	penalty = 0;
 	maxBorrowDate = 30;
 
 	// also want to include maxBorrowingPeriods in the constructors?
@@ -24,8 +23,7 @@ Student::Student(std::string user, std::string pswd)
 
 	// leaving comment blocks around the things I change - Eshan
 	MaxBorrowed = 5;
-	penalty = 0;
-	maxBorrowDate = 30
+	maxBorrowDate = 30;
 	//
 }
 
@@ -44,12 +42,6 @@ void Student::SetPswd(std::string pswd)
 void Student::SetBorrowedBooks(std::vector<BookCopy> bBooks)
 {
 	this->StudentBorrowedBooks = bBooks;
-}
-
-
-void Student::SetPenalty(int penalty)
-{
-	this->penalty = penalty;
 }
 
 void Student::SetMaxBorrowed(int maxBorrowed)
@@ -72,12 +64,6 @@ std::string Student::GetPswd()
 std::vector<BookCopy> Student::GetBorrowedBooks()
 {
 	return this->StudentBorrowedBooks;
-}
-
-
-int Student::GetPenalty()
-{
-	return this->penalty;
 }
 
 int Student::GetMaxBorrowed()
@@ -114,11 +100,11 @@ void Student::StudentBorrowBook(std::vector <BookCopy>& x, int date)
 		if (current_date > StudentBorrowedBooks[i].get_exp_date())
 		{
 			std::cout << StudentBorrowedBooks[i].getTitle() << "is overdue! Please return the book!" << std::endl;
-			penalty++;
+			MaxBorrowed--;
 		}
 		return;
 	}
-	if (StudentBorrowedBooks.size() >= (MaxBorrowed - penalty))
+	if (StudentBorrowedBooks.size() >= MaxBorrowed)
 	{
 		std::cout << "You have already reached the limit of borrowed copies" << std::endl;
 		return;
@@ -130,11 +116,14 @@ void Student::StudentBorrowBook(std::vector <BookCopy>& x, int date)
 	{
 		if (idValue == x[i].getID())
 		{
-			if (x[i].getReaderName() == "")
+			if (x[i].getReaderName() == "NULL")
 			{
 				x[i].setReaderName(Username);
+				x[i].set_start_date(current_date);
+				x[i].set_exp_date(current_date + maxBorrowDate);
 				StudentBorrowedBooks.push_back(x[i]);
-				std::cout << "The book has been successfully borrowed!" << std::endl;
+				std::cout << x[i].getTitle() << " has been successfully borrowed!" << std::endl;
+
 				return;
 			}
 			else
@@ -157,13 +146,17 @@ void Student::ReturnBooks(std::vector<BookCopy>& x)
 	{
 		if (id == x[i].getID())
 		{
-			x[i].setReaderName("");
+			x[i].setReaderName("NULL");
 			for (j = 0; j < StudentBorrowedBooks.size(); j++)
 			{
 				if (StudentBorrowedBooks[j].getID() == id)
 				{
 					StudentBorrowedBooks.erase(StudentBorrowedBooks.begin() + i);
 				}
+			}
+			if (maxBorrowed < 5)
+			{
+				maxBorrowed++;
 			}
 			return;
 		}

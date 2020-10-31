@@ -10,7 +10,6 @@ private:
 	std::string Username;
 	std::string Password;
 	std::vector<BookCopy> StudentBorrowedBooks;
-	int penalty;
 	int MaxBorrowed;
 	int maxBorrowDate;
 
@@ -23,7 +22,6 @@ public:
 
 	//
 	void SetBorrowedBooks(std::vector<BookCopy> bBooks);
-	void SetPenalty(int penalty);
 	void SetMaxBorrowed(int maxBorrowed);
 	void SetMaxBorrowDate(int maxBorrowDate);
 	//
@@ -33,7 +31,6 @@ public:
 
 	//
 	std::vector<BookCopy> GetBorrowedBooks();
-	int GetPenalty();
 	int GetMaxBorrowed();
 	int GetMaxBorrowDate();
 	//

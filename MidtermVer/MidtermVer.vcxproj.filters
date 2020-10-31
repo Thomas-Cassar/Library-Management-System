@@ -26,10 +26,11 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="StudentData.txt">
+    <Text Include="DateData.txt">
       <Filter>Resource Files</Filter>
     </Text>
-    <Text Include="DateData.txt">
+    <Text Include="BookCopiesData.txt" />
+    <Text Include="StudentsData.txt">
       <Filter>Resource Files</Filter>
     </Text>
   </ItemGroup>
@@ -41,6 +42,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="BookCopy.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

@@ -1,6 +1,7 @@
 #include "LMS.h"
 #include <conio.h>
 #include <ctime>
+#include <string.h>
 
 LMS::LMS()
 {
@@ -35,6 +36,12 @@ LMS::LMS()
 		StudentList.push_back(stutemp);
 	}
 
+	//Book copy reading
+	BookCopy booktemp;
+	while (BookFile >> booktemp)
+	{
+		CopyList.push_back(booktemp);
+	}
 }
 
 LMS::~LMS()
@@ -57,12 +64,19 @@ Student LMS::LogIn()
 	std::cin >> tempusr;
 	std::cout << "Enter password:" << std::endl;
 
-	int i = 0;
 	while (((c = _getch()) != '\r') && (c != '\n'))
 	{
-		temppswd += c;
-		std::cout << "*";
-		i++;
+		if (c == '\b')
+		{
+			temppswd = temppswd.substr(0, temppswd.length() - 1);
+			std::cout  << '\b';
+			std::cout << ' ';
+			std::cout << '\b';
+		}
+		else {
+			temppswd += c;
+			std::cout << "*";
+		}
 	}
 	std::cout << std::endl;
 
@@ -73,9 +87,7 @@ Student LMS::LogIn()
 		{
 			if (temppswd == i.GetPswd())
 			{
-				LoggedInUsername = tempusr;
-				usertype = StudentUser;
-				return StudentUser;
+				return i;
 			}
 			else
 			{
@@ -87,7 +99,7 @@ Student LMS::LogIn()
 
 	//Loop through all teachers
 
-	}
+
 
 	std::cout << "User not found" << std::endl;
 	exit(0);
@@ -102,72 +114,15 @@ void LMS::PrintCommands()
 		std::cout << "\t0. Log Out" << std::endl;
 }
 
-std::vector<BookCopy> LMS::returnBookCopy()
+std::vector<BookCopy>* LMS::returnBookCopy()
 {
-	return CopyList;
+	return &CopyList;
 }
 
-void LMS::AddBooks()
-{
-	BookCopy book;
-	std::string ISBN;
-	std::cout << "Enter the ISBN of the book: " << std::endl;
-	std::cin >> ISBN;
-	book.setISBN(ISBN);
-	std::string Title;
-	std::cout << "Enter the title of the book: " << std::endl;
-	std::cin >> Title;
-	book.setTitle(Title);
-	std::string auth;
-	std::cout << "Enter the author of the book: " << std::endl;
-	std::cin >> auth;
-	book.setAuthor(auth);
-	std::string cat;
-	std::cout << "Enter the category of the book: " << std::endl;
-	std::cin >> cat;
-	book.setCategory(cat);
-	std::string id = "";
-	const char nums[] = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
-	int x;
-	for (x = 0; x < 16; x++)
-	{
-		id += nums[rand() % (sizeof(nums) - 1)];
-	}
-	book.setID(id);
-	book.set_start_date(counter);
-	CopyList.push_back(book);
-}
 
 void LMS::incCounter()
 {
 	counter++;
-}
-
-void LMS::DeleteBooks()
-{
-	BookCopy book;
-	int i = 0, pos, flag = 0;
-	std::string idstr;
-	std::cout << "Enter ID of the copy to delete: " << std::endl;
-	std::cin >> idstr;
-	for (i = 0;i < CopyList.size();i++)
-	{
-		if (idstr == CopyList[i].getID())
-		{
-			pos = i;
-			flag = 1;
-			break;
-		}
-	}
-	if (flag == 1)
-	{
-		CopyList.erase(CopyList.begin() + pos);
-		std::cout << "Copy succesfully removed from library!" << std::endl;
-	}
-	else
-	{
-		std::cout << "Copy was not found in library!" << std::endl;
-	}
 }
 
 std::string LMS::getDate()
