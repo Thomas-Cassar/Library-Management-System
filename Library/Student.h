@@ -13,6 +13,7 @@ private:
 	std::vector<BookCopy> StudentReservedBooks;
 	int penalty;
 	int MaxBorrowed;
+	int maxBorrowDate;
 
 public:
 	Student();
@@ -26,6 +27,7 @@ public:
 	void SetReservedBooks(std::vector<BookCopy> rBooks);
 	void SetPenalty(int penalty);
 	void SetMaxBorrowed(int maxBorrowed);
+	void SetMaxBorrowDate(int maxBorrowDate);
 	//
 
 	std::string GetUser();
@@ -36,14 +38,15 @@ public:
 	std::vector<BookCopy> GetReservedBooks();
 	int GetPenalty();
 	int GetMaxBorrowed();
+	int GetMaxBorrowDate();
 	//
 
-	void StudentBorrowBook(std::vector <BookCopy> &x);
+	void StudentBorrowBook(std::vector <BookCopy> &x, int date);
 	void CancelStudentReservation(std::vector<BookCopy>& x);
-	void ReturnBooks(std::vector<BookCopy>& x);
+	void ReturnBooks(std::vector<BookCopy>& x, int date);
 
 	//
-	void operator << (std::ostream& out);
-	void operator >> (std::istream& in);
+	friend std::ostream& operator << (std::ostream& out, Student* student);
+	friend std::istream& operator >> (std::istream& in, Student* student);
 	//
 };

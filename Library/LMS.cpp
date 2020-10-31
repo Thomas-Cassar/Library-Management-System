@@ -7,6 +7,8 @@ LMS::LMS()
 	//Initial Date of LMS
 	Date = "01/01/01";
 
+	counter = 0;
+
 	usertype = NULLUSER;
 	//Open files
 	//Students
@@ -261,6 +263,11 @@ void LMS::AddBooks()
 	CopyList.push_back(book);
 }
 
+void LMS::incCounter()
+{
+	counter++;
+}
+
 void LMS::DeleteBooks()
 {
 	BookCopy book;
@@ -292,6 +299,17 @@ std::string LMS::getDate()
 {
 	return Date;
 }
+
+void LMS::setCounter(int counter)
+{
+	this->counter = counter;
+}
+
+int LMS::getCounter()
+{
+	return counter;
+}
+
 void LMS::setDate(std::string date)
 {
 	Date = date;

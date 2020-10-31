@@ -1,8 +1,9 @@
- #include "Student.h"
+#include "Student.h"
 #include <iostream>
 #include "BookCopy.h"
 #include <vector>
 #include <ctime>
+#include <string>
 #include "LMS.h"
 
 Student::Student()
@@ -90,12 +91,34 @@ int Student::GetMaxBorrowed()
 	return this->MaxBorrowed;
 }
 //
+int Student::GetMaxBorrowDate()
+{
+	return maxBorrowDate;
+}
 
-void Student::StudentBorrowBook(std::vector <BookCopy> &x)
+void Student::SetMaxBorrowDate(int maxBorrowDate)
+{
+	this->maxBorrowDate = maxBorrowDate;
+}
+
+void Student::StudentBorrowBook(std::vector <BookCopy> &x, int date)
 {
 	std::string idValue = "";
 	int i = 0;
 	std::string reserveAnswer = "";
+
+	for (int iter = 0; iter < float(clock()) / 1000; iter++)
+	{
+		if (iter != 0 && iter % 5 == 0)
+		{
+			i++;
+		}
+	}
+	int current_date = i + date;
+	for (i = 0; i < StudentBorrowedBooks.size(); i++)
+	{
+		if (current_date > StudentBorrowedBooks[i].get_exp_date())
+	}
 	if(StudentBorrowedBooks.size() >= (MaxBorrowed - penalty))
 	{
 		std::cout << "You have already reached the limit of borrowed copies" << std::endl;
@@ -167,7 +190,7 @@ void Student::CancelStudentReservation(std::vector<BookCopy> &x)
 	std::cout << "Cancellation request has failed!" << std::endl;
 }
 
-void Student::ReturnBooks(std::vector<BookCopy>& x)
+void Student::ReturnBooks(std::vector<BookCopy>& x, int date)
 {
 	std::cout << "Enter the ID of the book you want to return: " << std::endl;
 	std::string id;
@@ -192,49 +215,54 @@ void Student::ReturnBooks(std::vector<BookCopy>& x)
 }
 
 //
-void Student::operator << (std::ostream& out) 
+std::ostream& operator << (std::ostream& out, Student* student) 
 {
-	out << "Username: " << this->Username << std::endl;
+	out << "Username: " << student->GetUser() << std::endl;
 	
 	// maybe don't want to show password
-	out << "Password: " << this->Password << std::endl;
+	out << "Password: " << student->GetPswd() << std::endl;
 	//
 
 	out << "Current Borrowed Books: " << std::endl;
-	for (int i = 0; i < this->StudentBorrowedBooks.size(); i++) {
-		this->StudentBorrowedBooks[i].operator<<(out);
-		out << std::endl << std::endl;
+	for (int i = 0; i < student->GetBorrowedBooks().size(); i++) {
+		out << student->GetBorrowedBooks()[i].getTitle();
+		out << std::endl;
 	}
 
-	out << "Current Reserved Books: " << std::endl;
-	for (int i = 0; i < this->StudentReservedBooks.size(); i++) {
+	/*out << "Current Reserved Books: " << std::endl;
+	for (int i = 0; i < student->get.size(); i++) {
 		this->StudentReservedBooks[i].operator<<(out);
 		out << std::endl << std::endl;
-	}
+	}*/
 
-	out << "Current Penalty: " << this->penalty << std::endl;
+	out << "Max Borrow Period: " << student->GetMaxBorrowDate() << std::endl;
+	out << "Max Books That Can Be Borrowed: " << student->GetMaxBorrowed() << std::endl;
 
 	// if we also include maxBorrowingPeriods for student
 	// out << "Max. Borrowing Periods: " << this->MaxBorrowingPeriods << std::endl;
+	return out;
 }
 
-void Student::operator >> (std::istream& in)
+std::istream& operator >> (std::istream& in, Student* student)
 {
 	std::string Username, Password;
+	int maxborrow, maxborrowper;
 
 	// may have to add penalty and maxborrowed
 	// int penalty, maxBorrowed
 
-	in >> Username >> Password;
+	in >> maxborrow >> maxborrowper;
 	
 	// in >> penalty >> maxBorrowed;
 
-	this->Username = Username;
-	this->Password = Password;
-	
+	student->SetUser(Username);
+	student->SetPswd(Password);
+	student->SetMaxBorrowed(maxborrow);
+	student->SetMaxBorrowDate(maxborrowper);
 	/*
 	this->penalty = penalty;
 	this->MaxBorrowed = maxBorrowed;
 	*/
+	return in;
 }
 //

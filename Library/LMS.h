@@ -30,6 +30,7 @@ private:
 
 	std::string LoggedInUsername;
 	std::string Date;
+	int counter;
 	UserType usertype;
 	
 	
@@ -40,12 +41,15 @@ public:
 	std::string getDate();
 	void setDate(std::string date);
 	void incrementDate();
+	void setCounter(int counter);
 	UserType GetUserType();
 	std::vector <BookCopy> returnBookCopy();
 	UserType LogIn();
+	int getCounter();
 	void AddBooks();
 	void DeleteBooks();
 	void PrintCommands();
+	void incCounter();
 
 
 };
