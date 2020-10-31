@@ -51,10 +51,10 @@ int main()
 			{
 				mainLMS.PrintCommands();
 				std::cin >> command;
-				switch (command)
-				{
-				case 1: 
-				}
+				//switch (command)
+				//{
+				//case 1: 
+				//}
 				std::cout << std::endl;
 			}
 			break;

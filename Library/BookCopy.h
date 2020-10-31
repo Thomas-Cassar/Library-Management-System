@@ -37,8 +37,9 @@ public:
 	void set_res_date(int resDate);
 	void set_exp_date(int expDate);
 	std::vector <std::string> reservees;
-	friend std::ostream& operator << (std::ostream& out, BookCopy* book);
-	friend std::istream& operator >> (std::istream& in, BookCopy* book);
+	friend std::ostream& operator << (std::ostream& out, BookCopy& book);
+	friend std::istream& operator >> (std::istream& in, BookCopy& book);
 };
-
+std::ostream& operator << (std::ostream& out, BookCopy& book);
+std::istream& operator >> (std::istream& in, BookCopy& book);
 

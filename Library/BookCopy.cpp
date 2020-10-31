@@ -102,35 +102,35 @@ void BookCopy::set_res_date(int resDate)
 
 //
 
-std::ostream& operator << (std::ostream& out, BookCopy* book)
+std::ostream& operator << (std::ostream& out, BookCopy& book)
 {
-	out << "ISBN: " << book->getISBN() << std::endl;
-	out << "Title: " << book->getTitle() << std::endl;
-	out << "Author: " << book->getAuthor() << std::endl;
-	out << "Category: " << book->getCategory() << std::endl;
-	out << "ID: " << book->getID() << std::endl;
-	out << "Reader Name: " << book->getReaderName() << std::endl;
-	out << "Start Date: " << book->get_start_date() << std::endl;
-	out << "Reservation Date: " << book->get_res_date() << std::endl;
-	out << "Expiration Date: " << book->get_exp_date() << std::endl;
+	out << "ISBN: " << book.getISBN() << std::endl;
+	out << "Title: " << book.getTitle() << std::endl;
+	out << "Author: " << book.getAuthor() << std::endl;
+	out << "Category: " << book.getCategory() << std::endl;
+	out << "ID: " << book.getID() << std::endl;
+	out << "Reader Name: " << book.getReaderName() << std::endl;
+	out << "Start Date: " << book.get_start_date() << std::endl;
+	out << "Reservation Date: " << book.get_res_date() << std::endl;
+	out << "Expiration Date: " << book.get_exp_date() << std::endl;
 	return out;
 }
-std::istream& operator >> (std::istream& in, BookCopy* book)
+std::istream& operator >> (std::istream& in, BookCopy& book)
 {
 	std::string ISBN, Title, Author, Category, ID,
 		readerName;
 	int start_date, res_date, exp_date;
 	in >> ISBN >> Title >> Author >> Category >> ID
 		>> readerName >> start_date >> res_date >> exp_date;
-	book->setISBN(ISBN);
-	book->setTitle(Title);
-	book->setAuthor(Author);
-	book->setCategory(Category);
-	book->setID(ID);
-	book->setReaderName(readerName);
-	book->set_start_date(start_date);
-	book->set_res_date(res_date);
-	book->set_exp_date(exp_date);
+	book.setISBN(ISBN);
+	book.setTitle(Title);
+	book.setAuthor(Author);
+	book.setCategory(Category);
+	book.setID(ID);
+	book.setReaderName(readerName);
+	book.set_start_date(start_date);
+	book.set_res_date(res_date);
+	book.set_exp_date(exp_date);
 	return in;
 }
 //

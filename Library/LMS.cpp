@@ -46,15 +46,9 @@ LMS::LMS()
 
 //Student reading
 	Student stutemp;
-	StudentFile >> usrtemp >> pswdtemp;
-	while (usrtemp != "$$$")
+	while (StudentFile >> stutemp)
 	{
-		stutemp.SetUser(usrtemp);
-		stutemp.SetPswd(pswdtemp);
-
 		StudentList.push_back(stutemp);
-
-		StudentFile >> usrtemp >> pswdtemp;
 	}
 
 //Teacher reading
@@ -259,7 +253,7 @@ void LMS::AddBooks()
 		id += nums[rand() % (sizeof(nums) - 1)];
 	}
 	book.setID(id);
-	book.set_start_date(Date);
+	book.set_start_date(counter);
 	CopyList.push_back(book);
 }
 

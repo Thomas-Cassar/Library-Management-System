@@ -118,6 +118,11 @@ void Student::StudentBorrowBook(std::vector <BookCopy> &x, int date)
 	for (i = 0; i < StudentBorrowedBooks.size(); i++)
 	{
 		if (current_date > StudentBorrowedBooks[i].get_exp_date())
+		{
+			std::cout << StudentBorrowedBooks[i].getTitle() << "is overdue! Please return the book!" << std::endl;
+			penalty++;
+		}
+		return;
 	}
 	if(StudentBorrowedBooks.size() >= (MaxBorrowed - penalty))
 	{
@@ -215,17 +220,17 @@ void Student::ReturnBooks(std::vector<BookCopy>& x, int date)
 }
 
 //
-std::ostream& operator << (std::ostream& out, Student* student) 
+std::ostream& operator << (std::ostream& out, Student& student) 
 {
-	out << "Username: " << student->GetUser() << std::endl;
+	out << "Username: " << student.GetUser() << std::endl;
 	
 	// maybe don't want to show password
-	out << "Password: " << student->GetPswd() << std::endl;
+	out << "Password: " << student.GetPswd() << std::endl;
 	//
 
 	out << "Current Borrowed Books: " << std::endl;
-	for (int i = 0; i < student->GetBorrowedBooks().size(); i++) {
-		out << student->GetBorrowedBooks()[i].getTitle();
+	for (int i = 0; i < student.GetBorrowedBooks().size(); i++) {
+		out << student.GetBorrowedBooks()[i].getTitle();
 		out << std::endl;
 	}
 
@@ -235,30 +240,30 @@ std::ostream& operator << (std::ostream& out, Student* student)
 		out << std::endl << std::endl;
 	}*/
 
-	out << "Max Borrow Period: " << student->GetMaxBorrowDate() << std::endl;
-	out << "Max Books That Can Be Borrowed: " << student->GetMaxBorrowed() << std::endl;
+	out << "Max Borrow Period: " << student.GetMaxBorrowDate() << std::endl;
+	out << "Max Books That Can Be Borrowed: " << student.GetMaxBorrowed() << std::endl;
 
 	// if we also include maxBorrowingPeriods for student
 	// out << "Max. Borrowing Periods: " << this->MaxBorrowingPeriods << std::endl;
 	return out;
 }
 
-std::istream& operator >> (std::istream& in, Student* student)
+std::istream& operator >> (std::istream& in, Student& student)
 {
 	std::string Username, Password;
-	int maxborrow, maxborrowper;
+	int maxborrow=5, maxborrowper=30;
 
 	// may have to add penalty and maxborrowed
 	// int penalty, maxBorrowed
-
+	in >> Username >> Password;
 	in >> maxborrow >> maxborrowper;
 	
 	// in >> penalty >> maxBorrowed;
 
-	student->SetUser(Username);
-	student->SetPswd(Password);
-	student->SetMaxBorrowed(maxborrow);
-	student->SetMaxBorrowDate(maxborrowper);
+	student.SetUser(Username);
+	student.SetPswd(Password);
+	student.SetMaxBorrowed(maxborrow);
+	student.SetMaxBorrowDate(maxborrowper);
 	/*
 	this->penalty = penalty;
 	this->MaxBorrowed = maxBorrowed;

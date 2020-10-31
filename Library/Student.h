@@ -46,7 +46,10 @@ public:
 	void ReturnBooks(std::vector<BookCopy>& x, int date);
 
 	//
-	friend std::ostream& operator << (std::ostream& out, Student* student);
-	friend std::istream& operator >> (std::istream& in, Student* student);
+	friend std::ostream& operator << (std::ostream& out, Student& student);
+	friend std::istream& operator >> (std::istream& in, Student& student);
 	//
 };
+
+std::ostream& operator << (std::ostream& out, Student& student);
+std::istream& operator >> (std::istream& in, Student& student);
