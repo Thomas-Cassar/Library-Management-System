@@ -34,6 +34,11 @@ LMS::LMS()
 	{
 		StudentList.push_back(stutemp);
 	}
+	BookCopy copy;
+	while (BookFile >> copy)
+	{
+		CopyList.push_back(copy);
+	}
 
 }
 
@@ -74,8 +79,7 @@ Student LMS::LogIn()
 			if (temppswd == i.GetPswd())
 			{
 				LoggedInUsername = tempusr;
-				usertype = StudentUser;
-				return StudentUser;
+				return i;
 			}
 			else
 			{
@@ -84,11 +88,6 @@ Student LMS::LogIn()
 			}
 		}
 	}
-
-	//Loop through all teachers
-
-	}
-
 	std::cout << "User not found" << std::endl;
 	exit(0);
 }

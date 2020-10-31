@@ -144,12 +144,14 @@
     <ClInclude Include="Student.h" />
   </ItemGroup>
   <ItemGroup>
+    <Text Include="BookCopiesData.txt" />
     <Text Include="DateData.txt" />
     <Text Include="StudentData.txt" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BookCopy.cpp" />
     <ClCompile Include="LMS.cpp" />
+    <ClCompile Include="main.cpp" />
     <ClCompile Include="Student.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
