@@ -33,6 +33,9 @@
     <Text Include="StudentsData.txt">
       <Filter>Resource Files</Filter>
     </Text>
+    <Text Include="BookCopiesData.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="LMS.cpp">
