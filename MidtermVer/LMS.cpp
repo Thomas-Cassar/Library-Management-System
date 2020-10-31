@@ -28,20 +28,28 @@ LMS::LMS()
 	}
 
 	//Read from files and store in vectors
-
-//Student reading
-	Student stutemp;
-	while (StudentFile >> stutemp)
-	{
-		StudentList.push_back(stutemp);
-	}
-
 	//Book copy reading
 	BookCopy booktemp;
 	while (BookFile >> booktemp)
 	{
 		CopyList.push_back(booktemp);
 	}
+
+//Student reading
+	Student stutemp;
+	while (StudentFile >> stutemp)
+	{	
+		std::vector<BookCopy> tempbooklist;
+	
+		for (int i = 0; i < CopyList.size(); i++)
+		{
+			if (CopyList[i].getReaderName() == stutemp.GetUser())
+				tempbooklist.push_back(CopyList[i]);
+		}
+		stutemp.SetBorrowedBooks(tempbooklist);
+		StudentList.push_back(stutemp);
+	}
+
 }
 
 LMS::~LMS()

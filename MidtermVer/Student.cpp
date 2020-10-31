@@ -109,7 +109,7 @@ void Student::StudentBorrowBook(std::vector <BookCopy>& x, int date)
 	{
 		if (current_date > StudentBorrowedBooks[i].get_exp_date())
 		{
-			std::cout << StudentBorrowedBooks[i].getTitle() << "is overdue! Please return the book!" << std::endl;
+			std::cout << StudentBorrowedBooks[i].getTitle() << " is overdue! Please return the book!" << std::endl;
 			MaxBorrowed--;
 			shouldreturn = true;
 		}
@@ -149,7 +149,7 @@ void Student::StudentBorrowBook(std::vector <BookCopy>& x, int date)
 			}
 		}
 	}
-	std::cout << "Failed to borrow book!" << std::endl;
+	std::cout << "Invalid book ID!" << std::endl;
 }
 
 void Student::ReturnBooks(std::vector<BookCopy>& x)
@@ -167,7 +167,7 @@ void Student::ReturnBooks(std::vector<BookCopy>& x)
 			{
 				if (StudentBorrowedBooks[j].getID() == id)
 				{
-					StudentBorrowedBooks.erase(StudentBorrowedBooks.begin() + i);
+					StudentBorrowedBooks.erase(StudentBorrowedBooks.begin() + j);
 					std::cout << "Book was returned successfully!!" << std::endl;
 				}
 				
