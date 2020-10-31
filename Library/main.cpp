@@ -17,20 +17,26 @@ int main()
 
 	std::string date;
 
-	std::fstream dateFile ("DateData.txt");
+	std::ifstream dateFile("DateData.txt");
 
 	if (dateFile.fail())
 	{
 		std::cerr << "Could not open date file";
 		exit(1);
 	}
-
+	
+	dateFile >> date;
+	std::cout << date << std::endl;
 	while (dateFile >> date);
 
 	if (date != "")
 	{
 	    mainLMS.setDate(date);
 	}
+
+	dateFile.close();
+
+	std::ofstream datesFile("DateData.txt");
 
 	clock_t t = clock();
 
@@ -81,17 +87,19 @@ int main()
 	}
     
 	m = clock() - m;
+	
 
 	for (int iter = 0; iter < float(m)/1000; iter += 5)
 	{
 		mainLMS.incrementDate();
 	}
 	
-	dateFile << mainLMS.getDate() << std::endl;
+	//dateFile << 5;
+	datesFile << mainLMS.getDate() << std::endl;
 	
 	std::cout << "Goodbye. Thank you for using the Library Management System.";
 
-	dateFile.close();
+	datesFile.close();
 
 	return 0;
 }
