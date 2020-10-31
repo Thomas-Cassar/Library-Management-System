@@ -6,15 +6,15 @@
 LMS::LMS()
 {
 	//Initial Date of LMS
-	Date = "01/01/01";
+	LMSDate = "01/01/01";
 
 	counter = 0;
 
 	//Open files
 	//Students
-	StudentFile.open("StudentsData.txt");
+	StudentFile.open("student.txt");
 	//Books
-	BookFile.open("BookCopiesData.txt");
+	BookFile.open("book.txt");
 	//Check successful
 	if (StudentFile.fail())
 	{
@@ -111,6 +111,7 @@ void LMS::PrintCommands()
 		std::cout << "\t1. Get Recommended Books" << std::endl;
 		std::cout << "\t2. Borrow Books" << std::endl;
 		std::cout << "\t3. Return Books" << std::endl;
+		std::cout << "\t4. Check Current Date" << std::endl;
 		std::cout << "\t0. Log Out" << std::endl;
 }
 
@@ -127,7 +128,7 @@ void LMS::incCounter()
 
 std::string LMS::getDate()
 {
-	return Date;
+	return LMSDate;
 }
 
 void LMS::setCounter(int counter)
@@ -142,10 +143,44 @@ int LMS::getCounter()
 
 void LMS::setDate(std::string date)
 {
-	Date = date;
+	LMSDate = date;
 }
 
-void LMS::incrementDate()
+void LMS::updateFiles()
+{
+	BookFile.close();
+	StudentFile.close();
+
+	//Open files
+	//Students
+	StudentFile.open("student.txt", std::ofstream::out | std::ofstream::trunc);
+	//Books
+	BookFile.open("book.txt",std::ofstream::out | std::ofstream::trunc);
+	//Check successful
+	if (StudentFile.fail())
+	{
+		std::cerr << "Could not open student file";
+		exit(1);
+	}
+	if (BookFile.fail())
+	{
+		std::cerr << "Could not open book file";
+		exit(1);
+	}
+
+	int i;
+	for (i=0; i<StudentList.size();i++)
+	{
+		StudentFile << StudentList[i];
+	}
+
+	for (i = 0; i < CopyList.size(); i++)
+	{
+		BookFile << CopyList[i];
+	}
+}
+
+std::string LMS::incrementDate(std::string Date)
 {
 	std::string defaultDate = "01/01/00";
 	int i = 0;
@@ -175,7 +210,7 @@ void LMS::incrementDate()
 				Date[4]++;
 			}
 		}
-		return;
+		return Date;
 	}
 	if (Date[0] == '0' && Date[1] == '2' && (((Date[6] - '0') * 10) + Date[7] - '0') % 4 != 0)
 	{
@@ -203,7 +238,7 @@ void LMS::incrementDate()
 				Date[4]++;
 			}
 		}
-		return;
+		return Date;
 	}
 	if ((Date[1] == '4' || Date[1] == '6' || Date[1] == '9' || (Date[0] == '1' && Date[1] == '1')))
 	{
@@ -285,4 +320,10 @@ void LMS::incrementDate()
 				Date[4]++;
 		}
 	}
+	return Date;
 }
+
+//void LMS::recommend(Student& s1)
+//{
+    //for (int i =s1.GetBorrowedBooks.size()
+//}

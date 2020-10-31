@@ -2,6 +2,7 @@
 #include <ctime>
 #include <fstream>
 #include "LMS.h"
+std::string checkDates(LMS &lms, clock_t x);
 
 int main()
 {
@@ -45,26 +46,28 @@ int main()
 
 	clock_t m = t;
 
-
 	while (command != 0)//Main program loop
 	{
 		mainLMS.PrintCommands();
 		std::cin >> command;
 		switch (command)
 		{
+		std::vector<BookCopy>* copyvectemp; //Pointer that will store address of booklist
 		case 1: 
 			//mainLMS.recommend();
 			break;
 		case 2:
-			std::vector<BookCopy>* copyvectemp;
 			copyvectemp = mainLMS.returnBookCopy();
 			s1.StudentBorrowBook(*copyvectemp, mainLMS.getCounter());
-			// std::cout << bookName << " has been borrowed!";
+			mainLMS.updateFiles();
 			break;
 		case 3:
-			std::vector<BookCopy> * copyvectemp;
 			copyvectemp = mainLMS.returnBookCopy();
 			s1.ReturnBooks(*copyvectemp);
+			mainLMS.updateFiles();
+			break;
+		case 4:
+			std::cout << "The current date is: " << checkDates(mainLMS, t) << std::endl;
 			break;
 		case 0: 
 			break;
@@ -77,16 +80,17 @@ int main()
 	}
 
 	m = clock() - m;
+	std::string LMSDATE = mainLMS.getDate();
 
 	for (int iter = 0; iter < float(m) / 1000; iter++)
 	{
 		if (iter != 0 && iter % 5 == 0)
 		{
-			mainLMS.incrementDate();
+			LMSDATE = mainLMS.incrementDate(LMSDATE);
 			mainLMS.incCounter();
 		}
 	}
-
+	mainLMS.setDate(LMSDATE);
 	dateFile << mainLMS.getDate();
 	dateFile << " ";
 	dateFile << mainLMS.getCounter() << std::endl;
@@ -99,4 +103,19 @@ int main()
 	dateFile.close();
 
 	return 0;
+}
+
+std::string checkDates(LMS &lms, clock_t x)
+{
+	std::string LMSDATE = lms.getDate();
+	clock_t checkDate = clock() - x;
+	
+	for (int iter = 0; iter < float(checkDate) / 1000; iter++)
+	{
+		if (iter != 0 && iter % 5 == 0)
+		{
+			LMSDATE = lms.incrementDate(LMSDATE);
+		}
+	}
+	return LMSDATE;
 }

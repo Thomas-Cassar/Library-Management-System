@@ -76,11 +76,17 @@ int Student::GetMaxBorrowDate()
 	return maxBorrowDate;
 }
 
+/*
+* 
+*/
 void Student::SetMaxBorrowDate(int maxBorrowDate)
 {
 	this->maxBorrowDate = maxBorrowDate;
 }
 
+/*
+* This fuction is called from the main loop if the user wants to borrow a book
+*/
 void Student::StudentBorrowBook(std::vector <BookCopy>& x, int date)
 {
 	std::string idValue = "";
@@ -95,21 +101,31 @@ void Student::StudentBorrowBook(std::vector <BookCopy>& x, int date)
 		}
 	}
 	int current_date = i + date;
+	bool shouldreturn = false;
+
+	//This function checks to see if any books are overdue
+	//If said book is overdue then MaxBorrowed is decremented and no new book is allowed to be taken out
 	for (i = 0; i < StudentBorrowedBooks.size(); i++)
 	{
 		if (current_date > StudentBorrowedBooks[i].get_exp_date())
 		{
 			std::cout << StudentBorrowedBooks[i].getTitle() << "is overdue! Please return the book!" << std::endl;
 			MaxBorrowed--;
+			shouldreturn = true;
 		}
-		return;
+		
 	}
+	if (shouldreturn)
+		return;
+
+	//This function checks to see if we are already over the limit for books allowed to be borrowed
 	if (StudentBorrowedBooks.size() >= MaxBorrowed)
 	{
 		std::cout << "You have already reached the limit of borrowed copies" << std::endl;
 		return;
 	}
 
+	//If here is reached then the book is allowed to be borrowed and we ask what they want to borrow
 	std::cout << "Enter ID of the copy of the book you want to borrow: ";
 	std::cin >> idValue;
 	for (i = 0; i < x.size(); i++)
@@ -152,11 +168,13 @@ void Student::ReturnBooks(std::vector<BookCopy>& x)
 				if (StudentBorrowedBooks[j].getID() == id)
 				{
 					StudentBorrowedBooks.erase(StudentBorrowedBooks.begin() + i);
+					std::cout << "Book was returned successfully!!" << std::endl;
 				}
+				
 			}
-			if (maxBorrowed < 5)
+			if (MaxBorrowed < 5)
 			{
-				maxBorrowed++;
+				MaxBorrowed++;
 			}
 			return;
 		}
@@ -164,54 +182,45 @@ void Student::ReturnBooks(std::vector<BookCopy>& x)
 	std::cout << "Could not find the book to return!" << std::endl;
 }
 
-//
+/*
+* This function overloads the << ostream operator to be able to print all variables on one line of
+* a student
+*/
 std::ostream& operator << (std::ostream& out, Student& student)
 {
-	out << "Username: " << student.GetUser() << std::endl;
-
-	// maybe don't want to show password
-	out << "Password: " << student.GetPswd() << std::endl;
-	//
-
-	out << "Current Borrowed Books: " << std::endl;
-	for (int i = 0; i < student.GetBorrowedBooks().size(); i++) {
-		out << student.GetBorrowedBooks()[i].getTitle();
-		out << std::endl;
-	}
-
-	/*out << "Current Reserved Books: " << std::endl;
-	for (int i = 0; i < student->get.size(); i++) {
-		this->StudentReservedBooks[i].operator<<(out);
-		out << std::endl << std::endl;
-	}*/
-
-	out << "Max Borrow Period: " << student.GetMaxBorrowDate() << std::endl;
-	out << "Max Books That Can Be Borrowed: " << student.GetMaxBorrowed() << std::endl;
-
-	// if we also include maxBorrowingPeriods for student
-	// out << "Max. Borrowing Periods: " << this->MaxBorrowingPeriods << std::endl;
+	//Output all variables to ostream
+	out << 
+		student.GetUser() << ' ' << 
+		student.GetPswd() << ' ' << 
+		student.GetMaxBorrowed() <<' ' 
+		<< student.GetMaxBorrowDate() 
+	<< std::endl;
 	return out;
 }
 
+/*
+* This function overloads the >> istream operator to be able to read all variables on one line of
+* a student
+*/
 std::istream& operator >> (std::istream& in, Student& student)
 {
+	//Temp variables for reading in values
 	std::string Username, Password;
 	int maxborrow = 5, maxborrowper = 30;
 
-	// may have to add penalty and maxborrowed
-	// int penalty, maxBorrowed
-	in >> Username >> Password;
-	in >> maxborrow >> maxborrowper;
+	//Take in values from istream
+	in >> 
+		Username >> 
+		Password >>
+		maxborrow >> 
+		maxborrowper;
 
-	// in >> penalty >> maxBorrowed;
-
+	
+	//Set variables based on values taken in
 	student.SetUser(Username);
 	student.SetPswd(Password);
 	student.SetMaxBorrowed(maxborrow);
 	student.SetMaxBorrowDate(maxborrowper);
-	/*
-	this->penalty = penalty;
-	this->MaxBorrowed = maxBorrowed;
-	*/
+	
 	return in;
 }

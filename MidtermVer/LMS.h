@@ -17,7 +17,7 @@ private:
 	std::vector<BookCopy> CopyList;
 
 	std::string LoggedInUsername;
-	std::string Date;
+	std::string LMSDate;
 	int counter;
 
 
@@ -27,13 +27,13 @@ public:
 
 	std::string getDate();
 	void setDate(std::string date);
-	void incrementDate();
+	std::string incrementDate(std::string Date);
 	void setCounter(int counter);
 	std::vector <BookCopy>* returnBookCopy();
 	Student LogIn();
 	int getCounter();
 	void PrintCommands();
 	void incCounter();
-
-
+	void updateFiles();
+	void recommend(Student &s1);
 };

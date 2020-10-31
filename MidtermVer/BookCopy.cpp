@@ -90,27 +90,52 @@ void BookCopy::set_exp_date(int expDate)
 	exp_date = expDate;
 }
 
-//
 
+
+/*
+* This function overloads the << ostream operator to be able to print all variables on one line of
+* a book copy
+*/
 std::ostream& operator << (std::ostream& out, BookCopy& book)
 {
-	out << "ISBN: " << book.getISBN() << std::endl;
-	out << "Title: " << book.getTitle() << std::endl;
-	out << "Author: " << book.getAuthor() << std::endl;
-	out << "Category: " << book.getCategory() << std::endl;
-	out << "ID: " << book.getID() << std::endl;
-	out << "Reader Name: " << book.getReaderName() << std::endl;
-	out << "Start Date: " << book.get_start_date() << std::endl;
-	out << "Expiration Date: " << book.get_exp_date() << std::endl;
+	//Output all variables to one line on ostream
+	out <<
+		book.getISBN() <<' '<<
+		book.getTitle() << ' ' <<
+		book.getAuthor() << ' ' <<
+		book.getCategory() << ' ' <<
+		book.getID() << ' ' <<
+		book.getReaderName() << ' ' <<
+		book.get_start_date() << ' ' <<
+		book.get_exp_date() <<
+	std::endl;
+
 	return out;
 }
+
+/*
+* This function overloads the >> istream operator to be able to read all variables on one line of
+* a book copy
+*/
 std::istream& operator >> (std::istream& in, BookCopy& book)
 {
+	//Temp variables for storing istream data
 	std::string ISBN, Title, Author, Category, ID,
 		readerName;
 	int start_date, res_date, exp_date;
-	in >> ISBN >> Title >> Author >> Category >> ID
-		>> readerName >> start_date >> exp_date;
+
+	//Take in all values from istream
+	in >> 
+		ISBN >> 
+		Title >> 
+		Author >> 
+		Category >> 
+		ID>> 
+		readerName >> 
+		start_date >> 
+		exp_date;
+
+	//Set all variables based on istream
 	book.setISBN(ISBN);
 	book.setTitle(Title);
 	book.setAuthor(Author);

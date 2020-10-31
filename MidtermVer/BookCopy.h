@@ -33,7 +33,6 @@ public:
 	void setReaderName(std::string reader_name);
 	void set_start_date(int startDate);
 	void set_exp_date(int expDate);
-	std::vector <std::string> reservees;
 	friend std::ostream& operator << (std::ostream& out, BookCopy& book);
 	friend std::istream& operator >> (std::istream& in, BookCopy& book);
 };

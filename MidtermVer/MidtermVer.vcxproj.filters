@@ -29,13 +29,13 @@
     <Text Include="DateData.txt">
       <Filter>Resource Files</Filter>
     </Text>
-    <Text Include="BookCopiesData.txt" />
-    <Text Include="StudentsData.txt">
-      <Filter>Resource Files</Filter>
-    </Text>
     <Text Include="BookCopiesData.txt">
       <Filter>Resource Files</Filter>
     </Text>
+    <Text Include="student.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="book.txt" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="LMS.cpp">
