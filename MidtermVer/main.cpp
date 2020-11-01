@@ -54,7 +54,7 @@ int main()
 		{
 		std::vector<BookCopy>* copyvectemp; //Pointer that will store address of booklist
 		case 1: 
-			//mainLMS.recommend();
+			mainLMS.recommend(s1); 
 			break;
 		case 2:
 			copyvectemp = mainLMS.returnBookCopy();

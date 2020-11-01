@@ -331,7 +331,51 @@ std::string LMS::incrementDate(std::string Date)
 	return Date;
 }
 
-//void LMS::recommend(Student& s1)
-//{
-    //for (int i =s1.GetBorrowedBooks.size()
-//}
+void LMS::recommend(Student& s1)
+{
+	std::vector <BookCopy> category;
+	std::vector <BookCopy> temp = CopyList;
+
+	for (int i = 0; i < s1.GetBorrowedBooks().size(); i++)
+	{
+		category.push_back(s1.GetBorrowedBooks()[i]);
+	}
+	int count = 0;
+	int maxcount = 0, position = 0;
+	for (int i = 0; i < category.size(); i++)
+	{
+		for (int j = i+1; j < category.size();j++)
+			if (category[i].getCategory() == category[j].getCategory() && category[j].getCategory() != "")
+			{
+				category[j].setCategory("");
+		    }
+	}
+	for (int i = 0; i < temp.size(); i++)
+	{
+		for (int j = i + 1; j < temp.size(); j++)
+		{
+			if (temp[i].getTitle() == temp[j].getTitle() && temp[j].getCategory() != "")
+			{
+				temp[j].setTitle("");
+			}
+		}
+	}
+	std::cout << "Some Books You May Like: " << std::endl;
+	for (int j = 0; j < category.size();j++)
+	for (int i = 0; i < temp.size(); i++)
+	{
+		if (temp[i].getTitle() != "" && (category[j].getCategory() == CopyList[i].getCategory()) && (temp[i].getReaderName() == "NULL") && (category[j].getTitle() != temp[i].getTitle()))
+		{
+			std::cout << temp[i].getTitle() << " by " << temp[i].getAuthor() << std::endl;
+			count++;
+		}
+	}
+	if (count == 0 && s1.GetBorrowedBooks().size() == 0)
+	{
+		std::cout << "Please borrow a book so that we can get an idea of what you like!" << std::endl;
+	}
+	else if (count == 0 && s1.GetBorrowedBooks().size() != 0)
+	{
+		std::cout << "There are no books that match the categories of the books you have borrowed!" << std::endl;
+	}
+}
