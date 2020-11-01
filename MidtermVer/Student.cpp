@@ -152,6 +152,19 @@ void Student::StudentBorrowBook(std::vector <BookCopy>& x, int date)
 	std::cout << "Invalid book ID!" << std::endl;
 }
 
+void Student::Print()
+{
+	std::cout << "Username: " << Username << std::endl;
+	std::cout << "Password: " << Password << std::endl;
+	std::cout << "Maxmum Books You can Borrow: " << MaxBorrowed << std::endl;
+	std::cout << "Maximum Borrowing Time: " << maxBorrowDate << " days" << std::endl;
+	std::cout << "Books You have Borrowed: " << std::endl;
+	for (int i = 0; i < StudentBorrowedBooks.size(); i++)
+	{
+		std::cout << StudentBorrowedBooks[i].getTitle() << std::endl;
+	}
+}
+
 void Student::ReturnBooks(std::vector<BookCopy>& x)
 {
 	std::cout << "Enter the ID of the book you want to return: " << std::endl;

@@ -120,6 +120,7 @@ void LMS::PrintCommands()
 		std::cout << "\t2. Borrow Books" << std::endl;
 		std::cout << "\t3. Return Books" << std::endl;
 		std::cout << "\t4. Check Current Date" << std::endl;
+		std::cout << "\t5. View My Information" << std::endl;
 		std::cout << "\t0. Log Out" << std::endl;
 }
 

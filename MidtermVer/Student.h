@@ -37,7 +37,7 @@ public:
 
 	void StudentBorrowBook(std::vector <BookCopy>& x, int date);
 	void ReturnBooks(std::vector<BookCopy>& x);
-
+	void Print();
 	//
 	friend std::ostream& operator << (std::ostream& out, Student& student);
 	friend std::istream& operator >> (std::istream& in, Student& student);

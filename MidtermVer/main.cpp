@@ -69,6 +69,9 @@ int main()
 		case 4:
 			std::cout << "The current date is: " << checkDates(mainLMS, t) << std::endl;
 			break;
+		case 5:
+			s1.Print();
+			break;
 		case 0: 
 			break;
 		default: 
