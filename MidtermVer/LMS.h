@@ -30,7 +30,7 @@ public:
 	std::string incrementDate(std::string Date);
 	void setCounter(int counter);
 	std::vector <BookCopy>* returnBookCopy();
-	Student LogIn();
+	Student* LogIn();
 	int getCounter();
 	void PrintCommands();
 	void incCounter();

@@ -8,7 +8,7 @@ int main()
 {
 	LMS mainLMS;//Intitialize LMS class
 
-	Student s1;
+	Student* s1;
 
 	s1 = mainLMS.LogIn();//Prompt user for log in
 
@@ -16,7 +16,7 @@ int main()
 
 	srand(time(NULL));//Set the seed for random generators
 
-	std::cout << "Welcome to the Library Management System" << std::endl;
+	std::cout << std::endl<<"Welcome to the Library Management System" << std::endl;
 
 	std::string date;
 
@@ -54,23 +54,23 @@ int main()
 		{
 		std::vector<BookCopy>* copyvectemp; //Pointer that will store address of booklist
 		case 1: 
-			mainLMS.recommend(s1); 
+			mainLMS.recommend(*s1); 
 			break;
 		case 2:
 			copyvectemp = mainLMS.returnBookCopy();
-			s1.StudentBorrowBook(*copyvectemp, mainLMS.getCounter());
+			s1->StudentBorrowBook(*copyvectemp, mainLMS.getCounter());
 			mainLMS.updateFiles();
 			break;
 		case 3:
 			copyvectemp = mainLMS.returnBookCopy();
-			s1.ReturnBooks(*copyvectemp);
+			s1->ReturnBooks(*copyvectemp,mainLMS.getCounter());
 			mainLMS.updateFiles();
 			break;
 		case 4:
 			std::cout << "The current date is: " << checkDates(mainLMS, t) << std::endl;
 			break;
 		case 5:
-			s1.Print();
+			s1->Print();
 			break;
 		case 0: 
 			break;
@@ -103,6 +103,7 @@ int main()
 
 	std::cout << "Goodbye. Thank you for using the Library Management System.";
 
+	mainLMS.updateFiles();
 	dateFile.close();
 
 	return 0;

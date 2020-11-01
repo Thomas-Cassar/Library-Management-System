@@ -11,6 +11,7 @@ Student::Student()
 	Username = "NULL";
 	Password = "NULL";
 	MaxBorrowed = 5;
+	MaxBorrowedCurrent = 5;
 	maxBorrowDate = 30;
 
 	// also want to include maxBorrowingPeriods in the constructors?
@@ -23,6 +24,7 @@ Student::Student(std::string user, std::string pswd)
 
 	// leaving comment blocks around the things I change - Eshan
 	MaxBorrowed = 5;
+	MaxBorrowedCurrent = 5;
 	maxBorrowDate = 30;
 	//
 }
@@ -48,6 +50,10 @@ void Student::SetMaxBorrowed(int maxBorrowed)
 {
 	this->MaxBorrowed = maxBorrowed;
 }
+void Student::SetMaxBorrowedCurrent(int maxBorrowedCurrent)
+{
+	this->MaxBorrowedCurrent = maxBorrowedCurrent;
+}
 //
 
 std::string Student::GetUser()
@@ -69,6 +75,10 @@ std::vector<BookCopy> Student::GetBorrowedBooks()
 int Student::GetMaxBorrowed()
 {
 	return this->MaxBorrowed;
+}
+int Student::GetMaxBorrowedCurrent()
+{
+	return MaxBorrowedCurrent;
 }
 //
 int Student::GetMaxBorrowDate()
@@ -110,7 +120,7 @@ void Student::StudentBorrowBook(std::vector <BookCopy>& x, int date)
 		if (current_date > StudentBorrowedBooks[i].get_exp_date())
 		{
 			std::cout << StudentBorrowedBooks[i].getTitle() << " is overdue! Please return the book!" << std::endl;
-			MaxBorrowed--;
+
 			shouldreturn = true;
 		}
 		
@@ -119,7 +129,7 @@ void Student::StudentBorrowBook(std::vector <BookCopy>& x, int date)
 		return;
 
 	//This function checks to see if we are already over the limit for books allowed to be borrowed
-	if (StudentBorrowedBooks.size() >= MaxBorrowed)
+	if (StudentBorrowedBooks.size() >= MaxBorrowedCurrent)
 	{
 		std::cout << "You have already reached the limit of borrowed copies" << std::endl;
 		return;
@@ -154,9 +164,10 @@ void Student::StudentBorrowBook(std::vector <BookCopy>& x, int date)
 
 void Student::Print()
 {
+	std::cout << std::endl;
 	std::cout << "Username: " << Username << std::endl;
 	std::cout << "Password: " << Password << std::endl;
-	std::cout << "Maxmum Books You can Borrow: " << MaxBorrowed << std::endl;
+	std::cout << "Maxmum Books You can Borrow out of original maximum: " << MaxBorrowedCurrent <<'/'<<MaxBorrowed<< std::endl;
 	std::cout << "Maximum Borrowing Time: " << maxBorrowDate << " days" << std::endl;
 	std::cout << "Books You have Borrowed: " << std::endl;
 	for (int i = 0; i < StudentBorrowedBooks.size(); i++)
@@ -165,34 +176,60 @@ void Student::Print()
 	}
 }
 
-void Student::ReturnBooks(std::vector<BookCopy>& x)
+void Student::ReturnBooks(std::vector<BookCopy>& x, int date)
 {
+	//First we calculate the value of the date
+	std::string idValue = "";
+	int i = 0,j;
+	std::string reserveAnswer = "";
+
+	for (int iter = 0; iter < float(clock()) / 1000; iter++)
+	{
+		if (iter != 0 && iter % 5 == 0)
+		{
+			i++;
+		}
+	}
+	int current_date = i + date;
+
 	std::cout << "Enter the ID of the book you want to return: " << std::endl;
 	std::string id;
 	std::cin >> id;
-	int i, j;
 	for (i = 0; i < x.size(); i++)
 	{
 		if (id == x[i].getID())
 		{
-			x[i].setReaderName("NULL");
 			for (j = 0; j < StudentBorrowedBooks.size(); j++)
 			{
 				if (StudentBorrowedBooks[j].getID() == id)
 				{
+					//This function checks to see if any books are overdue
+					//If said book is overdue then MaxBorrowed is decremented
+					if (current_date > StudentBorrowedBooks[j].get_exp_date())
+					{
+						std::cout << StudentBorrowedBooks[j].getTitle() << " was overdue max books allowed to be taken out has been decreased" << std::endl;
+						if (MaxBorrowedCurrent > 1)
+						{
+							MaxBorrowedCurrent--;
+						}
+					}
+					else if (MaxBorrowedCurrent < MaxBorrowed)
+					{
+						std::cout << StudentBorrowedBooks[j].getTitle() << " was not overdue max books allowed to be taken out has been increased" << std::endl;
+							MaxBorrowedCurrent++;
+					}
+					x[i].setReaderName("NULL");
 					StudentBorrowedBooks.erase(StudentBorrowedBooks.begin() + j);
 					std::cout << "Book was returned successfully!!" << std::endl;
+					return;
 				}
-				
 			}
-			if (MaxBorrowed < 5)
-			{
-				MaxBorrowed++;
-			}
+			std::cout << "You do not have this book borrowed!" << std::endl;
 			return;
 		}
 	}
 	std::cout << "Could not find the book to return!" << std::endl;
+	return;
 }
 
 /*
@@ -205,8 +242,9 @@ std::ostream& operator << (std::ostream& out, Student& student)
 	out << 
 		student.GetUser() << ' ' << 
 		student.GetPswd() << ' ' << 
-		student.GetMaxBorrowed() <<' ' 
-		<< student.GetMaxBorrowDate() 
+		student.GetMaxBorrowed() <<' ' << 
+		student.GetMaxBorrowedCurrent() << ' '<<
+		student.GetMaxBorrowDate() 
 	<< std::endl;
 	return out;
 }
@@ -219,13 +257,14 @@ std::istream& operator >> (std::istream& in, Student& student)
 {
 	//Temp variables for reading in values
 	std::string Username, Password;
-	int maxborrow = 5, maxborrowper = 30;
+	int maxborrow = 5, maxborrowcur=5, maxborrowper = 30;
 
 	//Take in values from istream
 	in >> 
 		Username >> 
 		Password >>
 		maxborrow >> 
+		maxborrowcur>>
 		maxborrowper;
 
 	
@@ -233,6 +272,7 @@ std::istream& operator >> (std::istream& in, Student& student)
 	student.SetUser(Username);
 	student.SetPswd(Password);
 	student.SetMaxBorrowed(maxborrow);
+	student.SetMaxBorrowedCurrent(maxborrowcur);
 	student.SetMaxBorrowDate(maxborrowper);
 	
 	return in;

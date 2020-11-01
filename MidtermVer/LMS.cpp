@@ -61,7 +61,7 @@ LMS::~LMS()
 
 
 
-Student LMS::LogIn()
+Student* LMS::LogIn()
 {
 
 
@@ -95,7 +95,7 @@ Student LMS::LogIn()
 		{
 			if (temppswd == i.GetPswd())
 			{
-				return i;
+				return &i;
 			}
 			else
 			{
@@ -114,7 +114,8 @@ Student LMS::LogIn()
 }
 
 void LMS::PrintCommands()
-{
+{		
+		std::cout << "************************************************"<<std::endl;
 	    std::cout << "Enter a command from the list below:" << std::endl;
 		std::cout << "\t1. Get Recommended Books" << std::endl;
 		std::cout << "\t2. Borrow Books" << std::endl;

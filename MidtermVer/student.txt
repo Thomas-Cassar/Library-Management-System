@@ -1,1 +1,1 @@
-Student1 Pass 10 30
+Student1 Pass 5 5 10
