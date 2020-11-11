@@ -385,9 +385,9 @@ void LMS::recommend(Student& s1)
 	std::vector <BookCopy> category;
 	std::vector <BookCopy> temp = CopyList;//makes new vector so that CopyList is not changed
 
-	for (int i = 0; i < s1.GetBorrowedBooks().size(); i++)
+	for (int i = 0; i < s1.GetBorrowedBooks()->size(); i++)
 	{
-		category.push_back(s1.GetBorrowedBooks()[i]);
+		category.push_back(s1.GetBorrowedBooks()->at(i));
 	}
 	int count = 0;
 	for (int i = 0; i < category.size(); i++)
@@ -421,11 +421,11 @@ void LMS::recommend(Student& s1)
 			count++;
 		}
 	}
-	if (count == 0 && s1.GetBorrowedBooks().size() == 0)//Case where the reader has no books taken out
+	if (count == 0 && s1.GetBorrowedBooks()->size() == 0)//Case where the reader has no books taken out
 	{
 		std::cout << "Please borrow a book so that we can get an idea of what you like!" << std::endl;
 	}
-	else if (count == 0 && s1.GetBorrowedBooks().size() != 0)//Case where the reader has a book taken out of a unique genre
+	else if (count == 0 && s1.GetBorrowedBooks()->size() != 0)//Case where the reader has a book taken out of a unique genre
 	{
 		std::cout << "There are no books that match the categories of the books you have borrowed!" << std::endl;
 	}

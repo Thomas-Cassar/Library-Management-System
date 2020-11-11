@@ -8,13 +8,13 @@ int main()
 {
 	LMS mainLMS;//Intitialize LMS class
 
-	Student* s1;//Pointer to logged in student
+	Student* s1;//Pointer to logged in user
 
 	s1 = mainLMS.LogIn();//Prompt user for log in
 
 	int command = -1;//Variable for input command
 
-	srand(time(NULL));//Set the seed for random generators
+	srand((unsigned int)time(NULL));//Set the seed for random generators
 
 	std::cout << std::endl<<"Welcome to the Library Management System" << std::endl;
 
@@ -62,7 +62,7 @@ int main()
 			break;
 		case 2://Reader wants to borrow book
 			copyvectemp = mainLMS.returnBookCopy();
-			s1->StudentBorrowBook(*copyvectemp, mainLMS.getCounter());
+			s1->BorrowBook(*copyvectemp, mainLMS.getCounter());
 			mainLMS.updateFiles();
 			break;
 		case 3://Reader wants to return book

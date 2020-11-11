@@ -5,6 +5,7 @@
 #include <string>
 #include <fstream>
 #include "Student.h"
+#include "User.h"
 #include "BookCopy.h"
 
 class LMS
