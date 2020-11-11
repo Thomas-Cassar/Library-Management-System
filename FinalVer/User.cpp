@@ -8,6 +8,10 @@ User::User(std::string user, std::string pswd)
 
 }
 
+User::~User()
+{
+}
+
 /**
  * @return string - Username of current Student object
  */

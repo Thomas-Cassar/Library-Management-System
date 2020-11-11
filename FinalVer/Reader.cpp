@@ -62,7 +62,7 @@ void Reader::SetBorrowedBooks(std::vector<BookCopy> bBooks)
  */
 void Reader::SetMaxBorrowed(int maxBorrowed)
 {
-	maxBorrowed = maxBorrowed;
+	this->maxBorrowed = maxBorrowed;
 }
 
 /**

@@ -1,10 +1,5 @@
 #include "Student.h"
-#include <iostream>
-#include "BookCopy.h"
-#include <vector>
-#include <ctime>
-#include <string>
-#include "LMS.h"
+
 
 /**
  * default Student constructor

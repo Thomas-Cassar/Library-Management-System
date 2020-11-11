@@ -18,6 +18,8 @@
     <Text Include="book.txt" />
     <Text Include="DateData.txt" />
     <Text Include="student.txt" />
+    <Text Include="teacher.txt" />
+    <Text Include="librarian.txt" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BookCopy.cpp">

@@ -2,9 +2,6 @@
 
 #include "Reader.h"
 #include <string>
-#include "BookCopy.h"
-#include <vector>
-#include <iostream>
 class Student:
 	public Reader
 {

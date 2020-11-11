@@ -9,6 +9,8 @@ private:
 public:
 	//Constructor
 	User(std::string user, std::string pswd);
+	//Destructor
+	virtual  ~User();
 	//Getter Functions
 	std::string GetUser();
 	std::string GetPswd();

@@ -8,15 +8,9 @@ int main()
 {
 	LMS mainLMS;//Intitialize LMS class
 
-	Student* s1;//Pointer to logged in user
-
-	s1 = mainLMS.LogIn();//Prompt user for log in
-
 	int command = -1;//Variable for input command
 
 	srand((unsigned int)time(NULL));//Set the seed for random generators
-
-	std::cout << std::endl<<"Welcome to the Library Management System" << std::endl;
 
 	std::string date;// Var for holding date
 	// Open date file to read last date on exit
@@ -52,37 +46,7 @@ int main()
 		//Print commands and take in user input for command
 		mainLMS.PrintCommands();
 		std::cin >> command;
-
-		switch (command)
-		{
-		std::vector<BookCopy>* copyvectemp; //Pointer that will store address of booklist
-
-		case 1: //Get recommendations
-			mainLMS.recommend(*s1); 
-			break;
-		case 2://Reader wants to borrow book
-			copyvectemp = mainLMS.returnBookCopy();
-			s1->BorrowBook(*copyvectemp, mainLMS.getCounter());
-			mainLMS.updateFiles();
-			break;
-		case 3://Reader wants to return book
-			copyvectemp = mainLMS.returnBookCopy();
-			s1->ReturnBooks(*copyvectemp,mainLMS.getCounter());
-			mainLMS.updateFiles();
-			break;
-		case 4: //Checks current date
-			std::cout << "The current date is: " << checkDates(mainLMS, t) << std::endl;
-			break;
-		case 5://Prints Reader information
-			s1->Print();
-			break;
-		case 0: //Quit
-			break;
-		default: //Not valid input
-			std::cout << "Invalid input!";
-			break;
-		}
-		std::cout << std::endl;
+		mainLMS.ExecuteCommand(command);
 	
 	}
 

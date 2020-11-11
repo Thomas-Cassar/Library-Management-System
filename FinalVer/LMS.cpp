@@ -17,11 +17,14 @@ LMS::LMS()
 
 	//Open files
 	//Students
-
 	StudentFile.open("student.txt");
 	//Books
-
 	BookFile.open("book.txt");
+	//Teacher
+	TeacherFile.open("teacher.txt");
+	//Librarian
+	LibrarianFile.open("librarian.txt");
+
 
 	//Check if file opening was successful
 	if (StudentFile.fail())
@@ -34,7 +37,16 @@ LMS::LMS()
 		std::cerr << "Could not open book file";
 		exit(1);
 	}
-
+	if (TeacherFile.fail())
+	{
+		std::cerr << "Could not open teacher file";
+		exit(1);
+	}
+	if (LibrarianFile.fail())
+	{
+		std::cerr << "Could not open librarian file";
+		exit(1);
+	}
 	//Read from files and store in vectors
 	//Book copy reading
 	BookCopy booktemp;
@@ -58,6 +70,29 @@ LMS::LMS()
 		StudentList.push_back(stutemp);//Add student to list of all active students
 	}
 
+	//Teacher reading
+	Teacher teatemp;
+	while (TeacherFile >> teatemp)
+	{
+		std::vector<BookCopy> tempbooklist;
+
+		for (int i = 0; i < CopyList.size(); i++)//Loop through all books in vector to find books that this user has taken out
+		{
+			if (CopyList[i].getReaderName() == teatemp.GetUser())
+				tempbooklist.push_back(CopyList[i]);
+		}
+		teatemp.SetBorrowedBooks(tempbooklist);//Add books that the user has taken out to that user
+		TeacherList.push_back(teatemp);//Add teacher to list of all active teachers
+	}
+	//Librarian reading
+	Librarian libtemp;
+	while (LibrarianFile >> libtemp)
+	{
+		LibrarianList.push_back(libtemp);//Add teacher to list of all active librarians
+	}
+
+	LogIn();//Get user to log in 
+
 }
 
 /*
@@ -69,6 +104,8 @@ LMS::~LMS()
 	//Close all files on class destruction
 	StudentFile.close();
 	BookFile.close();
+	TeacherFile.close();
+	LibrarianFile.close();
 }
 
 
@@ -78,7 +115,7 @@ LMS::~LMS()
  * Gets user input for password and username
  * If valid the function returns the address of the student that is logged in
  */
-Student* LMS::LogIn()
+void LMS::LogIn()
 {
 	std::string tempusr = "", temppswd = "";//Vars for storing input
 	char c;//Var for storing char read
@@ -111,7 +148,45 @@ Student* LMS::LogIn()
 		{
 			if (temppswd == i.GetPswd())//Case where the input is corrrect and we return the adress of the student
 			{
-				return &i;
+				loggedinUser = &i;
+				std::cout << std::endl << "Welcome to the Library Management System" << std::endl;
+				return;
+			}
+			else//Case where entered password is incorrect
+			{
+				std::cout << "Wrong password" << std::endl;
+				exit(0);
+			}
+		}
+	}
+	//Loop through all teachers
+	for (auto& i : TeacherList)
+	{
+		if (tempusr == i.GetUser())
+		{
+			if (temppswd == i.GetPswd())//Case where the input is corrrect and we return the adress of the teacher
+			{
+				loggedinUser = &i;
+				std::cout << std::endl << "Welcome to the Library Management System" << std::endl;
+				return;
+			}
+			else//Case where entered password is incorrect
+			{
+				std::cout << "Wrong password" << std::endl;
+				exit(0);
+			}
+		}
+	}
+	//Loop through all librarians
+	for (auto& i : LibrarianList)
+	{
+		if (tempusr == i.GetUser())
+		{
+			if (temppswd == i.GetPswd())//Case where the input is corrrect and we return the adress of the librarian
+			{
+				loggedinUser = &i;
+				std::cout << std::endl << "Welcome to the Library Management System" << std::endl;
+				return;
 			}
 			else//Case where entered password is incorrect
 			{
@@ -130,15 +205,94 @@ Student* LMS::LogIn()
  * Prints all commands possible for the following user
  */
 void LMS::PrintCommands()
-{		
-		std::cout << "************************************************"<<std::endl;
-	    std::cout << "Enter a command from the list below:" << std::endl;
+{
+	if (dynamic_cast<Reader*>(loggedinUser)!=nullptr)
+	{
+		std::cout << "************************************************" << std::endl;
+		std::cout << "Reader " << loggedinUser->GetUser() << " enter a command from the list below:" << std::endl;
 		std::cout << "\t1. Get Recommended Books" << std::endl;
 		std::cout << "\t2. Borrow Books" << std::endl;
 		std::cout << "\t3. Return Books" << std::endl;
 		std::cout << "\t4. Check Current Date" << std::endl;
 		std::cout << "\t5. View My Information" << std::endl;
 		std::cout << "\t0. Log Out" << std::endl;
+	}
+	else if (dynamic_cast<Librarian*>(loggedinUser) != nullptr)
+	{
+		std::cout << "************************************************" << std::endl;
+		std::cout << "Librarian "<<loggedinUser->GetUser()<<" enter a command from the list below:" << std::endl;
+		std::cout << "\t1. N/A" << std::endl;
+		std::cout << "\t2. N/A" << std::endl;
+		std::cout << "\t3. N/A" << std::endl;
+		std::cout << "\t4. N/A" << std::endl;
+		std::cout << "\t5. N/A" << std::endl;
+		std::cout << "\t0. Log Out" << std::endl;
+	}
+
+}
+
+void LMS::ExecuteCommand(int command)
+{
+	if (dynamic_cast<Reader*>(loggedinUser) != nullptr)//User is of reader type
+	{
+		switch (command)
+		{
+			std::vector<BookCopy>* copyvectemp; //Pointer that will store address of booklist
+
+		case 1: //Get recommendations
+			recommend();
+			break;
+		case 2://Reader wants to borrow book
+			copyvectemp = returnBookCopy();
+			dynamic_cast<Reader*>(loggedinUser)->BorrowBook(*copyvectemp, getCounter());
+			updateFiles();
+			break;
+		case 3://Reader wants to return book
+			copyvectemp = returnBookCopy();
+			dynamic_cast<Reader*>(loggedinUser)->ReturnBooks(*copyvectemp, getCounter());
+			updateFiles();
+			break;
+		case 4: //Checks current date
+			std::cout << "The current date is: " << /*checkDates(mainLMS, t)*/"FIX" << std::endl;
+			break;
+		case 5://Prints Reader information
+			dynamic_cast<Reader*>(loggedinUser) ->Print();
+			break;
+		case 0: //Quit
+			break;
+		default: //Not valid input
+			std::cout << "Invalid input!";
+			break;
+		}
+	}
+
+	if (dynamic_cast<Librarian*>(loggedinUser) != nullptr)//User is of librarian type
+	{
+		switch (command)
+		{
+		case 1: 
+			
+			break;
+		case 2:
+			
+			break;
+		case 3:
+			
+			break;
+		case 4:
+
+			break;
+		case 5:
+
+			break;
+		case 0: //Quit
+			break;
+		default: //Not valid input
+			std::cout << "Invalid input!";
+			break;
+		}
+	}
+	std::cout << std::endl;
 }
 
 /**
@@ -199,16 +353,32 @@ void LMS::updateFiles()
 {
 	BookFile.close();
 	StudentFile.close();
+	TeacherFile.close();
+	LibrarianFile.close();
 
 	//Open files
 	//Students
 	StudentFile.open("student.txt", std::ofstream::out | std::ofstream::trunc);
+	//Teachers
+	TeacherFile.open("teacher.txt", std::ofstream::out | std::ofstream::trunc);
 	//Books
 	BookFile.open("book.txt",std::ofstream::out | std::ofstream::trunc);
+	//Librarian
+	LibrarianFile.open("librarian.txt", std::ofstream::out | std::ofstream::trunc);
 	//Check successful
 	if (StudentFile.fail())
 	{
 		std::cerr << "Could not open student file";
+		exit(1);
+	}
+	if (TeacherFile.fail())
+	{
+		std::cerr << "Could not open teacher file";
+		exit(1);
+	}
+	if (LibrarianFile.fail())
+	{
+		std::cerr << "Could not open librarian file";
 		exit(1);
 	}
 	if (BookFile.fail())
@@ -223,9 +393,18 @@ void LMS::updateFiles()
 		StudentFile << StudentList[i];
 	}
 
+	for (i = 0; i < TeacherList.size(); i++)//Print all students to teachers file
+	{
+		TeacherFile << TeacherList[i];
+	}
+
 	for (i = 0; i < CopyList.size(); i++)//Print all copies to copy file
 	{
 		BookFile << CopyList[i];
+	}
+	for (i = 0; i < LibrarianList.size(); i++)//Print all librarians to librarians file
+	{
+		LibrarianFile << LibrarianList[i];
 	}
 }
 
@@ -380,14 +559,16 @@ std::string LMS::incrementDate(std::string Date)
 *The following function takes in a student by reference and based on the books it currently has taken out 
 * it will recommend books of similar genres to any books it has taken out 
 */
-void LMS::recommend(Student& s1)
+void LMS::recommend()
 {
+	Reader* r1 = dynamic_cast<Reader*>(loggedinUser);
+
 	std::vector <BookCopy> category;
 	std::vector <BookCopy> temp = CopyList;//makes new vector so that CopyList is not changed
 
-	for (int i = 0; i < s1.GetBorrowedBooks()->size(); i++)
+	for (int i = 0; i < r1->GetBorrowedBooks()->size(); i++)
 	{
-		category.push_back(s1.GetBorrowedBooks()->at(i));
+		category.push_back(r1->GetBorrowedBooks()->at(i));
 	}
 	int count = 0;
 	for (int i = 0; i < category.size(); i++)
@@ -421,11 +602,11 @@ void LMS::recommend(Student& s1)
 			count++;
 		}
 	}
-	if (count == 0 && s1.GetBorrowedBooks()->size() == 0)//Case where the reader has no books taken out
+	if (count == 0 && r1->GetBorrowedBooks()->size() == 0)//Case where the reader has no books taken out
 	{
 		std::cout << "Please borrow a book so that we can get an idea of what you like!" << std::endl;
 	}
-	else if (count == 0 && s1.GetBorrowedBooks()->size() != 0)//Case where the reader has a book taken out of a unique genre
+	else if (count == 0 && r1->GetBorrowedBooks()->size() != 0)//Case where the reader has a book taken out of a unique genre
 	{
 		std::cout << "There are no books that match the categories of the books you have borrowed!" << std::endl;
 	}
