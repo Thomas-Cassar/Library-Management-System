@@ -100,6 +100,11 @@ std::string BookCopy::getReaderName()
 	return readerName;
 }
 
+std::string BookCopy::getReserverName()
+{
+	return reserverName;
+}
+
 /**
  * @return string - start_date of current BookCopy object
  */
@@ -170,6 +175,10 @@ void BookCopy::setReaderName(std::string reader_name)
 	readerName = reader_name;
 }
 
+void BookCopy::setReserverName(std::string reserver_name)
+{
+	reserverName = reserver_name;
+}
 /**
  * sets start_date of current BookCopy object to param startDate
  * @param startDate - string

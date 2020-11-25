@@ -52,5 +52,8 @@ public:
 	void incCounter();
 	void updateFiles();
 	void recommend();
+	void addBooks();
+	void deleteBooks();
+	void deleteOldUser(Reader& reader);
 	std::string incrementDate(std::string Date);
 };

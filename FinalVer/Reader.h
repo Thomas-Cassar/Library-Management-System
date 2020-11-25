@@ -8,6 +8,7 @@ class Reader :
 {
 private:
     std::vector<BookCopy> ReaderBorrowedBooks;//Stores all books that reader has borrowed
+    std::vector<BookCopy> ReaderReservedBooks;//Stores all books that reader has reserved
     int maxBorrowed, maxBorrowedCurrent;//Max allowed borrowed books and max allowed books at this time
     int maxBorrowDate;//How long the reader can have books for before overdue
 public:
@@ -16,6 +17,7 @@ public:
 
     //Getter functions
     std::vector<BookCopy>* GetBorrowedBooks();
+    std::vector<BookCopy>* GetReservedBooks();
     int GetMaxBorrowed();
     int GetMaxBorrowedCurrent();
     int GetMaxBorrowDate();

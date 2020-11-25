@@ -21,6 +21,11 @@ std::vector<BookCopy>* Reader::GetBorrowedBooks()
 	return &ReaderBorrowedBooks;
 }
 
+std::vector<BookCopy>* Reader::GetReservedBooks()
+{
+	return &ReaderReservedBooks;
+}
+
 /**
  * @return int - MaxBorrowed of current Reader object
  */
