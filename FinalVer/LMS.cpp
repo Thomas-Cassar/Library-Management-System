@@ -221,7 +221,7 @@ void LMS::PrintCommands()
 	{
 		std::cout << "************************************************" << std::endl;
 		std::cout << "Librarian "<<loggedinUser->GetUser()<<" enter a command from the list below:" << std::endl;
-		std::cout << "\t1. N/A" << std::endl;
+		std::cout << "\t1. Delete Old User" << std::endl;
 		std::cout << "\t2. N/A" << std::endl;
 		std::cout << "\t3. N/A" << std::endl;
 		std::cout << "\t4. N/A" << std::endl;
@@ -233,6 +233,9 @@ void LMS::PrintCommands()
 
 void LMS::ExecuteCommand(int command)
 {
+	std::string userin;
+	Student s;
+	Teacher t;
 	if (dynamic_cast<Reader*>(loggedinUser) != nullptr)//User is of reader type
 	{
 		switch (command)
@@ -270,8 +273,28 @@ void LMS::ExecuteCommand(int command)
 	{
 		switch (command)
 		{
-		case 1: 
-			
+		case 1:
+			std::cout << "Enter username to delete: " << std::endl;
+			std::cin >> userin;
+			for (int i = 0; i < StudentList.size(); i++)
+			{
+				if (userin == StudentList[i].GetUser())
+				{
+					s = StudentList[i];
+					deleteOldUser(s);
+					return;
+				}
+			}
+			for (int i = 0; i < TeacherList.size(); i++)
+			{
+				if (userin == TeacherList[i].GetUser())
+				{
+					t = TeacherList[i];
+					deleteOldUser(t);
+					return;
+				}
+			}
+			deleteOldUser(t);
 			break;
 		case 2:
 			
