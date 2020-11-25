@@ -55,5 +55,7 @@ public:
 	void addBooks();
 	void deleteBooks();
 	void deleteOldUser(Reader& reader);
+	void searchUser();
+	void addUser();
 	std::string incrementDate(std::string Date);
 };

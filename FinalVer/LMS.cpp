@@ -222,8 +222,8 @@ void LMS::PrintCommands()
 		std::cout << "************************************************" << std::endl;
 		std::cout << "Librarian "<<loggedinUser->GetUser()<<" enter a command from the list below:" << std::endl;
 		std::cout << "\t1. Delete Old User" << std::endl;
-		std::cout << "\t2. N/A" << std::endl;
-		std::cout << "\t3. N/A" << std::endl;
+		std::cout << "\t2. Search User" << std::endl;
+		std::cout << "\t3. Add New User" << std::endl;
 		std::cout << "\t4. N/A" << std::endl;
 		std::cout << "\t5. N/A" << std::endl;
 		std::cout << "\t0. Log Out" << std::endl;
@@ -297,10 +297,10 @@ void LMS::ExecuteCommand(int command)
 			deleteOldUser(t);
 			break;
 		case 2:
-			
+			searchUser();
 			break;
 		case 3:
-			
+			addUser();
 			break;
 		case 4:
 
@@ -747,4 +747,121 @@ void LMS::deleteOldUser(Reader &reader)
 		}
 	}
 	std::cout << "Reader was not found in the system!" << std::endl;
+}
+
+void LMS::searchUser()
+{
+	Librarian l;
+	Student s;
+	Teacher t;
+	std::string userin;
+	std::cout << "Enter the username: " << std::endl;
+	std::cin >> userin;
+	for (int i = 0; i < LibrarianList.size(); i++)
+	{
+		if (userin == LibrarianList[i].GetUser())
+		{
+			l = LibrarianList[i];
+			std::cout << "Here is the information of the Librarian: " << std::endl;
+			std::cout << "Username: " << l.GetUser() << std::endl;
+			std::cout << "Password: " << l.GetPswd() << std::endl;
+			return;
+		}
+	}
+	for (int i = 0; i < StudentList.size(); i++)
+	{
+		if (userin == StudentList[i].GetUser())
+		{
+			s = StudentList[i];
+			std::cout << "Here is the information of the Student: " << std::endl;
+			std::cout << "Username: " << s.GetUser() << std::endl;
+			std::cout << "Password: " << s.GetPswd() << std::endl;
+			std::cout << "List of Books the student is currently borrowing: " << std::endl;
+			for (int j = 0; j < s.GetBorrowedBooks()->size(); j++)
+			{
+				std::cout << s.GetBorrowedBooks()->at(j).getTitle();
+			}
+			return;
+		}
+	}
+	for (int i = 0; i < TeacherList.size(); i++)
+	{
+		if (userin == TeacherList[i].GetUser())
+		{
+			t = TeacherList[i];
+			std::cout << "Here is the information of the Teacher: " << std::endl;
+			std::cout << "Username: " << t.GetUser() << std::endl;
+			std::cout << "Password: " << t.GetPswd() << std::endl;
+			std::cout << "List of Books the teacher is currently borrowing: " << std::endl;
+			for (int j = 0; j < t.GetBorrowedBooks()->size(); j++)
+			{
+				std::cout << t.GetBorrowedBooks()->at(j).getTitle();
+			}
+			return;
+		}
+	}
+	std::cout << "User was not found in the system!" << std::endl;
+}
+void LMS::addUser()
+{
+	int ch;
+	std::string userin, passin;
+	std::cout << "Enter the type of User: " << std::endl;
+	std::cout << "Choose 1 for Librarian: \nChoose 2 for Student \nChoose 3 for Teacher" << std::endl;
+	std::cin >> ch;
+	if (ch < 1 || ch > 3)
+	{
+		std::cout << "Wrong choice!" << std::endl;
+		return;
+	}
+	std::cout << "Enter username of new User" << std::endl;
+	std::cin >> userin;
+	std::cout << "Enter password of new User" << std::endl;
+	std::cin >> passin;
+	Librarian l;
+	Student s;
+	Teacher t;
+	switch (ch)
+	{
+	case 1:
+		for (int i = 0; i < LibrarianList.size(); i++)
+		{
+			if (userin == LibrarianList[i].GetUser())
+			{
+				std::cout << "User already exists!" << std::endl;
+				return;
+			}
+		}
+		l.SetUser(userin);
+		l.SetPswd(passin);
+		LibrarianList.push_back(l);
+		break;
+	case 2:
+		for (int i = 0; i < StudentList.size(); i++)
+		{
+			if (userin == StudentList[i].GetUser())
+			{
+				std::cout << "User already exists!" << std::endl;
+				return;
+			}
+		}
+		s.SetUser(userin);
+		s.SetPswd(passin);
+		StudentList.push_back(s);
+		break;
+	case 3:
+		for (int i = 0; i < TeacherList.size(); i++)
+		{
+			if (userin == TeacherList[i].GetUser())
+			{
+				std::cout << "User already exists!" << std::endl;
+				return;
+			}
+		}
+		t.SetUser(userin);
+		t.SetPswd(passin);
+		TeacherList.push_back(t);
+		break;
+	}
+	std::cout << "New user added succesfully!" << std::endl;
 }

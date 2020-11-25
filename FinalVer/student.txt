@@ -1,1 +1,2 @@
 Student1 Pass 5 5 10
+Student2 Pass 5 5 30
