@@ -2,18 +2,18 @@
 #include <string>
 #include <vector>
 #include <iostream>
+#include "Book.h"
 class BookCopy
+	:public Book
 {
 private:
-	std::string ISBN;//Stores book ISBN
-	std::string Title;//Stores book title
-	std::string Author;//Stores book author
-	std::string Category;//Stores book category
+	Book book;
 	std::string ID;//Stores unique book ID
 	std::string readerName;//Stores user that currently has book taken out NULL if not taken out
-	std::string reserverName;
+	std::vector <std::string> reserverList;
 	int start_date;//Day value (since 01/01/01) that book was taken out
 	int exp_date;//Last day value (since 01/01/01) that book can be returned on and not be overdue
+	int reserve_date;
 public:
 	//Constructors
 	BookCopy();
@@ -21,24 +21,15 @@ public:
 		int startDate, int expDate);
 
 	//Getter functions
-	std::string getISBN();
-	std::string getTitle();
-	std::string getAuthor();
-	std::string getCategory();
 	std::string getID();
 	std::string getReaderName();
-	std::string getReserverName();
+	std::vector <std::string> getReserverList();
 	int get_start_date();
 	int get_exp_date();
 
 	//Setter functions
-	void setISBN(std::string isbn);
-	void setTitle(std::string title);
-	void setAuthor(std::string author);
-	void setCategory(std::string category);
 	void setID(std::string id);
 	void setReaderName(std::string reader_name);
-	void setReserverName(std::string reserver_name);
 	void set_start_date(int startDate);
 	void set_exp_date(int expDate);
 

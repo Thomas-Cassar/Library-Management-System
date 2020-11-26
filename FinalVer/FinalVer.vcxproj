@@ -146,6 +146,7 @@
     <Text Include="teacher.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Book.cpp" />
     <ClCompile Include="BookCopy.cpp" />
     <ClCompile Include="Librarian.cpp" />
     <ClCompile Include="LMS.cpp" />
@@ -156,6 +157,7 @@
     <ClCompile Include="User.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Book.h" />
     <ClInclude Include="BookCopy.h" />
     <ClInclude Include="Librarian.h" />
     <ClInclude Include="LMS.h" />

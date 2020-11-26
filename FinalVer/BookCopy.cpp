@@ -40,12 +40,8 @@ BookCopy::BookCopy()
  * sets exp_date to param expDate
  */
 BookCopy::BookCopy(std::string isbn, std::string title, std::string author, std::string category, std::string id, std::string reader_name,
-	int startDate, int expDate)
+	int startDate, int expDate) :Book ()
 {
-	ISBN = isbn;
-	Title = title;
-	Author = author;
-	Category = category;
 	ID = id;
 	readerName = reader_name;
 	start_date = startDate;
@@ -55,35 +51,6 @@ BookCopy::BookCopy(std::string isbn, std::string title, std::string author, std:
 /**
  * @return string - ISBN of current BookCopy object
  */
-std::string BookCopy::getISBN()
-{
-	return ISBN;
-}
-
-/**
- * @return string - Title of current BookCopy object
- */
-std::string BookCopy::getTitle()
-{
-	return Title;
-}
-
-/**
- * @return string - Author of current BookCopy object
- */
-std::string BookCopy::getAuthor()
-{
-	return Author;
-}
-
-/**
- * @return string - Category of current BookCopy object
- */
-std::string BookCopy::getCategory()
-{
-	return Category;
-}
-
 /**
  * @return string - ID of current BookCopy object
  */
@@ -100,9 +67,9 @@ std::string BookCopy::getReaderName()
 	return readerName;
 }
 
-std::string BookCopy::getReserverName()
+std::vector <std::string> BookCopy::getReserverList()
 {
-	return reserverName;
+	return reserverList;
 }
 
 /**
@@ -125,37 +92,6 @@ int BookCopy::get_exp_date()
  * sets ISBN of current BookCopy object to param isbn
  * @param isbn - string
  */
-void BookCopy::setISBN(std::string isbn)
-{
-	ISBN = isbn;
-}
-
-/**
- * sets Title of current BookCopy object to param title
- * @param title - string
- */
-void BookCopy::setTitle(std::string title)
-{
-	Title = title;
-}
-
-/**
- * sets author of current BookCopy object to param author
- * @param author - string
- */
-void BookCopy::setAuthor(std::string author)
-{
-	Author = author;
-}
-
-/**
- * sets category of current BookCopy object to param category
- * @param category - string
- */
-void BookCopy::setCategory(std::string category)
-{
-	Category = category;
-}
 
 /**
  * sets ID of current BookCopy object to param id
@@ -175,10 +111,6 @@ void BookCopy::setReaderName(std::string reader_name)
 	readerName = reader_name;
 }
 
-void BookCopy::setReserverName(std::string reserver_name)
-{
-	reserverName = reserver_name;
-}
 /**
  * sets start_date of current BookCopy object to param startDate
  * @param startDate - string
