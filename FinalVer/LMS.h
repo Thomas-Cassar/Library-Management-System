@@ -24,6 +24,7 @@ private:
 	std::vector<Teacher> TeacherList;
 	std::vector<Librarian> LibrarianList;
 	std::vector<BookCopy> CopyList;
+	std::vector<Book> BookList;
 
 	std::string LoggedInUsername;//Current username
 	std::string LMSDate;//Stores date string
@@ -40,6 +41,7 @@ public:
 	std::string getDate();
 	int getCounter();
 	std::vector <BookCopy>* returnBookCopy();
+	std::vector <Book>* returnBook();
 
 	//Setter functions
 	void setDate(std::string date);
@@ -57,5 +59,6 @@ public:
 	void deleteOldUser(Reader& reader);
 	void searchUser();
 	void addUser();
+	void searchBooks();
 	std::string incrementDate(std::string Date);
 };

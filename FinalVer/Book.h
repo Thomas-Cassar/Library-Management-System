@@ -1,5 +1,6 @@
 #pragma once
 #include <string>
+#include <vector>
 #include <iostream>
 class Book
 {
@@ -11,7 +12,10 @@ class Book
 		int index;
 		int count;
 		int favor;
+		std::vector <std::string> reserverList;
 	public:
+		Book();
+		Book(std::string iSBN, std::string title, std::string author, std::string category, int index, int count, int favor);
 		std::string getISBN();
 		std::string getTitle();
 		std::string getAuthor();
@@ -19,6 +23,7 @@ class Book
 		int getIndex();
 		int getCount();
 		int getFavor();
+		std::vector <std::string> getReserverList();
 		void setISBN(std::string isbn);
 		void setTitle(std::string title);
 		void setAuthor(std::string author);

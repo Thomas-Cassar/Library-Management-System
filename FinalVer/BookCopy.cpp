@@ -9,14 +9,12 @@
  */
 BookCopy::BookCopy()
 {
-	ISBN = "";
-	Title = "";
-	Author = "";
-	Category = "";
 	ID = "";
 	readerName = "";
 	start_date = 0;
 	exp_date = 30;
+	reserve_date = 0;
+	available = true;
 }
 
 /**
@@ -40,12 +38,13 @@ BookCopy::BookCopy()
  * sets exp_date to param expDate
  */
 BookCopy::BookCopy(std::string isbn, std::string title, std::string author, std::string category, std::string id, std::string reader_name,
-	int startDate, int expDate) :Book ()
+	int startDate, int expDate, int resDate) :Book (isbn,title,author,category,0,0,0)
 {
 	ID = id;
 	readerName = reader_name;
 	start_date = startDate;
 	exp_date = expDate;
+	reserve_date = resDate;
 }
 
 /**
@@ -58,7 +57,10 @@ std::string BookCopy::getID()
 {
 	return ID;
 }
-
+Book* BookCopy::returnBook()
+{
+	return &book;
+}
 /**
  * @return string - readerName of current BookCopy object
  */
@@ -67,10 +69,6 @@ std::string BookCopy::getReaderName()
 	return readerName;
 }
 
-std::vector <std::string> BookCopy::getReserverList()
-{
-	return reserverList;
-}
 
 /**
  * @return string - start_date of current BookCopy object
@@ -88,6 +86,15 @@ int BookCopy::get_exp_date()
 	return exp_date;
 }
 
+int BookCopy::get_reserve_date()
+{
+	return reserve_date;
+}
+
+bool BookCopy::get_available()
+{
+	return available;
+}
 /**
  * sets ISBN of current BookCopy object to param isbn
  * @param isbn - string
@@ -129,6 +136,15 @@ void BookCopy::set_exp_date(int expDate)
 	exp_date = expDate;
 }
 
+void BookCopy::set_reserve_date(int res)
+{
+	 reserve_date = res;
+}
+
+void BookCopy::set_available(bool avl)
+{
+	available = avl;
+}
 
 /*
 * This function overloads the << ostream operator to be able to print all variables on one line of
@@ -138,14 +154,15 @@ std::ostream& operator << (std::ostream& out, BookCopy& book)
 {
 	//Output all variables to one line on ostream
 	out <<
-		book.getISBN() <<' '<<
+		book.getISBN() << ' ' <<
 		book.getTitle() << ' ' <<
 		book.getAuthor() << ' ' <<
 		book.getCategory() << ' ' <<
 		book.getID() << ' ' <<
 		book.getReaderName() << ' ' <<
 		book.get_start_date() << ' ' <<
-		book.get_exp_date() <<
+		book.get_exp_date() << ' ' <<
+		book.get_reserve_date() << 
 	std::endl;
 
 	return out;
@@ -160,18 +177,19 @@ std::istream& operator >> (std::istream& in, BookCopy& book)
 	//Temp variables for storing istream data
 	std::string ISBN, Title, Author, Category, ID,
 		readerName;
-	int start_date, exp_date;
+	int start_date, exp_date, resDate;
 
 	//Take in all values from istream
-	in >> 
-		ISBN >> 
-		Title >> 
-		Author >> 
-		Category >> 
-		ID>> 
-		readerName >> 
-		start_date >> 
-		exp_date;
+	in >>
+		ISBN >>
+		Title >>
+		Author >>
+		Category >>
+		ID >>
+		readerName >>
+		start_date >>
+		exp_date >>
+		resDate;
 
 	//Set all variables based on istream
 	book.setISBN(ISBN);
@@ -182,5 +200,6 @@ std::istream& operator >> (std::istream& in, BookCopy& book)
 	book.setReaderName(readerName);
 	book.set_start_date(start_date);
 	book.set_exp_date(exp_date);
+	book.set_reserve_date(resDate);
 	return in;
 }

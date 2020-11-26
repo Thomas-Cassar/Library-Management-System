@@ -1,8 +1,27 @@
 #include "Book.h"
 
+Book::Book()
+{
+	ISBN = Title = Author = Category = "";
+	favor = count = index = 0;
+}
+Book::Book(std::string iSBN, std::string title, std::string author, std::string category, int index, int count, int favor)
+{
+	ISBN = iSBN;
+	Title = title;
+	Author = author;
+	Category = category;
+	this->index = index;
+	this->count = count;
+	this->favor = favor;
+}
 std::string Book::getISBN()
 {
 	return ISBN;
+}
+std::vector <std::string> Book::getReserverList()
+{
+	return reserverList;
 }
 std::string Book::getTitle()
 {

@@ -90,7 +90,26 @@ LMS::LMS()
 	{
 		LibrarianList.push_back(libtemp);//Add teacher to list of all active librarians
 	}
-
+	std::vector <BookCopy> temp = CopyList;
+	int counts=0;
+	int idx = 0;
+	for (int i = 0; i < temp.size(); i++)
+	{
+		for (int j = i + 1; j < temp.size(); j++)
+		{
+			if (temp.at(i).getISBN() == temp.at(j).getISBN() && temp.at(i).getISBN() != "")
+			{
+				temp.at(j).setISBN("");
+				counts++;
+			}
+		}
+		if (counts > 0)
+		{
+			Book b1(temp.at(i).getISBN(), temp.at(i).getTitle(), temp.at(i).getAuthor(), temp.at(i).getCategory(), idx, counts, 0);
+			idx++;
+			BookList.push_back(b1);
+		}
+	}
 	LogIn();//Get user to log in 
 
 }
@@ -324,6 +343,11 @@ void LMS::ExecuteCommand(int command)
 std::vector<BookCopy>* LMS::returnBookCopy()
 {
 	return &CopyList;
+}
+
+std::vector<Book>* LMS::returnBook()
+{
+	return &BookList;
 }
 
 /**
@@ -713,7 +737,13 @@ void LMS::deleteOldUser(Reader &reader)
 				for (int j = 0; j < s1->GetReservedBooks()->size(); j++)
 				{
 					BookCopy* b1 = &s1->GetReservedBooks()->at(j);
-					b1->setReserverName("NULL");
+					for (int k = 0; k < b1->getReserverList().size(); k++)
+					{
+						if (b1->getReserverList().at(k) == s1->GetUser())
+						{
+							b1->getReserverList().erase(b1->getReserverList().begin() + k);
+						}
+					}
 				}
 				StudentList.erase(StudentList.begin() + i);
 				std::cout << "Reader was deleted!" << std::endl;
@@ -737,7 +767,20 @@ void LMS::deleteOldUser(Reader &reader)
 				for (int j = 0; j < t1->GetReservedBooks()->size(); j++)
 				{
 					BookCopy* b1 = &t1->GetReservedBooks()->at(j);
-					b1->setReserverName("NULL");
+					for (int k = 0; k < b1->getReserverList().size(); k++)
+					{
+						if (b1->getReserverList().at(k) == t1->GetUser())
+						{
+							b1->getReserverList().erase(b1->getReserverList().begin() + k);
+						}
+					}
+					for (int k = 0; k < b1->returnBook()->getReserverList().size(); k++)
+					{
+						if (b1->returnBook()->getReserverList().at(k) == t1->GetUser())
+						{
+							b1->returnBook()->getReserverList().erase(b1->getReserverList().begin() + k);
+						}
+					}
 				}
 				TeacherList.erase(TeacherList.begin() + i);
 				std::cout << "Reader was deleted!" << std::endl;
@@ -864,4 +907,56 @@ void LMS::addUser()
 		break;
 	}
 	std::cout << "New user added succesfully!" << std::endl;
+}
+
+//NEED TO FINISH THIS FUNCION
+void LMS::searchBooks()
+{
+	std::string input;
+	Book b1;
+	std::cout << "Enter ISBN or Title or Author or Category: " << std::endl;
+	std::cin >> input;
+	int selflag=0;
+	for (int i = 0; i < BookList.size(); i++)
+	{
+		if (input == BookList[i].getISBN())
+		{
+			selflag = 1;
+			b1 = BookList[i];
+			break;
+		}
+		if (input == BookList[i].getTitle())
+		{
+			selflag = 2;
+			b1 = BookList[i];
+			break;
+		}
+		if (input == BookList[i].getAuthor())
+		{
+			selflag = 3;
+			b1 = BookList[i];
+			break;
+		}
+		if (input == BookList[i].getCategory())
+		{
+			selflag = 4;
+			b1 = BookList[i];
+			break;
+		}
+	}
+	if (selflag == 0)
+	{
+		std::cout << "The book you were looking for cannot be found!" << std::endl;
+		return;
+	}
+	if (selflag == 1)
+	{
+		std::cout << "ISBN: " << input << std::endl;
+		std::cout << "Title: " << b1.getTitle() << std::endl;
+		std::cout << "Author: " << b1.getAuthor() << std::endl;
+		std::cout << "Category: " << b1.getCategory() << std::endl;
+		std::cout << "IDs of available copies: " << std::endl;
+		//NEED TO FINISH
+	}
+
 }
