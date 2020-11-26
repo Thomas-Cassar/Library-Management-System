@@ -29,6 +29,7 @@ public:
 	int get_reserve_date();
 
 	//Setter functions
+	void setBook(Book& book);
 	void set_available(bool avl);
 	void set_reserve_date(int res);
 	void setID(std::string id);

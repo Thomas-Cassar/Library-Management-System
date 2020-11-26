@@ -145,6 +145,7 @@ void Reader::BorrowBook(std::vector <BookCopy>& x, int date)
 				x[i].setReaderName(GetUser());
 				x[i].set_start_date(current_date);
 				x[i].set_exp_date(current_date + GetMaxBorrowDate());
+				x[i].set_available(false);
 				GetBorrowedBooks()->push_back(x[i]);
 				std::cout << x[i].getTitle() << " has been successfully borrowed!" << std::endl;
 
@@ -225,6 +226,7 @@ void Reader::ReturnBooks(std::vector<BookCopy>& x, int date)
 					}
 					//Return book
 					x[i].setReaderName("NULL");
+					x[i].set_available(true);
 					GetBorrowedBooks()->erase(GetBorrowedBooks()->begin() + j);
 					std::cout << "Book was returned successfully!!" << std::endl;
 					return;

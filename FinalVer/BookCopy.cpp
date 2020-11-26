@@ -108,7 +108,10 @@ void BookCopy::setID(std::string id)
 {
 	ID = id;
 }
-
+void BookCopy::setBook(Book& book)
+{
+	this->book = book;
+}
 /**
  * sets readerName of current BookCopy object to param reader_name
  * @param reader_name - string

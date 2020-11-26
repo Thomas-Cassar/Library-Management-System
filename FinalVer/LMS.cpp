@@ -95,6 +95,7 @@ LMS::LMS()
 	int idx = 0;
 	for (int i = 0; i < temp.size(); i++)
 	{
+		counts = 1;
 		for (int j = i + 1; j < temp.size(); j++)
 		{
 			if (temp.at(i).getISBN() == temp.at(j).getISBN() && temp.at(i).getISBN() != "")
@@ -103,11 +104,22 @@ LMS::LMS()
 				counts++;
 			}
 		}
-		if (counts > 0)
+		if (temp.at(i).getISBN() != "")
 		{
 			Book b1(temp.at(i).getISBN(), temp.at(i).getTitle(), temp.at(i).getAuthor(), temp.at(i).getCategory(), idx, counts, 0);
 			idx++;
 			BookList.push_back(b1);
+		}
+	}
+	for (int i = 0; i < CopyList.size(); i++)
+	{
+		for (int j = 0; j < BookList.size(); j++)
+		{
+			if (CopyList[i].getISBN() == BookList[j].getISBN())
+			{
+				CopyList[i].setBook(BookList[j]);
+				continue;
+			}
 		}
 	}
 	LogIn();//Get user to log in 
@@ -243,7 +255,7 @@ void LMS::PrintCommands()
 		std::cout << "\t1. Delete Old User" << std::endl;
 		std::cout << "\t2. Search User" << std::endl;
 		std::cout << "\t3. Add New User" << std::endl;
-		std::cout << "\t4. N/A" << std::endl;
+		std::cout << "\t4. Search Books" << std::endl;
 		std::cout << "\t5. N/A" << std::endl;
 		std::cout << "\t0. Log Out" << std::endl;
 	}
@@ -322,7 +334,7 @@ void LMS::ExecuteCommand(int command)
 			addUser();
 			break;
 		case 4:
-
+			searchBooks();
 			break;
 		case 5:
 
@@ -908,8 +920,6 @@ void LMS::addUser()
 	}
 	std::cout << "New user added succesfully!" << std::endl;
 }
-
-//NEED TO FINISH THIS FUNCION
 void LMS::searchBooks()
 {
 	std::string input;
@@ -956,7 +966,13 @@ void LMS::searchBooks()
 		std::cout << "Author: " << b1.getAuthor() << std::endl;
 		std::cout << "Category: " << b1.getCategory() << std::endl;
 		std::cout << "IDs of available copies: " << std::endl;
-		//NEED TO FINISH
+		for (int i = 0; i < CopyList.size(); i++)
+		{
+			if (CopyList[i].returnBook()->getISBN() == b1.getISBN() && CopyList[i].get_available())
+			{
+				std::cout << CopyList[i].getID() << std::endl;
+			}
+		}
 	}
 
 }
