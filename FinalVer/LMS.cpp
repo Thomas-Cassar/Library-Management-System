@@ -959,9 +959,9 @@ void LMS::searchBooks()
 		std::cout << "The book you were looking for cannot be found!" << std::endl;
 		return;
 	}
-	if (selflag == 1)
+	if (selflag == 1 || selflag == 2)
 	{
-		std::cout << "ISBN: " << input << std::endl;
+		std::cout << "ISBN: " << b1.getISBN() << std::endl;
 		std::cout << "Title: " << b1.getTitle() << std::endl;
 		std::cout << "Author: " << b1.getAuthor() << std::endl;
 		std::cout << "Category: " << b1.getCategory() << std::endl;
@@ -973,6 +973,53 @@ void LMS::searchBooks()
 				std::cout << CopyList[i].getID() << std::endl;
 			}
 		}
+		return;
+	}
+	if (selflag == 3)
+	{
+		for (int j = 0; j < BookList.size();j++)
+		{
+			if (b1.getAuthor() == BookList[j].getAuthor())
+			{
+				b1 = BookList[j];
+				std::cout << "ISBN: " << b1.getISBN() << std::endl;
+				std::cout << "Title: " << b1.getTitle() << std::endl;
+				std::cout << "Author: " << b1.getAuthor() << std::endl;
+				std::cout << "Category: " << b1.getCategory() << std::endl;
+				std::cout << "IDs of available copies: " << std::endl;
+				for (int i = 0; i < CopyList.size(); i++)
+				{
+					if (CopyList[i].returnBook()->getISBN() == b1.getISBN() && CopyList[i].get_available())
+					{
+						std::cout << CopyList[i].getID() << std::endl;
+					}
+				}
+			}
+		}
+		return;
+	}
+	if (selflag == 4)
+	{
+		for (int j = 0; j < BookList.size();j++)
+		{
+			if (b1.getCategory() == BookList[j].getCategory())
+			{
+				b1 = BookList[j];
+				std::cout << "ISBN: " << b1.getISBN() << std::endl;
+				std::cout << "Title: " << b1.getTitle() << std::endl;
+				std::cout << "Author: " << b1.getAuthor() << std::endl;
+				std::cout << "Category: " << b1.getCategory() << std::endl;
+				std::cout << "IDs of available copies: " << std::endl;
+				for (int i = 0; i < CopyList.size(); i++)
+				{
+					if (CopyList[i].returnBook()->getISBN() == b1.getISBN() && CopyList[i].get_available())
+					{
+						std::cout << CopyList[i].getID() << std::endl;
+					}
+				}
+			}
+		}
+		return;
 	}
 
 }
