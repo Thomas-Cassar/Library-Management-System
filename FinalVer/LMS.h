@@ -42,7 +42,7 @@ public:
 	int getCounter();
 	std::vector <BookCopy>* returnBookCopy();
 	std::vector <Book>* returnBook();
-
+	void updateBooks();
 	//Setter functions
 	void setDate(std::string date);
 	void setCounter(int counter);

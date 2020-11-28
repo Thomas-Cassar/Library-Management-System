@@ -2,6 +2,7 @@
 #include <conio.h>
 #include <ctime>
 #include <string.h>
+#include <algorithm>
 
 /**
  * Constructor for class:
@@ -111,17 +112,7 @@ LMS::LMS()
 			BookList.push_back(b1);
 		}
 	}
-	for (int i = 0; i < CopyList.size(); i++)
-	{
-		for (int j = 0; j < BookList.size(); j++)
-		{
-			if (CopyList[i].getISBN() == BookList[j].getISBN())
-			{
-				CopyList[i].setBook(BookList[j]);
-				continue;
-			}
-		}
-	}
+	updateBooks();
 	LogIn();//Get user to log in 
 
 }
@@ -467,6 +458,20 @@ void LMS::updateFiles()
 	}
 }
 
+void LMS::updateBooks()
+{
+	for (int i = 0; i < CopyList.size(); i++)
+	{
+		for (int j = 0; j < BookList.size(); j++)
+		{
+			if (CopyList[i].getISBN() == BookList[j].getISBN())
+			{
+				CopyList[i].setBook(BookList[j]);
+				continue;
+			}
+		}
+	}
+}
 /*
 *The following fuction increments the date and returns a string representing the
 * current date
@@ -718,14 +723,49 @@ void LMS::deleteBooks()
 			break;
 		}
 	}
-	if (flag == 1)
+	if (flag == 1 && CopyList[pos].get_available())
 	{
+		for (i = 0; i < StudentList.size(); i++)
+		{
+			for (int j = 0; j < StudentList.at(i).GetReservedBooks()->size(); j++)
+			{
+				if (StudentList[i].GetReservedBooks()->at(j).getID() == idstr)
+				{
+					StudentList[i].GetReservedBooks()->erase(StudentList[i].GetReservedBooks()->begin() + j);
+					continue;
+				}
+			}
+		}
+		for (i = 0; i < TeacherList.size(); i++)
+		{
+			for (int j = 0; j < TeacherList.at(i).GetReservedBooks()->size(); j++)
+			{
+				if (TeacherList[i].GetReservedBooks()->at(j).getID() == idstr)
+				{
+					TeacherList[i].GetReservedBooks()->erase(TeacherList[i].GetReservedBooks()->begin() + j);
+					continue;
+				}
+			}
+		}
+		int tmp = CopyList[pos].returnBook()->getCount();
+		CopyList[pos].returnBook()->setCount(tmp - 1);
+		if (CopyList[pos].returnBook()->getCount() <= 0)
+		{
+			for (int j = 0; j < BookList.size(); j++)
+			{
+				if (CopyList[pos].returnBook()->getISBN() == BookList[j].getISBN())
+				{
+					BookList.erase(BookList.begin() + j);
+					break;
+				}
+			}
+		}
 		CopyList.erase(CopyList.begin() + pos);
 		std::cout << "Copy succesfully removed from library!" << std::endl;
 	}
 	else
 	{
-		std::cout << "Copy was not found in library!" << std::endl;
+		std::cout << "Copy could not be deleted!" << std::endl;
 	}
 }
 
@@ -754,6 +794,13 @@ void LMS::deleteOldUser(Reader &reader)
 						if (b1->getReserverList().at(k) == s1->GetUser())
 						{
 							b1->getReserverList().erase(b1->getReserverList().begin() + k);
+						}
+					}
+					for (int k = 0; k < b1->returnBook()->getReserverList().size(); k++)
+					{
+						if (b1->returnBook()->getReserverList().at(k) == s1->GetUser())
+						{
+							b1->returnBook()->getReserverList().erase(b1->getReserverList().begin() + k);
 						}
 					}
 				}
@@ -977,45 +1024,62 @@ void LMS::searchBooks()
 	}
 	if (selflag == 3)
 	{
+		std::vector <Book> temp;
+		int max = 0;
 		for (int j = 0; j < BookList.size();j++)
 		{
 			if (b1.getAuthor() == BookList[j].getAuthor())
 			{
-				b1 = BookList[j];
-				std::cout << "ISBN: " << b1.getISBN() << std::endl;
-				std::cout << "Title: " << b1.getTitle() << std::endl;
-				std::cout << "Author: " << b1.getAuthor() << std::endl;
-				std::cout << "Category: " << b1.getCategory() << std::endl;
-				std::cout << "IDs of available copies: " << std::endl;
-				for (int i = 0; i < CopyList.size(); i++)
+				temp.push_back(BookList[j]);
+			}
+		}
+		std::sort(temp.begin(), temp.end(), [](Book& b1, Book& b2) {return b1.getReserverList().size() >
+			b2.getReserverList().size();});
+		for (int j = 0; j < temp.size(); j++)
+		{
+			b1 = temp[j];
+			std::cout << "ISBN: " << b1.getISBN() << std::endl;
+			std::cout << "Title: " << b1.getTitle() << std::endl;
+			std::cout << "Author: " << b1.getAuthor() << std::endl;
+			std::cout << "Category: " << b1.getCategory() << std::endl;
+			std::cout << "IDs of available copies: " << std::endl;
+			for (int i = 0; i < CopyList.size(); i++)
+			{
+				if (CopyList[i].returnBook()->getISBN() == b1.getISBN() && CopyList[i].get_available())
 				{
-					if (CopyList[i].returnBook()->getISBN() == b1.getISBN() && CopyList[i].get_available())
-					{
-						std::cout << CopyList[i].getID() << std::endl;
-					}
+					std::cout << CopyList[i].getID() << std::endl;
 				}
 			}
 		}
+			
 		return;
 	}
 	if (selflag == 4)
 	{
+		std::vector <Book> temp;
+		int max = 0;
 		for (int j = 0; j < BookList.size();j++)
 		{
 			if (b1.getCategory() == BookList[j].getCategory())
 			{
-				b1 = BookList[j];
-				std::cout << "ISBN: " << b1.getISBN() << std::endl;
-				std::cout << "Title: " << b1.getTitle() << std::endl;
-				std::cout << "Author: " << b1.getAuthor() << std::endl;
-				std::cout << "Category: " << b1.getCategory() << std::endl;
-				std::cout << "IDs of available copies: " << std::endl;
-				for (int i = 0; i < CopyList.size(); i++)
+				temp.push_back(BookList[j]); 
+			}
+		}
+		std::sort(temp.begin(), temp.end(), [](Book& b1, Book& b2) {return b1.getReserverList().size() >
+			b2.getReserverList().size();});
+		for (int j = 0; j < temp.size(); j++)
+		{
+			b1 = temp[j];
+			std::cout << "ISBN: " << b1.getISBN() << std::endl;
+			std::cout << "Title: " << b1.getTitle() << std::endl;
+			std::cout << "Author: " << b1.getAuthor() << std::endl;
+			std::cout << "Category: " << b1.getCategory() << std::endl;
+			std::cout << "IDs of available copies: " << std::endl;
+			for (int i = 0; i < CopyList.size(); i++)
+			{
+				if (CopyList[i].returnBook()->getISBN() == b1.getISBN() && CopyList[i].get_available())
 				{
-					if (CopyList[i].returnBook()->getISBN() == b1.getISBN() && CopyList[i].get_available())
-					{
-						std::cout << CopyList[i].getID() << std::endl;
-					}
+					std::cout << CopyList[i].getID() << std::endl;
 				}
 			}
 		}

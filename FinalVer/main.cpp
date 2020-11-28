@@ -47,7 +47,7 @@ int main()
 		mainLMS.PrintCommands();
 		std::cin >> command;
 		mainLMS.ExecuteCommand(command);
-	
+		mainLMS.updateBooks();
 	}
 
 	m = clock() - m;
