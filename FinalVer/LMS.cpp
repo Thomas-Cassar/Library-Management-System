@@ -243,11 +243,14 @@ void LMS::PrintCommands()
 	{
 		std::cout << "************************************************" << std::endl;
 		std::cout << "Librarian "<<loggedinUser->GetUser()<<" enter a command from the list below:" << std::endl;
-		std::cout << "\t1. Delete Old User" << std::endl;
-		std::cout << "\t2. Search User" << std::endl;
-		std::cout << "\t3. Add New User" << std::endl;
-		std::cout << "\t4. Search Books" << std::endl;
-		std::cout << "\t5. N/A" << std::endl;
+		std::cout << "\t1. Search Books" << std::endl;
+		std::cout << "\t2. Add New Books" << std::endl;
+		std::cout << "\t3. Delete Old Books" << std::endl;
+		std::cout << "\t4. Search Users" << std::endl;
+		std::cout << "\t5. Add New Users" << std::endl;
+		std::cout << "\t6. Delete Old Users" << std::endl;
+		std::cout << "\t7. My Information" << std::endl;
+		std::cout << "\t8. Change Password" << std::endl;
 		std::cout << "\t0. Log Out" << std::endl;
 	}
 
@@ -296,6 +299,21 @@ void LMS::ExecuteCommand(int command)
 		switch (command)
 		{
 		case 1:
+			searchBooks();
+			break;
+		case 2:
+			addBooks();
+			break;
+		case 3:
+			deleteBooks();
+			break;
+		case 4:
+			searchUser();
+			break;
+		case 5:
+			addUser();
+			break;
+		case 6:
 			std::cout << "Enter username to delete: " << std::endl;
 			std::cin >> userin;
 			for (int i = 0; i < StudentList.size(); i++)
@@ -318,17 +336,11 @@ void LMS::ExecuteCommand(int command)
 			}
 			deleteOldUser(t);
 			break;
-		case 2:
-			searchUser();
+		case 7:
+			myInfo();
 			break;
-		case 3:
-			addUser();
-			break;
-		case 4:
-			searchBooks();
-			break;
-		case 5:
-
+		case 8:
+			ChangePassword();
 			break;
 		case 0: //Quit
 			break;
@@ -704,7 +716,25 @@ void LMS::addBooks()
 	}
 	book.setID(id);
 	book.set_start_date(counter);
+	x = 0;
+	for (int i = 0; i < BookList.size(); i++)
+	{
+		if (BookList[i].getISBN() == ISBN)
+		{
+			int cnt = BookList[i].getCount();
+			BookList[i].setCount(cnt + 1);
+			x = 1;
+			break;
+		}
+	}
+	if (!x)
+	{
+		Book b1 (ISBN, Title, auth, cat, BookList.size(), 1, 0);
+		book.setBook(b1);
+		BookList.push_back(b1);
+	}
 	CopyList.push_back(book);
+	std::cout << "Book successfully added to library!" << std::endl;
 }
 
 void LMS::deleteBooks()
@@ -1086,4 +1116,57 @@ void LMS::searchBooks()
 		return;
 	}
 
+}
+void LMS::ChangePassword()
+{
+	std::cout << "Enter your old password: " << std::endl;
+	char c;
+	std::string temppswd;
+	while (((c = _getch()) != '\r') && (c != '\n'))//This function gets the password and hides it with *
+	{
+		if (c == '\b')//Case where backspace is entered we move cursor back 1 and remove a * and a letter from the input password
+		{
+			temppswd = temppswd.substr(0, temppswd.length() - 1);
+			std::cout << '\b';
+			std::cout << ' ';
+			std::cout << '\b';
+		}
+		else {//Case where we add letter to the string password
+			temppswd += c;
+			std::cout << "*";
+		}
+	}
+	std::cout << std::endl;
+	if (temppswd != loggedinUser->GetPswd())
+	{
+		std::cout << "Password you entered is wrong! Your password cannot be changed." << std::endl;
+	}
+	else
+	{
+		std::cout << "Enter your new password" << std::endl;
+		std::cin >> temppswd;
+		loggedinUser->SetPswd(temppswd);
+		std::cout << "Your password has been changed!" << std::endl;
+	}
+}
+void LMS::myInfo()
+{
+	if (dynamic_cast<Reader*>(loggedinUser) != nullptr)
+	{
+		Reader* s = dynamic_cast<Reader*>(loggedinUser);
+		std::cout << "Here is your information: " << std::endl;
+		std::cout << "Username: " << s->GetUser() << std::endl;
+		std::cout << "Password: " << s->GetPswd() << std::endl;
+		std::cout << "List of Books you are currently borrowing: " << std::endl;
+		for (int j = 0; j < s->GetBorrowedBooks()->size(); j++)
+		{
+			std::cout << s->GetBorrowedBooks()->at(j).getTitle();
+		}
+	}
+	else
+	{
+		std::cout << "Here is your information: " << std::endl;
+		std::cout << "Username: " << loggedinUser->GetUser() << std::endl;
+		std::cout << "Password: " << loggedinUser->GetPswd() << std::endl;
+	}
 }

@@ -46,6 +46,8 @@ public:
 	//Setter functions
 	void setDate(std::string date);
 	void setCounter(int counter);
+	void ChangePassword();
+	void myInfo();
 
 	//Command functions
 	void LogIn();

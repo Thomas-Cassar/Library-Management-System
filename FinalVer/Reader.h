@@ -31,6 +31,7 @@ public:
     //Command functions
     void BorrowBook(std::vector <BookCopy>& x, int date);
     void ReturnBooks(std::vector<BookCopy>& x, int date);
+    void ReserveBooks(std::vector<BookCopy>& x, int date);
     void Print();
 
     //Overloaded operators

@@ -140,11 +140,16 @@ void Reader::BorrowBook(std::vector <BookCopy>& x, int date)
 	{
 		if (idValue == x[i].getID())//Case where the book is in the copy vector
 		{
+			if (!x[i].getReserverList().empty())
+			{
+				std::cout << "This book is not available!" << std::endl;
+				return;
+			}
 			if (x[i].getReaderName() == "NULL")//Case where the book is not taken out
 			{
 				x[i].setReaderName(GetUser());
 				x[i].set_start_date(current_date);
-				x[i].set_exp_date(current_date + GetMaxBorrowDate());
+				x[i].set_exp_date(current_date + GetMaxBorrowDate() - x[i].getReserverList().size()/20);
 				x[i].set_available(false);
 				GetBorrowedBooks()->push_back(x[i]);
 				std::cout << x[i].getTitle() << " has been successfully borrowed!" << std::endl;
