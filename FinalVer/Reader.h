@@ -11,6 +11,7 @@ private:
     std::vector<BookCopy> ReaderReservedBooks;//Stores all books that reader has reserved
     int maxBorrowed, maxBorrowedCurrent;//Max allowed borrowed books and max allowed books at this time
     int maxBorrowDate;//How long the reader can have books for before overdue
+    int penalty;
 public:
     Reader(std::string user, std::string pswd,int maxBorrowed,
         int maxBorrowedCurrent,int maxBorrowDate);
@@ -21,8 +22,10 @@ public:
     int GetMaxBorrowed();
     int GetMaxBorrowedCurrent();
     int GetMaxBorrowDate();
+    int GetPenalty();
 
     //Setter functions
+    void SetPenalty(int pnlty);
     void SetBorrowedBooks(std::vector<BookCopy> bBooks);
     void SetMaxBorrowed(int maxBorrowed);
     void SetMaxBorrowedCurrent(int maxBorrowedCurrent);
