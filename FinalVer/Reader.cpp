@@ -169,6 +169,15 @@ void Reader::BorrowBook(std::vector <BookCopy>& x, int date)
 								x[j].set_start_date(current_date);
 								x[j].set_exp_date(current_date + GetMaxBorrowDate() - x[i].getReserverList()->size() / 20);
 								x[j].set_available(false);
+								x[j].getReserverList()->erase(x[j].getReserverList()->begin());
+		                        x[j].returnBook()->getReserverList()->erase(x[j].returnBook()->getReserverList()->begin());
+								for (int q = 0; q < ReaderReservedBooks.size(); q++)
+								{
+									if (x[j].getID() == ReaderReservedBooks[q].getID())
+									{
+										ReaderReservedBooks.erase(ReaderReservedBooks.begin() + q);
+									}
+								}
 								GetBorrowedBooks()->push_back(x[j]);
 								std::cout << x[j].getTitle() << " has been successfully borrowed!" << std::endl;
 								return;

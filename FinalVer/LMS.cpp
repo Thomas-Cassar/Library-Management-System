@@ -774,13 +774,12 @@ void LMS::recommend()
 		}
 		std::sort(category.begin(), category.end(), [](Book& b1, Book& b2) {return b1.getReserverList()->size() >
 			b2.getReserverList()->size();});
-
-		temp = category;
-		if (temp.size() >= 10)
+		 
+		if (category.size() >= 10)
 		{
 			for (int i = 0; i < 10; i++)
 			{
-				Book b1 = temp[i];
+				Book b1 = category[i];
 				std::cout << "ISBN: " << b1.getISBN() << std::endl;
 				std::cout << "Title: " << b1.getTitle() << std::endl;
 				std::cout << "Author: " << b1.getAuthor() << std::endl;
@@ -790,9 +789,9 @@ void LMS::recommend()
 		}
 		else
 		{
-			for (int i = 0; i < temp.size(); i++)
+			for (int i = 0; i < category.size(); i++)
 			{
-				Book b1 = temp[i];
+				Book b1 = category[i];
 				std::cout << "ISBN: " << b1.getISBN() << std::endl;
 				std::cout << "Title: " << b1.getTitle() << std::endl;
 				std::cout << "Author: " << b1.getAuthor() << std::endl;
