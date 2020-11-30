@@ -441,10 +441,12 @@ void Reader::RenewBook(std::vector<BookCopy>& x, int date)
 				{
 					x[i].set_exp_date(current_date + GetMaxBorrowDate());
 					x[i].set_available(false);
-					std::cout << "Book has been succesfully renewed" << std::endl;
+					std::cout << "Book has been succesfully renewed!" << std::endl;
+					return;
 				}
 			}
 			std::cout << "You are not borrowing this book!" << std::endl;
+			return;
 		}
 	}
 	std::cout << "Book was not found in the library!" << std::endl;

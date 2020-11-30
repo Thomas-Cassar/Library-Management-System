@@ -1,5 +1,5 @@
-Teacher1 $$$
-Student1 Teacher1 Student2 $$$
+$$$
+Teacher1 Student2 $$$
 $$$
 $$$
 Student1 $$$
