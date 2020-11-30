@@ -730,52 +730,76 @@ void LMS::recommend()
 {
 	Reader* r1 = dynamic_cast<Reader*>(loggedinUser);
 
-	std::vector <BookCopy> category;
-	std::vector <BookCopy> temp = CopyList;//makes new vector so that CopyList is not changed
-
-	for (int i = 0; i < r1->GetBorrowedBooks()->size(); i++)
+	std::vector <Book> category;
+	std::vector <Book> temp = BookList;//makes new vector so that CopyList is not changed
+    
+	if (r1->GetBorrowedBooks()->empty())
 	{
-		category.push_back(r1->GetBorrowedBooks()->at(i));
-	}
-	int count = 0;
-	for (int i = 0; i < category.size(); i++)
-	{
-		for (int j = i+1; j < category.size();j++)
-			if (category[i].getCategory() == category[j].getCategory() && category[j].getCategory() != "")
-			{
-				category[j].setCategory("");
-		    }
-	}
-	for (int i = 0; i < temp.size(); i++)//removes duplicate copies from temp vector
-	{
-		for (int j = i + 1; j < temp.size(); j++)
+		std::sort(temp.begin(), temp.end(), [](Book& b1, Book& b2) {return b1.getReserverList()->size() >
+			b2.getReserverList()->size();});
+		if (temp.size() >= 10)
 		{
-			if (temp[i].getTitle() == temp[j].getTitle() && temp[j].getCategory() != "")
+			for (int i = 0; i < 10; i++)
 			{
-				temp[j].setTitle("");
+				Book b1 = temp[i];
+				std::cout << "ISBN: " << b1.getISBN() << std::endl;
+				std::cout << "Title: " << b1.getTitle() << std::endl;
+				std::cout << "Author: " << b1.getAuthor() << std::endl;
+				std::cout << "Category: " << b1.getCategory() << std::endl;
+				std::cout << std::endl;
+			}
+		}
+		else
+		{
+			for (int i = 0; i < temp.size(); i++)
+			{
+				Book b1 = temp[i];
+				std::cout << "ISBN: " << b1.getISBN() << std::endl;
+				std::cout << "Title: " << b1.getTitle() << std::endl;
+				std::cout << "Author: " << b1.getAuthor() << std::endl;
+				std::cout << "Category: " << b1.getCategory() << std::endl;
+				std::cout << std::endl;
 			}
 		}
 	}
-	std::cout << "Some Books You May Like: " << std::endl;
-	/*checks to see all books which match the categories of the books the stuedent has borrowed
-	  and if the book has not been taken out
-	*/
-	for (int j = 0; j < category.size();j++)
-	for (int i = 0; i < temp.size(); i++)
+	else
 	{
-		if (temp[i].getTitle() != "" && (category[j].getCategory() == CopyList[i].getCategory()) && (temp[i].getReaderName() == "NULL") && (category[j].getTitle() != temp[i].getTitle()))
+		std::string cat = r1->GetBorrowedBooks()->end()->getCategory();
+		for (int i = 0; i < temp.size(); i++)
 		{
-			std::cout << temp[i].getTitle() << " by " << temp[i].getAuthor() << std::endl;
-			count++;
+			if (temp[i].getCategory() == cat)
+			{
+				category.push_back(temp[i]);
+			}
 		}
-	}
-	if (count == 0 && r1->GetBorrowedBooks()->size() == 0)//Case where the reader has no books taken out
-	{
-		std::cout << "Please borrow a book so that we can get an idea of what you like!" << std::endl;
-	}
-	else if (count == 0 && r1->GetBorrowedBooks()->size() != 0)//Case where the reader has a book taken out of a unique genre
-	{
-		std::cout << "There are no books that match the categories of the books you have borrowed!" << std::endl;
+		std::sort(category.begin(), category.end(), [](Book& b1, Book& b2) {return b1.getReserverList()->size() >
+			b2.getReserverList()->size();});
+
+		temp = category;
+		if (temp.size() >= 10)
+		{
+			for (int i = 0; i < 10; i++)
+			{
+				Book b1 = temp[i];
+				std::cout << "ISBN: " << b1.getISBN() << std::endl;
+				std::cout << "Title: " << b1.getTitle() << std::endl;
+				std::cout << "Author: " << b1.getAuthor() << std::endl;
+				std::cout << "Category: " << b1.getCategory() << std::endl;
+				std::cout << std::endl;
+			}
+		}
+		else
+		{
+			for (int i = 0; i < temp.size(); i++)
+			{
+				Book b1 = temp[i];
+				std::cout << "ISBN: " << b1.getISBN() << std::endl;
+				std::cout << "Title: " << b1.getTitle() << std::endl;
+				std::cout << "Author: " << b1.getAuthor() << std::endl;
+				std::cout << "Category: " << b1.getCategory() << std::endl;
+				std::cout << std::endl;
+			}
+		}
 	}
 }
 
