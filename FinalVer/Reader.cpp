@@ -396,9 +396,9 @@ void Reader::CancelReservation(std::vector<BookCopy>& x, std::vector<Book>& y, i
 					}
 				}
 			}
+			std::cout << "You have not reserved this book!" << std::endl;
+			return;
 		}
-		std::cout << "You have not reserved this book!" << std::endl;
-		return;
 	}
 	std::cout << "Book not found in library!" << std::endl;
 }
