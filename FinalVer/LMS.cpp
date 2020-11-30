@@ -25,7 +25,10 @@ LMS::LMS()
 	TeacherFile.open("teacher.txt");
 	//Librarian
 	LibrarianFile.open("librarian.txt");
-
+	//CopyReserver
+	CopyReserverFile.open("copyreservers.txt");
+	//BookReserver
+	BookReserverFile.open("bookreservers.txt");
 
 	//Check if file opening was successful
 	if (StudentFile.fail())
@@ -46,6 +49,16 @@ LMS::LMS()
 	if (LibrarianFile.fail())
 	{
 		std::cerr << "Could not open librarian file";
+		exit(1);
+	}
+	if (CopyReserverFile.fail())
+	{
+		std::cerr << "Could not open copy reserver file";
+		exit(1);
+	}
+	if (BookReserverFile.fail())
+	{
+		std::cerr << "Could not open book reserver file";
 		exit(1);
 	}
 	//Read from files and store in vectors
@@ -112,9 +125,29 @@ LMS::LMS()
 			BookList.push_back(b1);
 		}
 	}
+	std::string restemp = "";
+	for (int q = 0; q < CopyList.size(); q++)
+	{
+	    restemp = "";
+		while (restemp != "$$$")
+		{
+			CopyReserverFile >> restemp;
+			if (restemp!="$$$")
+				CopyList[q].getReserverList()->push_back(restemp);
+		}
+	}
+	for (int q = 0; q < BookList.size(); q++)
+	{
+		restemp = "";
+		while (restemp != "$$$")
+		{
+			BookReserverFile >> restemp;
+			if (restemp != "$$$")
+				BookList[q].getReserverList()->push_back(restemp);
+		}
+	}
 	updateBooks();
 	LogIn();//Get user to log in 
-
 }
 
 /*
@@ -128,6 +161,8 @@ LMS::~LMS()
 	BookFile.close();
 	TeacherFile.close();
 	LibrarianFile.close();
+	BookReserverFile.close();
+	CopyReserverFile.close();
 }
 
 
@@ -442,7 +477,8 @@ void LMS::updateFiles()
 	StudentFile.close();
 	TeacherFile.close();
 	LibrarianFile.close();
-
+	CopyReserverFile.close();
+	BookReserverFile.close();
 	//Open files
 	//Students
 	StudentFile.open("student.txt", std::ofstream::out | std::ofstream::trunc);
@@ -452,6 +488,10 @@ void LMS::updateFiles()
 	BookFile.open("book.txt",std::ofstream::out | std::ofstream::trunc);
 	//Librarian
 	LibrarianFile.open("librarian.txt", std::ofstream::out | std::ofstream::trunc);
+	//CopyReserve
+	CopyReserverFile.open("copyreservers.txt", std::ofstream::out | std::ofstream::trunc);
+	//BookReserve
+	BookReserverFile.open("bookreservers.txt", std::ofstream::out | std::ofstream::trunc);
 	//Check successful
 	if (StudentFile.fail())
 	{
@@ -473,6 +513,16 @@ void LMS::updateFiles()
 		std::cerr << "Could not open book file";
 		exit(1);
 	}
+	if (CopyReserverFile.fail())
+	{
+		std::cerr << "Could not open copy reserver file";
+		exit(1);
+	}
+	if (BookReserverFile.fail())
+	{
+		std::cerr << "Could not open book reserver file";
+		exit(1);
+	}
 
 	int i;
 	for (i=0; i<StudentList.size();i++)//Print all students to student file
@@ -492,6 +542,22 @@ void LMS::updateFiles()
 	for (i = 0; i < LibrarianList.size(); i++)//Print all librarians to librarians file
 	{
 		LibrarianFile << LibrarianList[i];
+	}
+	for (i = 0; i < BookList.size(); i++)
+	{
+		for (int j = 0; j < BookList[i].getReserverList()->size(); j++)
+		{
+			BookReserverFile << BookList[i].getReserverList()->at(j) << ' ';
+		}
+		BookReserverFile << "$$$" << std::endl;
+	}
+	for (i = 0; i < CopyList.size(); i++)
+	{
+		for (int j = 0; j < CopyList[i].getReserverList()->size(); j++)
+		{
+			CopyReserverFile << CopyList[i].getReserverList()->at(j) << ' ';
+		}
+		CopyReserverFile << "$$$" << std::endl;
 	}
 }
 

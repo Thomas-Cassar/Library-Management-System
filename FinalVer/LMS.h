@@ -18,7 +18,8 @@ private:
 	std::fstream BookFile;
 	std::fstream TeacherFile;
 	std::fstream LibrarianFile;
-
+	std::fstream CopyReserverFile;
+	std::fstream BookReserverFile;
 	//Vectors for storing data read from file
 	std::vector<Student> StudentList;
 	std::vector<Teacher> TeacherList;

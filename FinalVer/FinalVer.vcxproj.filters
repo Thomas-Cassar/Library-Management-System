@@ -20,6 +20,8 @@
     <Text Include="student.txt" />
     <Text Include="teacher.txt" />
     <Text Include="librarian.txt" />
+    <Text Include="copyreservers.txt" />
+    <Text Include="bookreservers.txt" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BookCopy.cpp">

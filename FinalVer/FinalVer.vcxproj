@@ -140,6 +140,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <Text Include="book.txt" />
+    <Text Include="bookreservers.txt" />
+    <Text Include="copyreservers.txt" />
     <Text Include="DateData.txt" />
     <Text Include="librarian.txt" />
     <Text Include="student.txt" />

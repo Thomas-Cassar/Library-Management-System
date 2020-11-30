@@ -2,7 +2,6 @@
 #include <ctime>
 #include <fstream>
 #include "LMS.h"
-std::string checkDates(LMS &lms, clock_t x);
 
 int main()
 {
@@ -76,20 +75,4 @@ int main()
 	dateFile.close();
 
 	return 0;
-}
-
-//function to check current date, increments date by 1 day after 5 seconds have passed
-std::string checkDates(LMS &lms, clock_t x)
-{
-	std::string LMSDATE = lms.getDate();
-	clock_t checkDate = clock() - x;
-	
-	for (int iter = 0; iter < float(checkDate) / 1000; iter++)
-	{
-		if (iter != 0 && iter % 5 == 0)
-		{
-			LMSDATE = lms.incrementDate(LMSDATE);
-		}
-	}
-	return LMSDATE;
 }
