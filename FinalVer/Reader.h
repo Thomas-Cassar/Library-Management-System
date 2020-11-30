@@ -32,7 +32,7 @@ public:
     void SetMaxBorrowDate(int maxBorrowDate);
 
     //Command functions
-    void BorrowBook(std::vector <BookCopy>& x, int date);
+    void BorrowBook(std::vector <BookCopy>& x, std::vector<Book>& y, int date);
     void ReturnBooks(std::vector<BookCopy>& x, int date);
     void ReserveBooks(std::vector<BookCopy>& x, std::vector<Book>& y, int date);
     void CancelReservation(std::vector<BookCopy>& x, std::vector<Book>& y, int date);

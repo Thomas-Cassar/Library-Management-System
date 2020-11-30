@@ -1,6 +1,6 @@
-Teacher1 Student2 $$$
-$$$
 Student1 $$$
+$$$
+$$$
 $$$
 $$$
 $$$

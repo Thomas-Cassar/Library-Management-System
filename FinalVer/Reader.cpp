@@ -104,7 +104,7 @@ void Reader::SetPenalty(int pnlty)
 /*
 * This fuction is called from the main loop if the user wants to borrow a book
 */
-void Reader::BorrowBook(std::vector <BookCopy>& x, int date)
+void Reader::BorrowBook(std::vector <BookCopy>& x, std::vector<Book>& y, int date)
 {
 	std::string idValue = "";
 	int i = 0;
@@ -169,8 +169,32 @@ void Reader::BorrowBook(std::vector <BookCopy>& x, int date)
 								x[j].set_start_date(current_date);
 								x[j].set_exp_date(current_date + GetMaxBorrowDate() - x[i].getReserverList()->size() / 20);
 								x[j].set_available(false);
-								x[j].getReserverList()->erase(x[j].getReserverList()->begin());
-		                        x[j].returnBook()->getReserverList()->erase(x[j].returnBook()->getReserverList()->begin());
+								for (int it = 0; it < x.size(); it++)
+								{
+									if (x[it].getISBN() == x[j].getISBN())
+									{
+										for (int its = 0; its < x[it].getReserverList()->size(); its++)
+										{
+											if (x[it].getReserverList()->at(its) == GetUser())
+											{
+												x[it].getReserverList()->erase(x[it].getReserverList()->begin() + its);
+											}
+										}
+									}
+								}
+								for (int it = 0; it < y.size(); it++)
+								{
+									if (y[it].getISBN() == x[j].getISBN())
+									{
+										for (int its = 0; its < y[it].getReserverList()->size();its++)
+										{
+											if (y[it].getReserverList()->at(its) == GetUser())
+											{
+												y[it].getReserverList()->erase(y[it].getReserverList()->begin() + its);
+											}
+										}
+									}
+								}
 								for (int q = 0; q < ReaderReservedBooks.size(); q++)
 								{
 									if (x[j].getID() == ReaderReservedBooks[q].getID())

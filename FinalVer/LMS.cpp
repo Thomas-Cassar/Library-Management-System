@@ -66,6 +66,14 @@ LMS::LMS()
 	BookCopy booktemp;
 	while (BookFile >> booktemp)
 	{
+		if (booktemp.getReaderName() != "NULL")
+		{
+			booktemp.set_available(false);
+		}
+		else
+		{
+			booktemp.set_available(true);
+		}
 		CopyList.push_back(booktemp);
 	}
 
@@ -105,7 +113,7 @@ LMS::LMS()
 		LibrarianList.push_back(libtemp);//Add teacher to list of all active librarians
 	}
 	std::vector <BookCopy> temp = CopyList;
-	int counts=0;
+	int counts = 0;
 	int idx = 0;
 	for (int i = 0; i < temp.size(); i++)
 	{
@@ -190,7 +198,6 @@ LMS::~LMS()
 	BookReserverFile.close();
 	CopyReserverFile.close();
 }
-
 
 /**
  * LogIn Function:
@@ -338,7 +345,8 @@ void LMS::ExecuteCommand(int command)
 			break;
 		case 2://Reader wants to borrow book
 			copyvectemp = returnBookCopy();
-			dynamic_cast<Reader*>(loggedinUser)->BorrowBook(*copyvectemp, getCounter());
+			bookvectemp = returnBook();
+			dynamic_cast<Reader*>(loggedinUser)->BorrowBook(*copyvectemp, *bookvectemp, getCounter());
 			updateFiles();
 			break;
 		case 3://Reader wants to return book
@@ -969,11 +977,17 @@ void LMS::deleteOldUser(Reader &reader)
 							b1->getReserverList()->erase(b1->getReserverList()->begin() + k);
 						}
 					}
-					for (int k = 0; k < b1->returnBook()->getReserverList()->size(); k++)
+					for (int k = 0; k < BookList.size(); k++)
 					{
-						if (b1->returnBook()->getReserverList()->at(k) == s1->GetUser())
+						if (BookList[k].getISBN() == b1->getISBN())
 						{
-							b1->returnBook()->getReserverList()->erase(b1->getReserverList()->begin() + k);
+							for (int l = 0; l < BookList[k].getReserverList()->size(); l++)
+							{
+								if (BookList[k].getReserverList()->at(l) == s1->GetUser())
+								{
+									BookList[k].getReserverList()->erase(BookList[k].getReserverList()->begin() + l);
+								}
+							}
 						}
 					}
 				}
@@ -1006,11 +1020,17 @@ void LMS::deleteOldUser(Reader &reader)
 							b1->getReserverList()->erase(b1->getReserverList()->begin() + k);
 						}
 					}
-					for (int k = 0; k < b1->returnBook()->getReserverList()->size(); k++)
+					for (int k = 0; k < BookList.size(); k++)
 					{
-						if (b1->returnBook()->getReserverList()->at(k) == t1->GetUser())
+						if (BookList[k].getISBN() == b1->getISBN())
 						{
-							b1->returnBook()->getReserverList()->erase(b1->getReserverList()->begin() + k);
+							for (int l = 0; l < BookList[k].getReserverList()->size(); l++)
+							{
+								if (BookList[k].getReserverList()->at(l) == t1->GetUser())
+								{
+									BookList[k].getReserverList()->erase(BookList[k].getReserverList()->begin() + l);
+								}
+							}
 						}
 					}
 				}
