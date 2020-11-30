@@ -146,6 +146,32 @@ LMS::LMS()
 				BookList[q].getReserverList()->push_back(restemp);
 		}
 	}
+	for (int q = 0; q < StudentList.size(); q++)
+	{
+		for (int r = 0; r < CopyList.size(); r++)
+		{
+			for (int s = 0; s < CopyList[r].getReserverList()->size(); s++) 
+			{
+				if (CopyList[r].getReserverList()->at(s) == StudentList[q].GetUser())
+				{
+					StudentList[q].GetReservedBooks()->push_back(CopyList[r]);
+				}
+			}
+		}
+	}
+	for (int q = 0; q < TeacherList.size(); q++)
+	{
+		for (int r = 0; r < CopyList.size(); r++)
+		{
+			for (int s = 0; s < CopyList[r].getReserverList()->size(); s++)
+			{
+				if (CopyList[r].getReserverList()->at(s) == TeacherList[q].GetUser())
+				{
+					TeacherList[q].GetReservedBooks()->push_back(CopyList[r]);
+				}
+			}
+		}
+	}
 	updateBooks();
 	LogIn();//Get user to log in 
 }
