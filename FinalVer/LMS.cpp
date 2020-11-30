@@ -790,7 +790,7 @@ void LMS::recommend()
 	}
 	else
 	{
-		std::string cat = r1->GetBorrowedBooks()->end()->getCategory();
+		std::string cat = r1->GetBorrowedBooks()->back().getCategory();
 		for (int i = 0; i < temp.size(); i++)
 		{
 			if (temp[i].getCategory() == cat)

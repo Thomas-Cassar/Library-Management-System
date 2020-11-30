@@ -1,4 +1,4 @@
-978-1-61213-028-6 Fifty_Shades_Of_Gray E._L._James Erotic_Romance 0 Student1 443 453 371
+978-1-61213-028-6 Fifty_Shades_Of_Gray E._L._James Erotic_Romance 0 NULL 443 453 371
 978-1-61213-028-6 Fifty_Shades_Of_Gray E._L._James Erotic_Romance 1 NULL 60 70 363
 978-1-61213-028-6 Fifty_Shades_Of_Gray E._L._James Erotic_Romance 2 NULL 0 0 0
 978-0-43902-348-1 Hunger_Games Suzanne_Collins Science_Fiction sdfaLL NULL 0 0 0
@@ -8,7 +8,7 @@
 978-0-73492-137-4 Book_that_I_Should_Have_Read_Back_in_High_School Typical_Author_Name Genre_of_the_Book_that_I_Have_Named 60 NULL 0 0 0
 978-0-394-80016-5 Green_Eggs_And_Ham Dr.Seuss Children's_Literature 0gsfd NULL 0 0 0
 978-0-394-80016-5 Green_Eggs_And_Ham Dr.Seuss Children's_Literature 1dfag NULL 0 0 0
-9780230031067 Of_Mice_And_Men John_Steinbeck Tragedy 999 Teacher1 511 529 446
+9780230031067 Of_Mice_And_Men John_Steinbeck Tragedy 999 NULL 545 555 446
 978-0141180977 Death_Of_A_Salesman Arthur_Miller Tragedy kjdanfsbgikuhn34 NULL 0 0 0
 978-0141180977 Death_Of_A_Salesman Arthur_Miller Tragedy 3uhfdgjns NULL 0 0 0
 1497438098 Romeo_and_Juliet Shakespeare Tragedy dsakgjadsklf NULL 0 0 0
