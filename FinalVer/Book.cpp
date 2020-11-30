@@ -19,9 +19,9 @@ std::string Book::getISBN()
 {
 	return ISBN;
 }
-std::vector <std::string> Book::getReserverList()
+std::vector <std::string>* Book::getReserverList()
 {
-	return reserverList;
+	return &reserverList;
 }
 std::string Book::getTitle()
 {

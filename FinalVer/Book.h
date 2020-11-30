@@ -23,7 +23,7 @@ class Book
 		int getIndex();
 		int getCount();
 		int getFavor();
-		std::vector <std::string> getReserverList();
+		std::vector <std::string>* getReserverList();
 		void setISBN(std::string isbn);
 		void setTitle(std::string title);
 		void setAuthor(std::string author);

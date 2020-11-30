@@ -10,7 +10,7 @@
  * sets maxBorrowDate to 30
  */
 Student::Student()
-	:Reader("NULL","NULL",5,5,30)
+	:Reader("NULL","NULL",5,5,30,0)
 {
 	//Default set values that should be overwritten by reading in from a file
 }
@@ -27,7 +27,7 @@ Student::Student()
  * sets maxBorrowDate to 30
  */
 Student::Student(std::string user, std::string pswd)
-	:Reader(user,pswd, 5, 5, 30)
+	:Reader(user,pswd, 5, 5, 30, 0)
 {
 	//Default set values that should be overwritten by reading in from a file
 }

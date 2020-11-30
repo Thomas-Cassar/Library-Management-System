@@ -14,7 +14,7 @@ private:
     int penalty;
 public:
     Reader(std::string user, std::string pswd,int maxBorrowed,
-        int maxBorrowedCurrent,int maxBorrowDate);
+        int maxBorrowedCurrent,int maxBorrowDate, int penalty);
 
     //Getter functions
     std::vector<BookCopy>* GetBorrowedBooks();
@@ -34,7 +34,9 @@ public:
     //Command functions
     void BorrowBook(std::vector <BookCopy>& x, int date);
     void ReturnBooks(std::vector<BookCopy>& x, int date);
-    void ReserveBooks(std::vector<BookCopy>& x, int date);
+    void ReserveBooks(std::vector<BookCopy>& x, std::vector<Book>& y, int date);
+    void CancelReservation(std::vector<BookCopy>& x, std::vector<Book>& y, int date);
+    void RenewBook(std::vector<BookCopy>& x, int date);
     void Print();
 
     //Overloaded operators

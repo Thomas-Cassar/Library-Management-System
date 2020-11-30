@@ -2,11 +2,12 @@
 #include <ctime>
 
 Reader::Reader(std::string user, std::string pswd, int maxBorrowed,
-	int maxBorrowedCurrent, int maxBorrowDate)
-	:User(user,pswd),
+	int maxBorrowedCurrent, int maxBorrowDate, int penalty)
+	:User(user, pswd),
 	maxBorrowed(maxBorrowed),
 	maxBorrowedCurrent(maxBorrowedCurrent),
-	maxBorrowDate(maxBorrowDate)
+	maxBorrowDate(maxBorrowDate),
+	penalty(penalty)
 {
 
 }
@@ -149,8 +150,40 @@ void Reader::BorrowBook(std::vector <BookCopy>& x, int date)
 	{
 		if (idValue == x[i].getID())//Case where the book is in the copy vector
 		{
-			if (!x[i].getReserverList().empty())
+			if (!x[i].getReserverList()->empty())
 			{
+				if (x[i].returnBook()->getReserverList()->at(0) == GetUser())
+				{
+					std::cout << "You are the first reservee in the list!" << std::endl;
+					for (int j = 0; j < x.size(); j++)
+					{
+						if (x[i].getISBN() == x[j].getISBN() && x[j].get_available())
+						{
+							std::cout << "Copy with id " << x[j].getID() << " is available! Would you like to borrow it?" << std::endl;
+							std::cout << "Enter 0 for Yes, 1 for No" << std::endl;
+							int ans;
+							std::cin >> ans;
+							if (ans == 0)
+							{
+								x[j].setReaderName(GetUser());
+								x[j].set_start_date(current_date);
+								x[j].set_exp_date(current_date + GetMaxBorrowDate() - x[i].getReserverList()->size() / 20);
+								x[j].set_available(false);
+								GetBorrowedBooks()->push_back(x[j]);
+								std::cout << x[j].getTitle() << " has been successfully borrowed!" << std::endl;
+								return;
+							}
+							else if (ans == 1)
+							{
+								std::cout << "This copy was not borrowed!" << std::endl;
+							}
+							else
+							{
+								std::cout << "Wrong command!" << std::endl;
+							}
+						}
+					}
+				}
 				std::cout << "This book is not available!" << std::endl;
 				return;
 			}
@@ -158,7 +191,7 @@ void Reader::BorrowBook(std::vector <BookCopy>& x, int date)
 			{
 				x[i].setReaderName(GetUser());
 				x[i].set_start_date(current_date);
-				x[i].set_exp_date(current_date + GetMaxBorrowDate() - x[i].getReserverList().size()/20);
+				x[i].set_exp_date(current_date + GetMaxBorrowDate() - x[i].getReserverList()->size()/20);
 				x[i].set_available(false);
 				GetBorrowedBooks()->push_back(x[i]);
 				std::cout << x[i].getTitle() << " has been successfully borrowed!" << std::endl;
@@ -255,7 +288,7 @@ void Reader::ReturnBooks(std::vector<BookCopy>& x, int date)
 }
 
 //NEED TO FINISH
-void Reader::ReserveBooks(std::vector<BookCopy>& x, int date)
+void Reader::ReserveBooks(std::vector<BookCopy>& x, std::vector<Book>& y, int date)
 {
 	int i = 0;
 	for (int iter = 0; iter < float(clock()) / 1000; iter++)
@@ -266,7 +299,7 @@ void Reader::ReserveBooks(std::vector<BookCopy>& x, int date)
 		}
 	}
 	int current_date = i + date;
-	std::cout << "Enter the ID of the book you want to return: " << std::endl;
+	std::cout << "Enter the ID of the book you want to reserve: " << std::endl;
 	std::string id;
 	std::cin >> id;
 	for (i = 0; i < x.size(); i++)//Loop through all books
@@ -275,33 +308,137 @@ void Reader::ReserveBooks(std::vector<BookCopy>& x, int date)
 		{
 			for (int j = 0; j < GetBorrowedBooks()->size(); j++)//See if this reader has the book taken out
 			{
-				if (GetBorrowedBooks()->at(j).getID() == id)//Case where the reader does have the book taken out
+				//This function checks to see if any books are overdue
+				if (current_date > GetBorrowedBooks()->at(j).get_exp_date())//Case where the book was overdue
 				{
-					//This function checks to see if any books are overdue
-					//If said book is overdue then MaxBorrowed is decremented
-					if (current_date > GetBorrowedBooks()->at(j).get_exp_date())//Case where the book was overdue
-					{
-						std::cout << "You have overdue books. You can't reserve any books!" << std::endl;
-						return;
-					}
-					/*else if (GetMaxBorrowedCurrent() < GetMaxBorrowed())//Case where overdue and we add to max books allowed to be borrowed
-					{
-						std::cout << GetBorrowedBooks()->at(j).getTitle() << " was not overdue max books allowed to be taken out has been increased" << std::endl;
-						SetMaxBorrowedCurrent(GetMaxBorrowedCurrent() + 1);
-					}*/
-					//Return book
-					x[i].setReaderName("NULL");
-					x[i].set_available(true);
-					GetBorrowedBooks()->erase(GetBorrowedBooks()->begin() + j);
-					std::cout << "Book was returned successfully!!" << std::endl;
+					std::cout << "You have overdue books. You can't reserve any books!" << std::endl;
 					return;
 				}
 			}
-			//Case where the reader has not taken out this book
-			std::cout << "You do not have this book borrowed!" << std::endl;
+			if (x[i].getReaderName() == GetUser())
+			{
+				std::cout << "You are already borrowing this book!" << std::endl;
+				return;
+			}
+			for (int k = 0; k < x[i].getReserverList()->size(); k++)
+			{
+				if (x[i].getReserverList()->at(k) == GetUser())
+				{
+					std::cout << "You are already in the reservation list!" << std::endl;
+					return;
+				}
+			}
+			if (x[i].getReserverList()->empty())
+			{
+				x[i].set_reserve_date(current_date);
+			}
+			x[i].getReserverList()->push_back(GetUser());
+			for (int k = 0; k < y.size(); k++)
+			{
+				if (x[i].getISBN() == y[k].getISBN())
+				{
+					y[k].getReserverList()->push_back(GetUser());
+				}
+			}
+			ReaderReservedBooks.push_back(x[i]);
+			std::cout << "You have been added to the reservation list!" << std::endl;
 			return;
 		}
 	}
+	std::cout << "Could not find the book to reserve!" << std::endl;
+	return;
+}
+void Reader::CancelReservation(std::vector<BookCopy>& x, std::vector<Book>& y, int date)
+{
+	std::cout << "Enter the ID of the book you want to cancel reservation: " << std::endl;
+	std::string id;
+	std::cin >> id;
+	for (int i = 0; i < x.size(); i++)
+	{
+		if (id == x[i].getID())
+		{
+			for (int k = 0; k < x[i].getReserverList()->size(); k++)
+			{
+				if (x[i].getReserverList()->at(k) == GetUser())
+				{
+					x[i].getReserverList()->erase(x[i].getReserverList()->begin() + k);
+					for (int j = 0; j < y.size(); j++)
+					{
+						if (y[j].getISBN() == x[i].getISBN())
+						{
+							for (int s = 0; s < y[j].getReserverList()->size(); s++)
+							{
+								if (y[j].getReserverList()->at(s) == GetUser())
+								{
+									y[j].getReserverList()->erase(y[j].getReserverList()->begin() + s);
+									break;
+								}
+							}
+						}
+					}
+					for (int s = 0; s < ReaderReservedBooks.size(); s++)
+					{
+						if (x[i].getID() == ReaderReservedBooks[s].getID())
+						{
+							ReaderReservedBooks.erase(ReaderReservedBooks.begin() + s);
+							std::cout << "Cancelled reservation succesfully!" << std::endl;
+							return;
+						}
+					}
+				}
+			}
+		}
+		std::cout << "You have not reserved this book!" << std::endl;
+		return;
+	}
+	std::cout << "Book not found in library!" << std::endl;
+}
+
+void Reader::RenewBook(std::vector<BookCopy>& x, int date)
+{
+	int i = 0;
+	for (int iter = 0; iter < float(clock()) / 1000; iter++)
+	{
+		if (iter != 0 && iter % 5 == 0)
+		{
+			i++;
+		}
+	}
+	int current_date = i + date;
+	std::cout << "Enter the ID of the book to renew!" << std::endl;
+	std::string id;
+	std::cin >> id;
+	for (i = 0; i < x.size(); i++)
+	{
+		if (id == x[i].getID())
+		{
+			for (int j = 0; j < GetBorrowedBooks()->size(); j++)//See if this reader has the book taken out
+			{
+				//This function checks to see if any books are overdue
+				if (current_date > GetBorrowedBooks()->at(j).get_exp_date())//Case where the book was overdue
+				{
+					std::cout << "You have overdue books. You can't renew the book!" << std::endl;
+					return;
+				}
+			}
+			if (!x[i].getReserverList()->empty())
+			{
+				std::cout << "The book cannot be renewed as people are waiting in line!" << std::endl;
+				return;
+			}
+			for (int j = 0; j < GetBorrowedBooks()->size(); j++)//See if this reader has the book taken out
+			{
+				if (id == GetBorrowedBooks()->at(j).getID())
+				{
+					x[i].set_exp_date(current_date + GetMaxBorrowDate());
+					x[i].set_available(false);
+					std::cout << "Book has been succesfully renewed" << std::endl;
+				}
+			}
+			std::cout << "You are not borrowing this book!" << std::endl;
+		}
+	}
+	std::cout << "Book was not found in the library!" << std::endl;
 }
 /*
 * This function overloads the << ostream operator to be able to print all variables on one line of
@@ -315,8 +452,9 @@ std::ostream& operator << (std::ostream& out, Reader& reader)
 		reader.GetPswd() << ' ' <<
 		reader.GetMaxBorrowed() << ' ' <<
 		reader.GetMaxBorrowedCurrent() << ' ' <<
-		reader.GetMaxBorrowDate()
-		<< std::endl;
+		reader.GetMaxBorrowDate() << ' ' <<
+		reader.GetPenalty()
+		<< std::endl; 
 	return out;
 }
 
@@ -328,7 +466,7 @@ std::istream& operator >> (std::istream& in, Reader& reader)
 {
 	//Temp variables for reading in values
 	std::string Username, Password;
-	int maxborrow = 5, maxborrowcur = 5, maxborrowper = 30;
+	int maxborrow = 5, maxborrowcur = 5, maxborrowper = 30, pen = 0;
 
 	//Take in values from istream
 	in >>
@@ -336,7 +474,8 @@ std::istream& operator >> (std::istream& in, Reader& reader)
 		Password >>
 		maxborrow >>
 		maxborrowcur >>
-		maxborrowper;
+		maxborrowper >>
+		pen;
 
 
 	//Set variables based on values taken in
@@ -345,6 +484,6 @@ std::istream& operator >> (std::istream& in, Reader& reader)
 	reader.SetMaxBorrowed(maxborrow);
 	reader.SetMaxBorrowedCurrent(maxborrowcur);
 	reader.SetMaxBorrowDate(maxborrowper);
-
+	reader.SetPenalty(pen);
 	return in;
 }

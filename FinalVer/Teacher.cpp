@@ -9,7 +9,7 @@
  * sets maxBorrowDate to 30
  */
 Teacher::Teacher()
-	:Reader("NULL", "NULL", 5, 5, 30)
+	:Reader("NULL", "NULL", 5, 5, 30,0)
 {
 	//Default set values that should be overwritten by reading in from a file
 }
@@ -26,7 +26,7 @@ Teacher::Teacher()
  * sets maxBorrowDate to 30
  */
 Teacher::Teacher(std::string user, std::string pswd)
-	:Reader(user, pswd, 5, 5, 30)
+	:Reader(user, pswd, 5, 5, 30, 0)
 {
 	//Default set values that should be overwritten by reading in from a file
 }

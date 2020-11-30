@@ -232,11 +232,15 @@ void LMS::PrintCommands()
 	{
 		std::cout << "************************************************" << std::endl;
 		std::cout << "Reader " << loggedinUser->GetUser() << " enter a command from the list below:" << std::endl;
-		std::cout << "\t1. Get Recommended Books" << std::endl;
+		std::cout << "\t1. Search Books" << std::endl;
 		std::cout << "\t2. Borrow Books" << std::endl;
 		std::cout << "\t3. Return Books" << std::endl;
-		std::cout << "\t4. Check Current Date" << std::endl;
-		std::cout << "\t5. View My Information" << std::endl;
+		std::cout << "\t4. Reserve Books" << std::endl;
+		std::cout << "\t5. Cancel Reservations" << std::endl;
+		std::cout << "\t6. Renew Books" << std::endl;
+		std::cout << "\t7. Get Recommended Books" << std::endl;
+		std::cout << "\t8. My Information" << std::endl;
+		std::cout << "\t9. Change Password" << std::endl;
 		std::cout << "\t0. Log Out" << std::endl;
 	}
 	else if (dynamic_cast<Librarian*>(loggedinUser) != nullptr)
@@ -266,9 +270,10 @@ void LMS::ExecuteCommand(int command)
 		switch (command)
 		{
 			std::vector<BookCopy>* copyvectemp; //Pointer that will store address of booklist
+			std::vector<Book>* bookvectemp;
 
 		case 1: //Get recommendations
-			recommend();
+			searchBooks();
 			break;
 		case 2://Reader wants to borrow book
 			copyvectemp = returnBookCopy();
@@ -281,10 +286,30 @@ void LMS::ExecuteCommand(int command)
 			updateFiles();
 			break;
 		case 4: //Checks current date
-			std::cout << "The current date is: " << /*checkDates(mainLMS, t)*/"FIX" << std::endl;
+			copyvectemp = returnBookCopy();
+			bookvectemp = returnBook();
+			dynamic_cast<Reader*>(loggedinUser)->ReserveBooks(*copyvectemp, *bookvectemp, getCounter());
+			updateFiles();
 			break;
 		case 5://Prints Reader information
-			dynamic_cast<Reader*>(loggedinUser) ->Print();
+			copyvectemp = returnBookCopy();
+			bookvectemp = returnBook();
+			dynamic_cast<Reader*>(loggedinUser)->CancelReservation(*copyvectemp, *bookvectemp, getCounter());
+			updateFiles();
+			break;
+		case 6:
+			copyvectemp = returnBookCopy();
+			dynamic_cast<Reader*>(loggedinUser)->RenewBook(*copyvectemp, getCounter());
+			updateFiles();
+			break;
+		case 7:
+			recommend();
+			break;
+		case 8:
+			dynamic_cast<Reader*>(loggedinUser)->Print();
+			break;
+		case 9:
+			ChangePassword();
 			break;
 		case 0: //Quit
 			break;
@@ -715,7 +740,10 @@ void LMS::addBooks()
 		id += nums[rand() % (sizeof(nums) - 1)];
 	}
 	book.setID(id);
-	book.set_start_date(counter);
+	book.setReaderName("NULL");
+	book.set_start_date(0);
+	book.set_exp_date(0);
+	book.set_reserve_date(0);
 	x = 0;
 	for (int i = 0; i < BookList.size(); i++)
 	{
@@ -819,18 +847,18 @@ void LMS::deleteOldUser(Reader &reader)
 				for (int j = 0; j < s1->GetReservedBooks()->size(); j++)
 				{
 					BookCopy* b1 = &s1->GetReservedBooks()->at(j);
-					for (int k = 0; k < b1->getReserverList().size(); k++)
+					for (int k = 0; k < b1->getReserverList()->size(); k++)
 					{
-						if (b1->getReserverList().at(k) == s1->GetUser())
+						if (b1->getReserverList()->at(k) == s1->GetUser())
 						{
-							b1->getReserverList().erase(b1->getReserverList().begin() + k);
+							b1->getReserverList()->erase(b1->getReserverList()->begin() + k);
 						}
 					}
-					for (int k = 0; k < b1->returnBook()->getReserverList().size(); k++)
+					for (int k = 0; k < b1->returnBook()->getReserverList()->size(); k++)
 					{
-						if (b1->returnBook()->getReserverList().at(k) == s1->GetUser())
+						if (b1->returnBook()->getReserverList()->at(k) == s1->GetUser())
 						{
-							b1->returnBook()->getReserverList().erase(b1->getReserverList().begin() + k);
+							b1->returnBook()->getReserverList()->erase(b1->getReserverList()->begin() + k);
 						}
 					}
 				}
@@ -856,18 +884,18 @@ void LMS::deleteOldUser(Reader &reader)
 				for (int j = 0; j < t1->GetReservedBooks()->size(); j++)
 				{
 					BookCopy* b1 = &t1->GetReservedBooks()->at(j);
-					for (int k = 0; k < b1->getReserverList().size(); k++)
+					for (int k = 0; k < b1->getReserverList()->size(); k++)
 					{
-						if (b1->getReserverList().at(k) == t1->GetUser())
+						if (b1->getReserverList()->at(k) == t1->GetUser())
 						{
-							b1->getReserverList().erase(b1->getReserverList().begin() + k);
+							b1->getReserverList()->erase(b1->getReserverList()->begin() + k);
 						}
 					}
-					for (int k = 0; k < b1->returnBook()->getReserverList().size(); k++)
+					for (int k = 0; k < b1->returnBook()->getReserverList()->size(); k++)
 					{
-						if (b1->returnBook()->getReserverList().at(k) == t1->GetUser())
+						if (b1->returnBook()->getReserverList()->at(k) == t1->GetUser())
 						{
-							b1->returnBook()->getReserverList().erase(b1->getReserverList().begin() + k);
+							b1->returnBook()->getReserverList()->erase(b1->getReserverList()->begin() + k);
 						}
 					}
 				}
@@ -1063,8 +1091,8 @@ void LMS::searchBooks()
 				temp.push_back(BookList[j]);
 			}
 		}
-		std::sort(temp.begin(), temp.end(), [](Book& b1, Book& b2) {return b1.getReserverList().size() >
-			b2.getReserverList().size();});
+		std::sort(temp.begin(), temp.end(), [](Book& b1, Book& b2) {return b1.getReserverList()->size() >
+			b2.getReserverList()->size();});
 		for (int j = 0; j < temp.size(); j++)
 		{
 			b1 = temp[j];
@@ -1095,8 +1123,8 @@ void LMS::searchBooks()
 				temp.push_back(BookList[j]); 
 			}
 		}
-		std::sort(temp.begin(), temp.end(), [](Book& b1, Book& b2) {return b1.getReserverList().size() >
-			b2.getReserverList().size();});
+		std::sort(temp.begin(), temp.end(), [](Book& b1, Book& b2) {return b1.getReserverList()->size() >
+			b2.getReserverList()->size();});
 		for (int j = 0; j < temp.size(); j++)
 		{
 			b1 = temp[j];
