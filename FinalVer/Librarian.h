@@ -1,8 +1,7 @@
 #pragma once
 #include "User.h"
 #include <iostream>
-class Librarian :
-    public User
+class Librarian : public User
 {
 private:
 public:

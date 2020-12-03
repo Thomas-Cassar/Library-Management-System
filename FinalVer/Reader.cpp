@@ -1,27 +1,52 @@
 #include "Reader.h"
 #include <ctime>
 
+/**
+ * @brief parameterized Reader constructor
+ * 
+ * @param user - string
+ * 
+ * @param pswd - string
+ * 
+ * @param maxBorrowed - int
+ * 
+ * @param maxBorrowedCurrent - int
+ * 
+ * @param maxBorrowDate - int
+ * 
+ * @param penalty - int
+ * 
+ * @postcondition new Reader object created
+ * 
+ * @postcondition Username set to param user
+ *				Password set to param pswd
+ *				maxBorrowed set to param maxBorrowed
+ *				maxBorrowedCurrent set to param maxBorrowedCurrent
+ *				maxBorrowDate set to param maxBorrowDate
+ *				penalty set to param penalty
+*/
 Reader::Reader(std::string user, std::string pswd, int maxBorrowed,
-	int maxBorrowedCurrent, int maxBorrowDate, int penalty)
-	:User(user, pswd),
+	int maxBorrowedCurrent, int maxBorrowDate, int penalty) : User(user, pswd),
 	maxBorrowed(maxBorrowed),
 	maxBorrowedCurrent(maxBorrowedCurrent),
 	maxBorrowDate(maxBorrowDate),
 	penalty(penalty)
 {
-
 }
 
 /**
- * @return vector<BookCopy> - ReaderBorrowedBooks of
+ * @return vector<BookCopy>* - ReaderBorrowedBooks of
  *  current Reader object
  */
- //
 std::vector<BookCopy>* Reader::GetBorrowedBooks()
 {
 	return &ReaderBorrowedBooks;
 }
 
+/**
+ * @return vector<BookCopy>* - ReaderReservedBooks of
+ *  current Reader object
+*/
 std::vector<BookCopy>* Reader::GetReservedBooks()
 {
 	return &ReaderReservedBooks;
@@ -42,7 +67,7 @@ int Reader::GetMaxBorrowedCurrent()
 {
 	return maxBorrowedCurrent;
 }
-//
+
 /**
  * @return int - maxBorrowDate of current Reader object
  */
@@ -51,16 +76,20 @@ int Reader::GetMaxBorrowDate()
 	return maxBorrowDate;
 }
 
+/**
+ * @return int - penalty of current Reader object
+*/
 int Reader::GetPenalty()
 {
 	return penalty;
 }
 
-//
+
 /**
- * sets ReaderBorrowedBooks vector of current Reader object
- *  to param bBooks
  * @param bBooks - vector<BookCopy>
+ * 
+ * @postcondition ReaderBorrowedBooks vector of current Reader 
+ *  set to param bBooks
  */
 void Reader::SetBorrowedBooks(std::vector<BookCopy> bBooks)
 {
@@ -68,8 +97,9 @@ void Reader::SetBorrowedBooks(std::vector<BookCopy> bBooks)
 }
 
 /**
- * sets MaxBorrowed of current Reader object to param maxBorrowed
  * @param maxBorrowed - int
+ * 
+ * @postcondition MaxBorrowed of current Reader set to param maxBorrowed
  */
 void Reader::SetMaxBorrowed(int maxBorrowed)
 {
@@ -77,30 +107,35 @@ void Reader::SetMaxBorrowed(int maxBorrowed)
 }
 
 /**
- * sets MaxBorrowedCurrent of current Reader object to param maxBorrowedCurrent
  * @param maxBorrowedCurrent - int
+ * 
+ * @postcondition MaxBorrowedCurrent of current Reader set to param maxBorrowedCurrent
  */
 void Reader::SetMaxBorrowedCurrent(int maxBorrowedCurrent)
 {
 	this->maxBorrowedCurrent = maxBorrowedCurrent;
 }
-//
-
-
 
 /**
- * sets maxBorrowDate of current Reader object to param maxBorrowDate
  * @param maxBorrowDate - int
+ * 
+ * @postcondition maxBorrowDate of current Reader set to param maxBorrowDate
 */
 void Reader::SetMaxBorrowDate(int maxBorrowDate)
 {
 	this->maxBorrowDate = maxBorrowDate;
 }
 
+/**
+ * @param pnlty - int
+ * 
+ * @postcondition penalty of current Reader set to param pnlty
+*/
 void Reader::SetPenalty(int pnlty)
 {
 	penalty = pnlty;
 }
+
 /*
 * This fuction is called from the main loop if the user wants to borrow a book
 */
@@ -381,6 +416,7 @@ void Reader::ReserveBooks(std::vector<BookCopy>& x, std::vector<Book>& y, int da
 	std::cout << "Could not find the book to reserve!" << std::endl;
 	return;
 }
+
 void Reader::CancelReservation(std::vector<BookCopy>& x, std::vector<Book>& y, int date)
 {
 	std::cout << "Enter the ID of the book you want to cancel reservation: " << std::endl;
@@ -475,9 +511,10 @@ void Reader::RenewBook(std::vector<BookCopy>& x, int date)
 	}
 	std::cout << "Book was not found in the library!" << std::endl;
 }
+
 /*
 * This function overloads the << ostream operator to be able to print all variables on one line of
-* a reader
+*  an output stream
 */
 std::ostream& operator << (std::ostream& out, Reader& reader)
 {
@@ -495,7 +532,7 @@ std::ostream& operator << (std::ostream& out, Reader& reader)
 
 /*
 * This function overloads the >> istream operator to be able to read all variables on one line of
-* a reader
+*  an input stream
 */
 std::istream& operator >> (std::istream& in, Reader& reader)
 {

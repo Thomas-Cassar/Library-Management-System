@@ -3,8 +3,7 @@
 #include <vector>
 #include "BookCopy.h"
 
-class Reader :
-    public User
+class Reader : public User
 {
 private:
     std::vector<BookCopy> ReaderBorrowedBooks;//Stores all books that reader has borrowed

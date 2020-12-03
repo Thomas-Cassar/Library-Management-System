@@ -1,13 +1,25 @@
 #include "User.h"
 
-
-User::User(std::string user, std::string pswd)
-	:Username(user),
-	Password(pswd)
+/**
+ * @brief parameterized User constructor
+ * 
+ * @param user - string
+ * 
+ * @param pswd - string
+ * 
+ * @postcondition new User object created
+ * 
+ * @postcondition Username set to param user
+ * 
+ * @postcondition Password set to param pswd
+*/
+User::User(std::string user, std::string pswd) : Username(user), Password(pswd)
 {
-
 }
 
+/**
+ * @brief User destructor
+*/
 User::~User()
 {
 }
@@ -17,7 +29,7 @@ User::~User()
  */
 std::string User::GetUser()
 {
-	return Username;
+	return this->Username;
 }
 
 /**
@@ -25,27 +37,32 @@ std::string User::GetUser()
  */
 std::string User::GetPswd()
 {
-	return Password;
+	return this->Password;
 }
 
 /**
- * sets Username of current Student object to param usr
  * @param usr - string
+ * 
+ * @postcondition Username of current Student set to param usr
  */
 void User::SetUser(std::string usr)
 {
-	Username = usr;
+	this->Username = usr;
 }
 
 /**
- * sets Password of current Student object to param pswd
  * @param pswd - string
+ * 
+ * @postcondition Password of current Student set to param pswd
  */
 void User::SetPswd(std::string pswd)
 {
-	Password = pswd;
+	this->Password = pswd;
 }
 
+/**
+ * @brief prints details for the current User object
+*/
 void User::Print()
 {
 	//Should be overloaded

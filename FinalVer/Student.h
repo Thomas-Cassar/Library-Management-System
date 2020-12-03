@@ -2,8 +2,7 @@
 
 #include "Reader.h"
 #include <string>
-class Student:
-	public Reader
+class Student : public Reader
 {
 private:
 public:

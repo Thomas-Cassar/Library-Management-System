@@ -5,10 +5,10 @@
 #include <algorithm>
 
 /**
- * Constructor for class:
- * Opens files
- * Reads files and adds to the respective vector that we use to store the values
- */
+ * @brief default LMS constructor
+ *  opens files
+ *  reads files and adds to the respective vector used to store values
+*/
 LMS::LMS()
 {
 	//Initial Date of LMS
@@ -61,6 +61,7 @@ LMS::LMS()
 		std::cerr << "Could not open book reserver file";
 		exit(1);
 	}
+
 	//Read from files and store in vectors
 	//Book copy reading
 	BookCopy booktemp;
@@ -106,12 +107,14 @@ LMS::LMS()
 		teatemp.SetBorrowedBooks(tempbooklist);//Add books that the user has taken out to that user
 		TeacherList.push_back(teatemp);//Add teacher to list of all active teachers
 	}
+
 	//Librarian reading
 	Librarian libtemp;
 	while (LibrarianFile >> libtemp)
 	{
 		LibrarianList.push_back(libtemp);//Add teacher to list of all active librarians
 	}
+
 	std::vector <BookCopy> temp = CopyList;
 	int counts = 0;
 	int idx = 0;
@@ -133,6 +136,7 @@ LMS::LMS()
 			BookList.push_back(b1);
 		}
 	}
+
 	std::string restemp = "";
 	for (int q = 0; q < CopyList.size(); q++)
 	{
@@ -184,9 +188,9 @@ LMS::LMS()
 	LogIn();//Get user to log in 
 }
 
-/*
-* Destructor for the class;
-* Makes sure all opened files are closed
+/**
+ * @brief LMS destructor
+ *  ensures that all files that were opened get closed
 */
 LMS::~LMS()
 {
@@ -200,11 +204,10 @@ LMS::~LMS()
 }
 
 /**
- * LogIn Function:
- * Called at start of program after construction of an LMS class
- * Gets user input for password and username
- * If valid the function returns the address of the student that is logged in
- */
+ * @brief called at the start of the program after LMS constructor is called
+ *  gets user input for username and password
+ *  if both are valid, the function returns the address of the user that is logged in
+*/
 void LMS::LogIn()
 {
 	std::string tempusr = "", temppswd = "";//Vars for storing input
@@ -249,6 +252,7 @@ void LMS::LogIn()
 			}
 		}
 	}
+
 	//Loop through all teachers
 	for (auto& i : TeacherList)
 	{
@@ -267,6 +271,7 @@ void LMS::LogIn()
 			}
 		}
 	}
+
 	//Loop through all librarians
 	for (auto& i : LibrarianList)
 	{
@@ -280,20 +285,20 @@ void LMS::LogIn()
 			}
 			else//Case where entered password is incorrect
 			{
-				std::cout << "Wrong password" << std::endl;
+				std::cout << "Wrong password." << std::endl;
 				exit(0);
 			}
 		}
 	}
 
 	//Case where entered username is not found
-	std::cout << "User not found" << std::endl;
+	std::cout << "User not found." << std::endl;
 	exit(0);
 }
 
 /**
- * Prints all commands possible for the following user
- */
+ * @brief prints all commands possible for the following user
+*/
 void LMS::PrintCommands()
 {
 	if (dynamic_cast<Reader*>(loggedinUser)!=nullptr)
@@ -328,6 +333,11 @@ void LMS::PrintCommands()
 
 }
 
+/**
+ * @brief executes a specific command corresponding to param command entered by the user
+ * 
+ * @param command - int
+*/
 void LMS::ExecuteCommand(int command)
 {
 	std::string userin;
@@ -447,21 +457,26 @@ void LMS::ExecuteCommand(int command)
 }
 
 /**
- * @return vector<BookCopy> pointer - points to the list of books
- */
+ * @return vector<BookCopy>* - points to the list of BookCopy objects
+*/
 std::vector<BookCopy>* LMS::returnBookCopy()
 {
 	return &CopyList;
 }
 
+/**
+ * @return vector<Book>* - booklist of LMS
+*/
 std::vector<Book>* LMS::returnBook()
 {
 	return &BookList;
 }
 
 /**
- * Increments counter - the number of days since 01/01/01
- */
+ * @brief increments the counter - number of days since 01/01/01
+ * 
+ * @postcondition the value of the counter has been increased by one (1)
+*/
 void LMS::incCounter()
 {
 	counter++;
@@ -469,33 +484,35 @@ void LMS::incCounter()
 
 /**
  * @return string - the string for LMSDate
- */
+*/
 std::string LMS::getDate()
 {
 	return LMSDate;
 }
 
 /**
- * sets counter to param counter
  * @param counter - int
- */
+ * 
+ * @postcondition counter set to param counter
+*/
 void LMS::setCounter(int counter)
 {
 	this->counter = counter;
 }
 
 /**
- * @return int - number of days passed since 01/01/01
- */
+ * @return int - number of days passed since 01/01/01 
+*/
 int LMS::getCounter()
 {
 	return counter;
 }
 
 /**
- * sets date to param date
  * @param date - string
- */
+ * 
+ * @postcondition LMSDate set to param date
+*/
 void LMS::setDate(std::string date)
 {
 	LMSDate = date;
@@ -595,6 +612,9 @@ void LMS::updateFiles()
 	}
 }
 
+/**
+ * @brief updates the books in the CopyList
+*/
 void LMS::updateBooks()
 {
 	for (int i = 0; i < CopyList.size(); i++)
@@ -609,6 +629,7 @@ void LMS::updateBooks()
 		}
 	}
 }
+
 /*
 *The following fuction increments the date and returns a string representing the
 * current date
@@ -836,6 +857,10 @@ void LMS::recommend()
 	}
 }
 
+/**
+ * @brief creates a new BookCopy object using ISBN, title, author, and category entered by the user
+ *  adds this BookCopy to the LMS
+*/
 void LMS::addBooks()
 {
 	BookCopy book;
@@ -888,6 +913,9 @@ void LMS::addBooks()
 	std::cout << "Book successfully added to library!" << std::endl;
 }
 
+/**
+ * @brief deletes a BookCopy from the LMS corresponding to an entered book ID
+*/
 void LMS::deleteBooks()
 {
 	BookCopy book;
@@ -950,6 +978,11 @@ void LMS::deleteBooks()
 	}
 }
 
+/**
+ * @brief deletes a user (param &reader) from the LMS
+ * 
+ * @param reader - Reader
+*/
 void LMS::deleteOldUser(Reader &reader)
 {
 	int flg = 0;
@@ -1044,6 +1077,9 @@ void LMS::deleteOldUser(Reader &reader)
 	std::cout << "Reader was not found in the system!" << std::endl;
 }
 
+/**
+ * @brief searches for a specific user in the LMS based on an entered username
+*/
 void LMS::searchUser()
 {
 	Librarian l;
@@ -1097,6 +1133,10 @@ void LMS::searchUser()
 	}
 	std::cout << "User was not found in the system!" << std::endl;
 }
+
+/**
+ * @brief adds a new user (Librarian/Student/Teacher) to the LMS
+*/
 void LMS::addUser()
 {
 	int ch;
@@ -1160,6 +1200,10 @@ void LMS::addUser()
 	}
 	std::cout << "New user added succesfully!" << std::endl;
 }
+
+/**
+ * @brief allows user to search for a book based on ISBN, Title, Author, or Category
+*/
 void LMS::searchBooks()
 {
 	std::string input;
@@ -1278,8 +1322,15 @@ void LMS::searchBooks()
 		}
 		return;
 	}
-
 }
+
+/**
+ * @brief allows the current user to change their password
+ *  prompts user to input their current password
+ *  - if correct password is entered, then the user can enter a new password
+ *  - if incorrect password is entered, then the user is informed that they cannot
+ *     change their password
+*/
 void LMS::ChangePassword()
 {
 	std::cout << "Enter your old password: " << std::endl;
@@ -1312,6 +1363,10 @@ void LMS::ChangePassword()
 		std::cout << "Your password has been changed!" << std::endl;
 	}
 }
+
+/**
+ * @brief prints out relevant info for the current user
+*/
 void LMS::myInfo()
 {
 	if (dynamic_cast<Reader*>(loggedinUser) != nullptr)

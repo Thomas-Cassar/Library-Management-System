@@ -1,12 +1,20 @@
 #include "BookCopy.h"
 
 /**
- * default BookCopy constructor
- * creates a new BookCopy object
- * sets ISBN, Title, Author, Category, ID, readerName to empty string
- * sets start_date to 0
- * sets exp_date to 30
- */
+ * @brief default BookCopy constructor
+ * 
+ * @postcondition creates a new BookCopy object
+ * 
+ * @postcondition sets ID and readerName to empty string ("")
+ * 
+ * @postcondition sets start_date to 0
+ * 
+ * @postcondition sets exp_date to 30
+ * 
+ * @postcondition sets reserve_date to 0
+ * 
+ * @postcondition sets available to true
+*/
 BookCopy::BookCopy()
 {
 	ID = "";
@@ -17,28 +25,45 @@ BookCopy::BookCopy()
 	available = true;
 }
 
-/**
- * parameterized BookCopy constructor
- * @param isbn - string
- * @param title - string
- * @param author - string
- * @param category - string
- * @param id - string
- * @param reader_name - string
- * @param startDate - string
- * @param expDate - string
- * creates a new BookCopy object
- * sets ISBN to param isbn
- * sets Title to param title
- * sets Author to param author
- * sets Category to param category
- * sets ID to param id
- * sets readerName to param reader_name
- * sets start_date to param startDate
- * sets exp_date to param expDate
+
+ /**
+  * @brief parameterized BookCopy constructor
+  *
+  * @param isbn - string
+  * 
+  * @param title - string
+  * 
+  * @param author - string
+  * 
+  * @param category - string
+  * 
+  * @param id - string
+  * 
+  * @param reader_name - string
+  * 
+  * @param startDate - int
+  * 
+  * @param expDate - int
+  * 
+  * @param resData - int
+  * 
+  * @postcondition creates a new BookCopy object
+  *
+  * @postcondition sets ISBN to param isbn
+  *				sets Title to param title
+  *				sets Author to param author
+  *				sets Category to param category
+  *				sets index, count, and favor to 0
+  *				sets ID to param id
+  *				sets readerName to param reader_name
+  *				sets start_date to param startDate
+  *				sets exp_date to param expDate
+				sets reserve_date to param resDate
+  *
+  * @postcondition sets available to true
  */
 BookCopy::BookCopy(std::string isbn, std::string title, std::string author, std::string category, std::string id, std::string reader_name,
-	int startDate, int expDate, int resDate) :Book (isbn,title,author,category,0,0,0)
+	int startDate, int expDate, int resDate) : Book (isbn, title, author, category, 0, 0, 0)
 {
 	ID = id;
 	readerName = reader_name;
@@ -48,19 +73,21 @@ BookCopy::BookCopy(std::string isbn, std::string title, std::string author, std:
 }
 
 /**
- * @return string - ISBN of current BookCopy object
- */
-/**
  * @return string - ID of current BookCopy object
  */
 std::string BookCopy::getID()
 {
 	return ID;
 }
+
+/**
+ * @return Book* - book of current BookCopy
+*/
 Book* BookCopy::returnBook()
 {
 	return &book;
 }
+
 /**
  * @return string - readerName of current BookCopy object
  */
@@ -68,7 +95,6 @@ std::string BookCopy::getReaderName()
 {
 	return readerName;
 }
-
 
 /**
  * @return string - start_date of current BookCopy object
@@ -86,35 +112,46 @@ int BookCopy::get_exp_date()
 	return exp_date;
 }
 
+/**
+ * @return int - reserve_date of current BookCopy object
+*/
 int BookCopy::get_reserve_date()
 {
 	return reserve_date;
 }
 
+/**
+ * @return bool - availability of current BookCopy object
+*/
 bool BookCopy::get_available()
 {
 	return available;
 }
-/**
- * sets ISBN of current BookCopy object to param isbn
- * @param isbn - string
- */
 
 /**
- * sets ID of current BookCopy object to param id
  * @param id - string
+ * 
+ * @postcondition ID of current BookCopy set to param id
  */
 void BookCopy::setID(std::string id)
 {
 	ID = id;
 }
+
+/**
+ * @param book - Book&
+ * 
+ * @postcondition book of current BookCopy set to param book
+*/
 void BookCopy::setBook(Book& book)
 {
 	this->book = book;
 }
+
 /**
- * sets readerName of current BookCopy object to param reader_name
  * @param reader_name - string
+ * 
+ * @postcondition readerName of current BookCopy set to param reader_name
  */
 void BookCopy::setReaderName(std::string reader_name)
 {
@@ -122,8 +159,9 @@ void BookCopy::setReaderName(std::string reader_name)
 }
 
 /**
- * sets start_date of current BookCopy object to param startDate
  * @param startDate - string
+ * 
+ * @postcondition start_date of current BookCopy set to param startDate
  */
 void BookCopy::set_start_date(int startDate)
 {
@@ -131,19 +169,30 @@ void BookCopy::set_start_date(int startDate)
 }
 
 /**
- * sets exp_date of current BookCopy object to param expDate
  * @param expDate - string
+ * 
+ * @postcondition exp_date of current BookCopy set to param expDate
  */
 void BookCopy::set_exp_date(int expDate)
 {
 	exp_date = expDate;
 }
 
+/**
+ * @param res - int
+ * 
+ * @postcondition reserve_date of current BookCopy set to param res
+*/
 void BookCopy::set_reserve_date(int res)
 {
 	 reserve_date = res;
 }
 
+/**
+ * @param avl - bool
+ * 
+ * @postcondition availability (var. available) of current BookCopy set to param avl
+*/
 void BookCopy::set_available(bool avl)
 {
 	available = avl;

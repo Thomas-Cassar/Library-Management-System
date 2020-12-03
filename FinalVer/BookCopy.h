@@ -3,8 +3,7 @@
 #include <vector>
 #include <iostream>
 #include "Book.h"
-class BookCopy
-	:public Book
+class BookCopy : public Book
 {
 private:
 	Book book;
