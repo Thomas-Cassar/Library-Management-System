@@ -46,6 +46,7 @@ int main()
 		mainLMS.PrintCommands();
 		std::cin >> command;
 		mainLMS.ExecuteCommand(command);
+		mainLMS.AutoRemove();
 		mainLMS.updateBooks();
 	}
 

@@ -301,7 +301,7 @@ void Reader::ReturnBooks(std::vector<BookCopy>& x, int date)
 {
 	//First we calculate the value of the date
 	std::string idValue = "";
-	int i = 0, j;
+	int i = 0, j, u = 0;
 	std::string reserveAnswer = "";
 
 	for (int iter = 0; iter < float(clock()) / 1000; iter++)
@@ -338,6 +338,15 @@ void Reader::ReturnBooks(std::vector<BookCopy>& x, int date)
 						SetMaxBorrowedCurrent(GetMaxBorrowedCurrent() + 1);
 					}*/
 					//Return book
+					for (int iter = 0; iter < float(clock()) / 1000; iter++)
+					{
+						if (iter != 0 && iter % 5 == 0)
+						{
+							u++;
+						}
+					}
+					current_date = u + date;
+					x[i].set_reserve_date(current_date);
 					x[i].setReaderName("NULL");
 					x[i].set_available(true);
 					GetBorrowedBooks()->erase(GetBorrowedBooks()->begin() + j);

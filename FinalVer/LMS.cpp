@@ -453,6 +453,7 @@ void LMS::ExecuteCommand(int command)
 			break;
 		}
 	}
+	
 	std::cout << std::endl;
 }
 
@@ -1386,5 +1387,48 @@ void LMS::myInfo()
 		std::cout << "Here is your information: " << std::endl;
 		std::cout << "Username: " << loggedinUser->GetUser() << std::endl;
 		std::cout << "Password: " << loggedinUser->GetPswd() << std::endl;
+	}
+}
+
+void LMS::AutoRemove() {
+	std::vector<BookCopy>* x = &CopyList;
+	int u = 0;
+	for (int iter = 0; iter < float(clock()) / 1000; iter++)
+	{
+		if (iter != 0 && iter % 5 == 0)
+		{
+			u++;
+		}
+	}
+	int temp = getCounter() + u;
+	int kicked = 0;
+	int j = 0;
+	for (int i = 0; i < x->size(); i++) {
+		if (!(x->at(i).get_available())) {
+			continue;
+		}
+		int retDate = x->at(i).get_reserve_date();
+		kicked = (temp - retDate) / 5;
+		std::vector<std::string>* res = x->at(i).getReserverList();
+		while (j < kicked && res->size() > 0) {
+			res->erase(res->begin());
+			j++;
+		}
+		j = 0;
+		bool flag = true;
+		for (int k = 0; k < BookList.size(); k++) {
+			if (x->at(i).getISBN() == BookList[k].getISBN() && flag) {
+				flag = false;
+				for (int l = 0; l < kicked; l++) {
+					if (BookList[k].getReserverList()->size() == 0) {
+						continue;
+					}
+					BookList[k].getReserverList()->erase(BookList[k].getReserverList()->begin());
+				}
+			}
+		}
+		x->at(i).setReserverList(*res);
+		
+		
 	}
 }

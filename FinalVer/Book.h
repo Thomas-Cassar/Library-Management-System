@@ -24,6 +24,7 @@ public:
 	int getCount();
 	int getFavor();
 	std::vector <std::string>* getReserverList();
+	void setReserverList(std::vector <std::string> x);
 	void setISBN(std::string isbn);
 	void setTitle(std::string title);
 	void setAuthor(std::string author);

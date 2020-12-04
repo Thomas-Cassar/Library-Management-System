@@ -54,6 +54,7 @@ public:
 	void LogIn();
 	void PrintCommands();
 	void ExecuteCommand(int command);
+	void AutoRemove();
 	void incCounter();
 	void updateFiles();
 	void recommend();

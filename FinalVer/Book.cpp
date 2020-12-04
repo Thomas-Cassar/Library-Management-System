@@ -186,6 +186,10 @@ void Book::setFavor(int fvr)
 	favor = fvr;
 }
 
+void Book::setReserverList(std::vector <std::string> x) {
+	reserverList = x;
+}
+
 
 /**
  * @brief overloaded << operator
