@@ -1,2 +1,1 @@
 Teacher1 Pass 7 7 15 1
-s s 5 5 30 0
