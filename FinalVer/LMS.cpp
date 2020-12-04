@@ -1409,24 +1409,22 @@ void LMS::AutoRemove() {
 		}
 		int retDate = x->at(i).get_reserve_date();
 		kicked = (temp - retDate) / 5;
+		int l = 0; 
 		std::vector<std::string>* res = x->at(i).getReserverList();
+		for (int k = 0; k < BookList.size(); k++) {
+			if (x->at(i).getISBN() == BookList[k].getISBN()) {
+				l = k;
+			}
+		}
 		while (j < kicked && res->size() > 0) {
 			res->erase(res->begin());
 			j++;
+			BookList[l].getReserverList()->erase(BookList[l].getReserverList()->begin());
+			
 		}
+		
 		j = 0;
-		bool flag = true;
-		for (int k = 0; k < BookList.size(); k++) {
-			if (x->at(i).getISBN() == BookList[k].getISBN() && flag) {
-				flag = false;
-				for (int l = 0; l < kicked; l++) {
-					if (BookList[k].getReserverList()->size() == 0) {
-						continue;
-					}
-					BookList[k].getReserverList()->erase(BookList[k].getReserverList()->begin());
-				}
-			}
-		}
+		
 		x->at(i).setReserverList(*res);
 		
 		
