@@ -287,6 +287,7 @@ void Reader::Print()
 	std::cout << "Password: " << GetPswd() << std::endl;
 	std::cout << "Maximum Books You can Borrow out of Original Maximum: " << GetMaxBorrowedCurrent() << '/' << GetMaxBorrowed() << std::endl;
 	std::cout << "Maximum Borrowing Time: " << GetMaxBorrowDate() << " days" << std::endl;
+	std::cout << penalty << " penalties" << std::endl;
 	std::cout << "Books You have Borrowed: " << std::endl;
 	for (int i = 0; i < GetBorrowedBooks()->size(); i++)//Prints all books reader has taken out
 	{
@@ -331,7 +332,10 @@ void Reader::ReturnBooks(std::vector<BookCopy>& x, int date)
 						std::cout << GetBorrowedBooks()->at(j).getTitle() << " was overdue penalty has increased" << std::endl;
 						penalty++;
 					}
-					SetMaxBorrowedCurrent(GetMaxBorrowedCurrent() - penalty / 5);
+					SetMaxBorrowedCurrent(GetMaxBorrowed() - (penalty / 5));
+					if (maxBorrowedCurrent < 1)
+						maxBorrowedCurrent = 1;//Make sure reader can always borrow 1 book
+
 					/*else if (GetMaxBorrowedCurrent() < GetMaxBorrowed())//Case where overdue and we add to max books allowed to be borrowed
 					{
 						std::cout << GetBorrowedBooks()->at(j).getTitle() << " was not overdue max books allowed to be taken out has been increased" << std::endl;
@@ -364,7 +368,6 @@ void Reader::ReturnBooks(std::vector<BookCopy>& x, int date)
 	return;
 }
 
-//NEED TO FINISH
 void Reader::ReserveBooks(std::vector<BookCopy>& x, std::vector<Book>& y, int date)
 {
 	int i = 0;

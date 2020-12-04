@@ -45,6 +45,14 @@ int main()
 		//Print commands and take in user input for command
 		mainLMS.PrintCommands();
 		std::cin >> command;
+		if (!std::cin.good())//Make sure command entered is an integer if not ignore
+		{
+			std::cin.clear();
+			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+			command = -1;
+			std::cout << "Wrong command!" << std::endl;
+			continue;
+		}
 		mainLMS.ExecuteCommand(command);
 		mainLMS.AutoRemove();
 		mainLMS.updateBooks();

@@ -11,6 +11,11 @@
 */
 LMS::LMS()
 {
+	//Reserve space for vector to prevent resizing
+	StudentList.reserve(100);
+	TeacherList.reserve(100);
+	LibrarianList.reserve(100);
+
 	//Initial Date of LMS
 	LMSDate = "01/01/01";
 
@@ -325,7 +330,7 @@ void LMS::PrintCommands()
 		std::cout << "\t3. Delete Old Books" << std::endl;
 		std::cout << "\t4. Search Users" << std::endl;
 		std::cout << "\t5. Add New Users" << std::endl;
-		std::cout << "\t6. Delete Old Users" << std::endl;
+		std::cout << "\t6. Delete Old Readers" << std::endl;
 		std::cout << "\t7. My Information" << std::endl;
 		std::cout << "\t8. Change Password" << std::endl;
 		std::cout << "\t0. Log Out" << std::endl;
@@ -1148,6 +1153,9 @@ void LMS::addUser()
 	if (ch < 1 || ch > 3)
 	{
 		std::cout << "Wrong choice!" << std::endl;
+		//Clear cin as to not affect next input
+		std::cin.clear();
+		std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 		return;
 	}
 	std::cout << "Enter username of new User" << std::endl;
@@ -1157,43 +1165,43 @@ void LMS::addUser()
 	Librarian l;
 	Student s;
 	Teacher t;
+	for (int i = 0; i < LibrarianList.size(); i++)
+	{
+		if (userin == LibrarianList[i].GetUser())
+		{
+			std::cout << "Username already taken!" << std::endl;
+			return;
+		}
+	}
+	for (int i = 0; i < StudentList.size(); i++)
+	{
+		if (userin == StudentList[i].GetUser())
+		{
+			std::cout << "Username already taken!" << std::endl;
+			return;
+		}
+	}
+	for (int i = 0; i < TeacherList.size(); i++)
+	{
+		if (userin == TeacherList[i].GetUser())
+		{
+			std::cout << "Username already taken!" << std::endl;
+			return;
+		}
+	}
 	switch (ch)
 	{
 	case 1:
-		for (int i = 0; i < LibrarianList.size(); i++)
-		{
-			if (userin == LibrarianList[i].GetUser())
-			{
-				std::cout << "User already exists!" << std::endl;
-				return;
-			}
-		}
 		l.SetUser(userin);
 		l.SetPswd(passin);
 		LibrarianList.push_back(l);
 		break;
 	case 2:
-		for (int i = 0; i < StudentList.size(); i++)
-		{
-			if (userin == StudentList[i].GetUser())
-			{
-				std::cout << "User already exists!" << std::endl;
-				return;
-			}
-		}
 		s.SetUser(userin);
 		s.SetPswd(passin);
 		StudentList.push_back(s);
 		break;
 	case 3:
-		for (int i = 0; i < TeacherList.size(); i++)
-		{
-			if (userin == TeacherList[i].GetUser())
-			{
-				std::cout << "User already exists!" << std::endl;
-				return;
-			}
-		}
 		t.SetUser(userin);
 		t.SetPswd(passin);
 		TeacherList.push_back(t);

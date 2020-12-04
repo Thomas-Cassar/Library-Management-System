@@ -1,8 +1,8 @@
-9781612130286 Fifty_Shades_Of_Gray E._L._James Romance 000 NULL 0 0 0
-9781612130286 Fifty_Shades_Of_Gray E._L._James Romance 001 NULL 0 0 0
-9781612130286 Fifty_Shades_Of_Gray E._L._James Romance 002 NULL 0 0 0
-9781983981901 Pride_and_Prejudice Jane_Austin Romance 003 NULL 0 0 0
-9781983981901 Pride_and_Prejudice Jane_Austin Romance 004 NULL 0 0 0
+9781612130286 Fifty_Shades_Of_Gray E._L._James Romance 000 NULL 335 365 337
+9781612130286 Fifty_Shades_Of_Gray E._L._James Romance 001 NULL 283 293 297
+9781612130286 Fifty_Shades_Of_Gray E._L._James Romance 002 NULL 284 294 297
+9781983981901 Pride_and_Prejudice Jane_Austin Romance 003 NULL 285 295 298
+9781983981901 Pride_and_Prejudice Jane_Austin Romance 004 NULL 220 230 240
 9781983981901 Pride_and_Prejudice Jane_Austin Romance 005 NULL 0 0 0
 9780440335160 Outlander Diana_Gabaldon Romance 006 NULL 0 0 0
 9780440335160 Outlander Diana_Gabaldon Romance 007 NULL 0 0 0
@@ -37,7 +37,7 @@
 9781839183 Macbeth Shakespeare Tragedy 312 NULL 0 0 0
 9781835462 Julius_Caesar Shakespeare Tragedy 313 NULL 0 0 0
 9781835462 Julius_Caesar Shakespeare Tragedy 314 NULL 0 0 0
-9780525555315 Winnie_The_Pooh A._A._Milne Children's_Literature 400 NULL 0 0 0
+9780525555315 Winnie_The_Pooh A._A._Milne Children's_Literature 400 NULL 0 0 205
 9780525555315 Winnie_The_Pooh A._A._Milne Children's_Literature 401 NULL 0 0 0
 9780394800165 Green_Eggs_And_Ham Dr.Seuss Children's_Literature 402 NULL 0 0 0
 9780394800165 Green_Eggs_And_Ham Dr.Seuss Children's_Literature 403 NULL 0 0 0
