@@ -1,1 +1,1 @@
-Teacher1 Pass 7 7 15 1
+Teacher1 Pass 7 7 15 0

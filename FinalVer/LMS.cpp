@@ -355,7 +355,7 @@ void LMS::ExecuteCommand(int command)
 			std::vector<BookCopy>* copyvectemp; //Pointer that will store address of booklist
 			std::vector<Book>* bookvectemp;
 
-		case 1: //Get recommendations
+		case 1: 
 			searchBooks();
 			break;
 		case 2://Reader wants to borrow book
@@ -369,7 +369,7 @@ void LMS::ExecuteCommand(int command)
 			dynamic_cast<Reader*>(loggedinUser)->ReturnBooks(*copyvectemp, getCounter());
 			updateFiles();
 			break;
-		case 4: //Checks current date
+		case 4: 
 			copyvectemp = returnBookCopy();
 			bookvectemp = returnBook();
 			dynamic_cast<Reader*>(loggedinUser)->ReserveBooks(*copyvectemp, *bookvectemp, getCounter());
@@ -386,7 +386,7 @@ void LMS::ExecuteCommand(int command)
 			dynamic_cast<Reader*>(loggedinUser)->RenewBook(*copyvectemp, getCounter());
 			updateFiles();
 			break;
-		case 7:
+		case 7: //Get recommendations
 			recommend();
 			break;
 		case 8:
@@ -784,8 +784,9 @@ std::string LMS::incrementDate(std::string Date)
 }
 
 /*
-*The following function takes in a student by reference and based on the books it currently has taken out 
-* it will recommend books of similar genres to any books it has taken out 
+* The following function considers the User that is currently logged in and based 
+* on the books it currently has taken out it will recommend books of similar 
+* genres to any books it has taken out 
 */
 void LMS::recommend()
 {
